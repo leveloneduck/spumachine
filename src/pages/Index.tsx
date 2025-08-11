@@ -1,6 +1,6 @@
 import Hero from '@/components/Hero';
 import Stats from '@/components/Stats';
-import MintPanel from '@/components/MintPanel';
+
 import NeonFooter from '@/components/NeonFooter';
 
 
@@ -8,9 +8,8 @@ const Index = () => {
   return (
     <div>
       <main>
-        <MintPanel />
-        <Stats />
         <Hero />
+        <Stats />
         <section id="about" className="container mx-auto py-16 max-w-3xl">
           <h2 className="text-2xl md:text-3xl font-bold">About the Collection</h2>
           <p className="mt-4 text-muted-foreground">
