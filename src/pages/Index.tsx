@@ -1,12 +1,25 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import NeonHeader from '@/components/NeonHeader';
+import Hero from '@/components/Hero';
+import Stats from '@/components/Stats';
+import MintPanel from '@/components/MintPanel';
+import NeonFooter from '@/components/NeonFooter';
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div>
+      <NeonHeader />
+      <main>
+        <Hero />
+        <Stats />
+        <MintPanel />
+        <section id="about" className="container mx-auto py-16 max-w-3xl">
+          <h2 className="text-2xl md:text-3xl font-bold">About the Collection</h2>
+          <p className="mt-4 text-muted-foreground">
+            404 one-of-a-kind cyberpunk artifacts. Each NFT is a portal into a neon-soaked future. Built on Solana using Candy Machine V3 for a smooth, secure minting flow.
+          </p>
+        </section>
+      </main>
+      <NeonFooter />
     </div>
   );
 };
