@@ -61,28 +61,12 @@ const MintPanel = () => {
   return (
     <section id="mint" className="container mx-auto py-16">
       <motion.div initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="mx-auto max-w-xl rounded-2xl bg-card/60 glow-border p-8">
-        <h2 className="text-2xl md:text-3xl font-bold">Mint your NFT</h2>
-        <p className="mt-2 text-muted-foreground">Supply: {MINT_CONFIG.totalItems} • Network: {MINT_CONFIG.network}</p>
-
-        <div className="mt-6 flex items-center justify-between rounded-lg border bg-background/40 p-4">
-          <div>
-            <p className="text-sm text-muted-foreground">Candy Machine</p>
-            <p className="font-mono text-sm truncate max-w-[220px]">
-              {MINT_CONFIG.candyMachineId ? MINT_CONFIG.candyMachineId : 'Not set'}
-            </p>
-          </div>
-          <Button variant="secondary" onClick={onCopy} className="hover-scale" size="sm">
-            <Copy size={16} className="mr-2" /> Copy
-          </Button>
-        </div>
-
-
-        <div className="mt-6 flex items-center gap-3">
+        <div className="flex flex-col items-center gap-3">
           <Button
             onClick={onMintClick}
             disabled={!connected || minting || stage === 'minting'}
             size="lg"
-            className="hover-scale"
+            className="rounded-full px-8 md:px-10 py-6 text-base md:text-lg bg-gradient-to-r from-primary to-primary/80 text-primary-foreground border border-primary/40 shadow-[0_0_30px_hsl(var(--primary-glow)/0.35)] hover:from-primary/90 hover:to-primary/70 hover:shadow-[0_0_40px_hsl(var(--primary-glow)/0.5)] hover-scale"
           >
             {stage === 'minting' && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {stage === 'idle' && 'Mint'}
@@ -93,6 +77,23 @@ const MintPanel = () => {
           <p className="text-sm text-muted-foreground">
             {connected ? `Connected: ${publicKey?.toBase58().slice(0, 4)}...${publicKey?.toBase58().slice(-4)}` : 'Connect your wallet to mint'}
           </p>
+        </div>
+
+        <div className="mt-8 w-full text-center">
+          <h2 className="text-2xl md:text-3xl font-bold">Mint your NFT</h2>
+          <p className="mt-2 text-muted-foreground">Supply: {MINT_CONFIG.totalItems} • Network: {MINT_CONFIG.network}</p>
+        </div>
+
+        <div className="mt-6 flex items-center justify-between rounded-lg border bg-background/40 p-4 w-full">
+          <div>
+            <p className="text-sm text-muted-foreground">Candy Machine</p>
+            <p className="font-mono text-sm truncate max-w-[220px]">
+              {MINT_CONFIG.candyMachineId ? MINT_CONFIG.candyMachineId : 'Not set'}
+            </p>
+          </div>
+          <Button variant="secondary" onClick={onCopy} className="hover-scale" size="sm">
+            <Copy size={16} className="mr-2" /> Copy
+          </Button>
         </div>
       </motion.div>
     </section>
