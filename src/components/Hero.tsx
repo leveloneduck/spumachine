@@ -9,14 +9,16 @@ const Hero = () => {
         <img src={heroImage} alt="Cyberpunk neon cityscape hero for 404 NFT mint" loading="eager" className="h-[90vh] md:h-[100vh] w-full object-cover opacity-60" />
         <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-background/60 to-background" />
       </div>
-      <div className="container mx-auto py-24 md:py-32">
+      <div className="container mx-auto pt-0 pb-24 md:pb-32">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="flex justify-center"
+          className="flex flex-col items-center gap-6"
         >
-          <h1 className="sr-only">Mint the 404 Cyberpunk Collection</h1>
+          <h1 className="text-center text-3xl md:text-5xl font-extrabold tracking-tight text-foreground">
+            Spare Parts Universe : Introduces The First Exclusive Collection
+          </h1>
           <MintPanel />
         </motion.div>
       </div>
