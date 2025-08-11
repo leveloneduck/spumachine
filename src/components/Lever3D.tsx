@@ -1,3 +1,4 @@
+
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, useGLTF } from '@react-three/drei';
@@ -194,5 +195,4 @@ const Lever3D = ({ stage, onPullEnd, onEngage }: Lever3DProps) => {
 
 export default Lever3D;
 
-// Preload GLTF if present (no-op if missing)
-useGLTF.preload('/models/lever.glb');
+// Removed useGLTF.preload('/models/lever.glb') to prevent fetching a missing model at startup.
