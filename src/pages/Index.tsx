@@ -1,13 +1,15 @@
-import NeonHeader from '@/components/NeonHeader';
 import Hero from '@/components/Hero';
 import Stats from '@/components/Stats';
 import MintPanel from '@/components/MintPanel';
 import NeonFooter from '@/components/NeonFooter';
+import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 
 const Index = () => {
   return (
     <div>
-      <NeonHeader />
+      <div className="fixed top-4 right-4 z-50">
+        <WalletMultiButton className="!rounded-full !px-5 !py-2.5 !bg-gradient-to-r !from-primary !to-primary/80 !text-primary-foreground hover:!from-primary/90 hover:!to-primary/70 !border !border-primary/40 !shadow-[0_0_30px_hsl(var(--primary-glow)/0.35)] hover:!shadow-[0_0_40px_hsl(var(--primary-glow)/0.5)] hover-scale" />
+      </div>
       <main>
         <Hero />
         <Stats />
