@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useWallet } from '@solana/wallet-adapter-react';
+import { useWalletModal } from '@solana/wallet-adapter-react-ui';
 import toast from 'react-hot-toast';
 import { Copy, Loader2 } from 'lucide-react';
 import { MINT_CONFIG } from '@/config/mintConfig';
@@ -8,6 +9,7 @@ import { motion } from 'framer-motion';
 
 const MintPanel = () => {
   const { connected, publicKey } = useWallet();
+  const { setVisible } = useWalletModal();
   const [minting, setMinting] = useState(false);
   const [stage, setStage] = useState<'idle' | 'prepping' | 'minting' | 'success' | 'error'>('idle');
   const onCopy = useCallback(async () => {
@@ -54,25 +56,31 @@ const MintPanel = () => {
     }
   }, [connected]);
 
-  const onMintClick = useCallback(() => {
-    startMint();
-  }, [startMint]);
+  const onActionClick = useCallback(() => {
+    if (!connected) {
+      setVisible(true);
+    } else {
+      startMint();
+    }
+  }, [connected, setVisible, startMint]);
 
   return (
     <section id="mint" className="container mx-auto py-16">
       <motion.div initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="mx-auto max-w-xl rounded-2xl bg-card/60 glow-border p-8">
         <div className="flex flex-col items-center gap-3">
           <Button
-            onClick={onMintClick}
-            disabled={!connected || minting || stage === 'minting'}
+            onClick={onActionClick}
+            disabled={minting || stage === 'minting'}
             size="lg"
-            className="rounded-full px-8 md:px-10 py-6 text-base md:text-lg bg-gradient-to-r from-primary to-primary/80 text-primary-foreground border border-primary/40 shadow-[0_0_30px_hsl(var(--primary-glow)/0.35)] hover:from-primary/90 hover:to-primary/70 hover:shadow-[0_0_40px_hsl(var(--primary-glow)/0.5)] hover-scale"
+            variant="mechanical"
+            className="hover-scale px-8 md:px-10 py-6 text-base md:text-lg"
           >
             {stage === 'minting' && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            {stage === 'idle' && 'Mint'}
-            {stage === 'minting' && 'Minting...'}
-            {stage === 'success' && 'Minted!'}
-            {stage === 'error' && 'Retry Mint'}
+            {!connected && 'Select Wallet'}
+            {connected && stage === 'idle' && 'Mint'}
+            {connected && stage === 'minting' && 'Minting...'}
+            {connected && stage === 'success' && 'Minted!'}
+            {connected && stage === 'error' && 'Retry Mint'}
           </Button>
           <p className="text-sm text-muted-foreground">
             {connected ? `Connected: ${publicKey?.toBase58().slice(0, 4)}...${publicKey?.toBase58().slice(-4)}` : 'Connect your wallet to mint'}
