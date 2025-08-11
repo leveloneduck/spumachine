@@ -6,16 +6,20 @@ export type MintStage = 'idle' | 'prepping' | 'minting' | 'success' | 'error';
 interface LeverMachineProps {
   stage: MintStage;
   onPullEnd: () => void;
+  onEngage?: () => void;
 }
 
-const LeverMachine = ({ stage, onPullEnd }: LeverMachineProps) => {
+const LeverMachine = ({ stage, onPullEnd, onEngage }: LeverMachineProps) => {
   const controls = useAnimation();
   const hasTriggeredRef = useRef(false);
-
+  const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canEngage = stage === 'idle';
   useEffect(() => {
     if (stage === 'prepping' && !hasTriggeredRef.current) {
       hasTriggeredRef.current = true;
       (async () => {
+        // Stop idle jiggle
+        await controls.start({ rotate: 0 });
         // Pull down
         await controls.start({ rotate: -35, transition: { type: 'spring', stiffness: 220, damping: 16 } });
         // Signal mint start
@@ -26,8 +30,17 @@ const LeverMachine = ({ stage, onPullEnd }: LeverMachineProps) => {
     }
     if (stage === 'idle') {
       hasTriggeredRef.current = false;
+      // Subtle idle jiggle for discoverability
+      if (!prefersReducedMotion) {
+        controls.start({
+          rotate: [0, -3, 0, 3, 0],
+          transition: { duration: 2.2, ease: 'easeInOut', repeat: Infinity, repeatDelay: 1.8 }
+        });
+      } else {
+        controls.start({ rotate: 0 });
+      }
     }
-  }, [stage, controls, onPullEnd]);
+  }, [stage, controls, onPullEnd, prefersReducedMotion]);
 
   const knobFill =
     stage === 'success'
@@ -44,9 +57,21 @@ const LeverMachine = ({ stage, onPullEnd }: LeverMachineProps) => {
       : 'shadow-none';
 
   return (
-    <div className={`mx-auto w-full max-w-md rounded-xl border bg-background/40 p-4 ${glowClass}`}>
+    <div
+      role="button"
+      aria-label="Pull the lever to mint"
+      tabIndex={0}
+      onClick={() => canEngage && onEngage?.()}
+      onKeyDown={(e) => {
+        if (canEngage && (e.key === 'Enter' || e.key === ' ')) {
+          e.preventDefault();
+          onEngage?.();
+        }
+      }}
+      className={`mx-auto w-full max-w-md rounded-xl border bg-background/40 p-4 outline-none transition-shadow ${glowClass} ${canEngage ? 'cursor-pointer hover-scale focus-visible:ring-2 focus-visible:ring-primary/60' : 'cursor-default'}`}
+    >
       <div className="flex items-center justify-center">
-        <svg width="220" height="120" viewBox="0 0 220 120" xmlns="http://www.w3.org/2000/svg">
+        <svg width="300" height="160" viewBox="0 0 220 120" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <linearGradient id="lever-grad" x1="0" y1="0" x2="1" y2="1">
               <stop offset="0%" stopColor="hsl(var(--primary))" />
@@ -72,7 +97,7 @@ const LeverMachine = ({ stage, onPullEnd }: LeverMachineProps) => {
         </svg>
       </div>
       <p className="mt-2 text-center text-xs text-muted-foreground">
-        {stage === 'idle' && 'Ready to mint — pull the lever!'}
+        {stage === 'idle' && 'Click or press Enter to pull the lever'}
         {stage === 'prepping' && 'Lever engaged...'}
         {stage === 'minting' && 'Processing mint...'}
         {stage === 'success' && 'Success!'}

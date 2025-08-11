@@ -87,7 +87,7 @@ const MintPanel = () => {
         </div>
 
         <div className="mt-8">
-          <LeverMachine stage={stage} onPullEnd={startMint} />
+          <LeverMachine stage={stage} onPullEnd={startMint} onEngage={onMintClick} />
         </div>
 
         <div className="mt-6 flex items-center gap-3">
