@@ -4,9 +4,9 @@ import MintPanel from '@/components/MintPanel';
 
 const Hero = () => {
   return (
-    <section className="relative overflow-hidden isolate">
+    <section className="relative overflow-hidden isolate min-h-[100svh]">
       <div className="absolute inset-0 z-0">
-        <img src={heroImage} alt="Cyberpunk neon cityscape hero for 404 NFT mint" loading="eager" className="h-[90vh] md:h-[100vh] w-full object-cover opacity-60" />
+        <img src={heroImage} alt="Cyberpunk neon cityscape hero for 404 NFT mint" loading="eager" className="w-full h-full object-cover opacity-60" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/70 pointer-events-none" />
       </div>
       <div className="container mx-auto pt-0 pb-24 md:pb-32">
@@ -16,7 +16,7 @@ const Hero = () => {
           transition={{ duration: 0.6, ease: 'easeOut' }}
           className="relative z-10 flex flex-col items-center gap-6"
         >
-          <h1 className="text-center text-3xl md:text-5xl font-extrabold tracking-tight text-foreground">
+          <h1 className="mt-0 text-center text-3xl md:text-5xl font-extrabold tracking-tight text-foreground">
             Spare Parts Universe : Introduces The First Exclusive Collection
           </h1>
           <MintPanel />
