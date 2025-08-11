@@ -13,7 +13,7 @@ export const MINT_CONFIG = {
   // Optional custom RPC, otherwise we use public devnet/mainnet endpoints
   rpcEndpoint: '',
   // Visual mode for the lever UI: 'svg' (default) or '3d'
-  visualMode: '3d' as VisualMode,
+  visualMode: 'svg' as VisualMode,
 };
 
 export const getRpcEndpoint = () => {
