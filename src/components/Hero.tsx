@@ -6,7 +6,7 @@ const Hero = () => {
   return (
     <section className="relative overflow-hidden">
       <div className="absolute inset-0 -z-10">
-        <img src={heroImage} alt="Cyberpunk neon cityscape hero for 404 NFT mint" loading="eager" className="h-[60vh] w-full object-cover opacity-60" />
+        <img src={heroImage} alt="Cyberpunk neon cityscape hero for 404 NFT mint" loading="eager" className="h-[90vh] md:h-[100vh] w-full object-cover opacity-60" />
         <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-background/60 to-background" />
       </div>
       <div className="container mx-auto py-24 md:py-32">
