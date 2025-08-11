@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useWallet } from '@solana/wallet-adapter-react';
 import toast from 'react-hot-toast';
@@ -6,11 +6,26 @@ import { Copy, Loader2 } from 'lucide-react';
 import { MINT_CONFIG } from '@/config/mintConfig';
 import { motion } from 'framer-motion';
 import LeverMachine from '@/components/LeverMachine';
+import Lever3D from '@/components/Lever3D';
 
 const MintPanel = () => {
   const { connected, publicKey } = useWallet();
   const [minting, setMinting] = useState(false);
   const [stage, setStage] = useState<'idle' | 'prepping' | 'minting' | 'success' | 'error'>('idle');
+  const [webgl, setWebgl] = useState(false);
+  useEffect(() => {
+    try {
+      const canvas = document.createElement('canvas');
+      const ok = !!(
+        canvas.getContext('webgl2') ||
+        canvas.getContext('webgl') ||
+        (canvas as any).getContext?.('experimental-webgl')
+      );
+      setWebgl(ok);
+    } catch {
+      setWebgl(false);
+    }
+  }, []);
   const onCopy = useCallback(async () => {
     if (!MINT_CONFIG.candyMachineId) {
       toast.error('Set your Candy Machine ID in src/config/mintConfig.ts');
@@ -86,9 +101,13 @@ const MintPanel = () => {
           </Button>
         </div>
 
-        <div className="mt-8">
-          <LeverMachine stage={stage} onPullEnd={startMint} onEngage={onMintClick} />
-        </div>
+          <div className="mt-8">
+            {MINT_CONFIG.visualMode === '3d' && webgl ? (
+              <Lever3D stage={stage} onPullEnd={startMint} onEngage={onMintClick} />
+            ) : (
+              <LeverMachine stage={stage} onPullEnd={startMint} onEngage={onMintClick} />
+            )}
+          </div>
 
         <div className="mt-6 flex items-center gap-3">
           <Button

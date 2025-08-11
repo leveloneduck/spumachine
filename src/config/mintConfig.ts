@@ -1,4 +1,5 @@
 export type NetworkType = 'devnet' | 'mainnet-beta';
+export type VisualMode = 'svg' | '3d';
 
 export const MINT_CONFIG = {
   collectionName: '404 Cyberpunk Collection',
@@ -10,7 +11,9 @@ export const MINT_CONFIG = {
   // Choose your network
   network: 'devnet' as NetworkType,
   // Optional custom RPC, otherwise we use public devnet/mainnet endpoints
-  rpcEndpoint: ''
+  rpcEndpoint: '',
+  // Visual mode for the lever UI: 'svg' (default) or '3d'
+  visualMode: '3d' as VisualMode,
 };
 
 export const getRpcEndpoint = () => {
