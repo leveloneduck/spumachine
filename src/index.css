@@ -110,6 +110,13 @@
     background-image: radial-gradient(1200px 600px at 10% -10%, hsl(var(--primary) / 0.15), transparent),
       radial-gradient(800px 400px at 90% 0%, hsl(var(--accent) / 0.12), transparent);
     background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+  }
+
+  #root {
+    margin: 0;
+    padding: 0;
   }
 }
 
