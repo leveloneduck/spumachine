@@ -5,11 +5,12 @@ import toast from 'react-hot-toast';
 import { Copy, Loader2 } from 'lucide-react';
 import { MINT_CONFIG } from '@/config/mintConfig';
 import { motion } from 'framer-motion';
+import LeverMachine from '@/components/LeverMachine';
 
 const MintPanel = () => {
   const { connected, publicKey } = useWallet();
   const [minting, setMinting] = useState(false);
-
+  const [stage, setStage] = useState<'idle' | 'prepping' | 'minting' | 'success' | 'error'>('idle');
   const onCopy = useCallback(async () => {
     if (!MINT_CONFIG.candyMachineId) {
       toast.error('Set your Candy Machine ID in src/config/mintConfig.ts');
@@ -23,7 +24,38 @@ const MintPanel = () => {
     }
   }, []);
 
-  const onMint = useCallback(async () => {
+  const startMint = useCallback(async () => {
+    if (!connected) {
+      toast.error('Connect your wallet first', { id: 'mint' });
+      setStage('error');
+      return;
+    }
+    if (!MINT_CONFIG.candyMachineId) {
+      toast.error('Add your Candy Machine ID in src/config/mintConfig.ts', { id: 'mint' });
+      setStage('error');
+      return;
+    }
+
+    try {
+      setMinting(true);
+      setStage('minting');
+      toast.loading('Processing mint...', { id: 'mint' });
+      // TODO: Implement Candy Machine V3 mint using Umi + mpl-candy-machine
+      // This placeholder simulates a successful mint after a delay.
+      await new Promise((res) => setTimeout(res, 1500));
+      toast.success('Mint simulated! Replace with real mint logic.', { id: 'mint' });
+      setStage('success');
+    } catch (e: any) {
+      console.error(e);
+      toast.error(e?.message ?? 'Mint failed', { id: 'mint' });
+      setStage('error');
+    } finally {
+      setMinting(false);
+      setTimeout(() => setStage('idle'), 1500);
+    }
+  }, [connected]);
+
+  const onMintClick = useCallback(() => {
     if (!connected) {
       toast.error('Connect your wallet first');
       return;
@@ -32,20 +64,8 @@ const MintPanel = () => {
       toast.error('Add your Candy Machine ID in src/config/mintConfig.ts');
       return;
     }
-
-    try {
-      setMinting(true);
-      toast.loading('Preparing mint...', { id: 'mint' });
-      // TODO: Implement Candy Machine V3 mint using Umi + mpl-candy-machine
-      // This placeholder simulates a successful mint after a delay.
-      await new Promise((res) => setTimeout(res, 1500));
-      toast.success('Mint simulated! Replace with real mint logic.', { id: 'mint' });
-    } catch (e: any) {
-      console.error(e);
-      toast.error(e?.message ?? 'Mint failed', { id: 'mint' });
-    } finally {
-      setMinting(false);
-    }
+    setStage('prepping');
+    toast.loading('Pulling lever...', { id: 'mint' });
   }, [connected]);
 
   return (
@@ -66,9 +86,23 @@ const MintPanel = () => {
           </Button>
         </div>
 
-        <div className="mt-8 flex items-center gap-3">
-          <Button onClick={onMint} disabled={!connected || minting} size="lg" className="hover-scale">
-            {minting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} Mint
+        <div className="mt-8">
+          <LeverMachine stage={stage} onPullEnd={startMint} />
+        </div>
+
+        <div className="mt-6 flex items-center gap-3">
+          <Button
+            onClick={onMintClick}
+            disabled={!connected || minting || stage === 'prepping' || stage === 'minting'}
+            size="lg"
+            className="hover-scale"
+          >
+            {stage === 'minting' && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {stage === 'idle' && 'Pull & Mint'}
+            {stage === 'prepping' && 'Get Ready...'}
+            {stage === 'minting' && 'Minting...'}
+            {stage === 'success' && 'Minted!'}
+            {stage === 'error' && 'Retry Mint'}
           </Button>
           <p className="text-sm text-muted-foreground">
             {connected ? `Connected: ${publicKey?.toBase58().slice(0, 4)}...${publicKey?.toBase58().slice(-4)}` : 'Connect your wallet to mint'}
