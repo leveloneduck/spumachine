@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useWalletModal } from '@solana/wallet-adapter-react-ui';
 import { motion } from 'framer-motion';
-import { Copy, Loader2 } from 'lucide-react';
+import { Copy, Loader2, Volume2, VolumeX } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
@@ -15,6 +15,12 @@ import machineAsset from '@/assets/spare-parts-machine.png';
 const MACHINE_PUBLIC = '/machine.png';
 // Locked hotspot defaults (percent relative to image)
 const LOCKED_HOTSPOT = { left: 47.212929223602664, top: 53.54015074572062, width: 6, height: 5 } as const;
+
+// Random video sources (replace with your own in public/videos or remote URLs)
+const VIDEO_SOURCES = [
+  'https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4',
+  'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4'
+] as const;
 
 type Stage = 'idle' | 'minting' | 'success' | 'error';
 
@@ -49,6 +55,9 @@ const MachineMint = () => {
     return { ...LOCKED_HOTSPOT } as { left: number; top: number; width: number; height: number };
   });
 
+  const [muted, setMuted] = useState(true);
+  const [videoSrc, setVideoSrc] = useState<string | null>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
 
 
@@ -56,6 +65,12 @@ const MachineMint = () => {
     if (typeof window === 'undefined') return;
     const params = new URLSearchParams(window.location.search);
     setDevMode(params.has('hotspot'));
+  }, []);
+
+  useEffect(() => {
+    // Pick a random video on mount
+    const index = Math.floor(Math.random() * VIDEO_SOURCES.length);
+    setVideoSrc(VIDEO_SOURCES[index]);
   }, []);
 
   useEffect(() => {
@@ -149,10 +164,29 @@ const MachineMint = () => {
       {/* Machine + hotspot */}
       <div className="relative select-none origin-top transition-transform duration-300 md:scale-[0.69] md:-translate-y-[3%] lg:-translate-y-[4%] 2xl:-translate-y-[5%]">
         <AspectRatio ratio={displayRatio}>
+          {/* Random video layer behind the machine artwork */
+          {videoSrc && (
+            <motion.video
+              ref={videoRef}
+              key={videoSrc}
+              className="absolute inset-0 z-0 h-full w-full object-cover pointer-events-none"
+              src={videoSrc}
+              autoPlay
+              muted={muted}
+              loop
+              playsInline
+              preload="metadata"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6 }}
+            />
+          )}
+
+          {/* Machine artwork overlay (PNG with transparent window) */
           <img
             src={imgSrc}
             alt="Minting machine UI — user-provided artwork"
-            className="absolute inset-0 h-full w-full object-contain pointer-events-none"
+            className="absolute inset-0 z-10 h-full w-full object-contain pointer-events-none"
             loading="eager"
             onLoad={(e) => {
               const img = e.currentTarget as HTMLImageElement;
