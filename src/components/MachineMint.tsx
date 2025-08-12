@@ -16,11 +16,11 @@ const MACHINE_PUBLIC = '/machine.png';
 // Locked hotspot defaults (percent relative to image)
 const LOCKED_HOTSPOT = { left: 47.212929223602664, top: 53.54015074572062, width: 6, height: 5 } as const;
 
-// Random video sources (replace with your own in public/videos or remote URLs)
-const VIDEO_SOURCES = [
-  'https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4',
-  'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4'
-] as const;
+// Default video window (percent relative to image)
+const DEFAULT_VIDEO_WINDOW = { left: 52, top: 42, width: 22, height: 14 } as const;
+
+// Video sources (local, small clips)
+const VIDEO_SOURCES = ['/spu-vid.MP4', '/spu-vid1.MP4'] as const;
 
 type Stage = 'idle' | 'minting' | 'success' | 'error';
 
@@ -55,18 +55,36 @@ const MachineMint = () => {
     return { ...LOCKED_HOTSPOT } as { left: number; top: number; width: number; height: number };
   });
 
+  const [videoDev, setVideoDev] = useState(false);
+  const [videoWindow, setVideoWindow] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('hotspotVideo')) {
+        const stored = localStorage.getItem('machineVideoWindow');
+        if (stored) {
+          try {
+            const parsed = JSON.parse(stored);
+            if (parsed && typeof parsed === 'object' && 'left' in parsed && 'top' in parsed) {
+              return parsed as { left: number; top: number; width: number; height: number };
+            }
+          } catch {}
+        }
+      }
+    }
+    return { ...DEFAULT_VIDEO_WINDOW } as { left: number; top: number; width: number; height: number };
+  });
+
   const [muted, setMuted] = useState(true);
   const [videoSrc, setVideoSrc] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-
 
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const params = new URLSearchParams(window.location.search);
     setDevMode(params.has('hotspot'));
+    setVideoDev(params.has('hotspotVideo'));
   }, []);
-
   useEffect(() => {
     // Pick a random video on mount
     const index = Math.floor(Math.random() * VIDEO_SOURCES.length);
@@ -166,21 +184,43 @@ const MachineMint = () => {
         <AspectRatio ratio={displayRatio}>
           {/* Random video layer behind the machine artwork */}
           {videoSrc && (
-            <motion.video
-              ref={videoRef}
-              key={videoSrc}
-              className="absolute inset-0 z-0 h-full w-full object-cover pointer-events-none"
-              src={videoSrc}
-              autoPlay
-              muted={muted}
-              loop
-              playsInline
-              preload="metadata"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6 }}
-            />
+            <div
+              className={`absolute z-0 overflow-hidden pointer-events-none ${videoDev ? 'ring-2 ring-primary/60' : ''}`}
+              style={{
+                left: `${videoWindow.left}%`,
+                top: `${videoWindow.top}%`,
+                width: `${videoWindow.width}%`,
+                height: `${videoWindow.height}%`,
+              }}
+            >
+              <motion.video
+                ref={videoRef}
+                key={videoSrc}
+                className="h-full w-full object-contain"
+                src={videoSrc}
+                autoPlay
+                muted={muted}
+                loop
+                playsInline
+                preload="metadata"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6 }}
+              />
+            </div>
           )}
+
+          {/* Mute/unmute toggle */}
+          <Button
+            type="button"
+            variant="secondary"
+            size="icon"
+            onClick={() => setMuted((m) => !m)}
+            className="absolute right-2 top-2 z-40"
+            aria-label={muted ? 'Unmute background video' : 'Mute background video'}
+          >
+            {muted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+          </Button>
 
           {/* Machine artwork overlay (PNG with transparent window) */}
           <img
