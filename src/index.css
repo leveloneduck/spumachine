@@ -107,34 +107,9 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Oxanium', ui-sans-serif, system-ui, sans-serif;
-    /* Removed global body gradients to eliminate top gap and let hero cover edge-to-edge */
-    margin: 0;
-    padding: 0;
-  }
-
-  #root {
-    margin: 0;
-    padding: 0;
-  }
-
-  /* Hard reset to remove any accidental top gaps */
-  html,
-  body,
-  #root,
-  main {
-    margin-top: 0 !important;
-    padding-top: 0 !important;
-  }
-
-  /* Ensure full height to avoid stray top gaps */
-  html,
-  body,
-  #root {
-    height: 100%;
-  }
-
-  #root > *:first-child {
-    margin-top: 0 !important;
+    background-image: radial-gradient(1200px 600px at 10% -10%, hsl(var(--primary) / 0.15), transparent),
+      radial-gradient(800px 400px at 90% 0%, hsl(var(--accent) / 0.12), transparent);
+    background-attachment: fixed;
   }
 }
 
@@ -152,7 +127,4 @@
   .story-link:hover::after { transform: scaleX(1); transform-origin: bottom left; }
 
   .glow-border { box-shadow: 0 0 0 1px hsl(var(--primary) / 0.3), 0 0 30px hsl(var(--primary-glow) / 0.25); }
-
-  /* Safe-area utility for iOS notch to avoid phantom top gap */
-  .pt-safe { padding-top: env(safe-area-inset-top); }
 }

@@ -4,23 +4,19 @@ import MintPanel from '@/components/MintPanel';
 
 const Hero = () => {
   return (
-    <section className="relative isolate overflow-hidden h-[100svh] -mt-8 md:-mt-12">
-      <div
-        className="absolute inset-0 -z-10 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${heroImage})` }}
-        aria-hidden="true"
-      />
-      <div className="absolute inset-0 z-0 bg-gradient-to-b from-transparent via-transparent to-background/70 pointer-events-none" />
-      <div className="container mx-auto">
+    <section className="relative overflow-hidden">
+      <div className="absolute inset-0 -z-10">
+        <img src={heroImage} alt="Cyberpunk neon cityscape hero for 404 NFT mint" loading="eager" className="h-[60vh] w-full object-cover opacity-60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-background/60 to-background" />
+      </div>
+      <div className="container mx-auto py-24 md:py-32">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="relative z-10 flex flex-col items-center gap-6"
+          className="flex justify-center"
         >
-          <h1 className="mt-0 text-center text-3xl md:text-5xl font-extrabold tracking-tight text-foreground">
-            Spare Parts Universe : Introduces The First Exclusive Collection
-          </h1>
+          <h1 className="sr-only">Mint the 404 Cyberpunk Collection</h1>
           <MintPanel />
         </motion.div>
       </div>
