@@ -9,6 +9,7 @@ import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { toast } from '@/components/ui/use-toast';
 import { MINT_CONFIG } from '@/config/mintConfig';
 
+// Artwork: replace this file with your uploaded machine image to update the UI
 import machineImg from '@/assets/spare-parts-machine.png';
 import pressImg from '@/assets/press-here.png';
 
@@ -75,7 +76,7 @@ const MachineMint = () => {
         <AspectRatio ratio={3 / 4}>
           <img
             src={machineImg}
-            alt="Spare Parts mint machine"
+            alt="Retro gumball mint machine UI"
             className="absolute inset-0 h-full w-full object-contain pointer-events-none"
             loading="eager"
           />
