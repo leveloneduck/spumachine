@@ -71,3 +71,8 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+
+## Machine artwork lock
+
+- The machine overlay image is fixed at `/machine.png?v=1`. Replace `public/machine.png` to update it.
+- Calibration modes (`?hotspot`, `?hotspotVideo`) are available only in development (`npm run dev`). They are disabled in production.

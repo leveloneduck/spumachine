@@ -12,7 +12,7 @@ import { MINT_CONFIG, getRpcEndpoint } from '@/config/mintConfig';
 
 
 // Artwork: replace this file with your uploaded machine image to update the UI
-const MACHINE_PUBLIC = '/machine.png';
+const MACHINE_PUBLIC = '/machine.png?v=1';
 // Locked hotspot defaults (percent relative to image)
 const LOCKED_HOTSPOT = { left: 47.212929223602664, top: 53.54015074572062, width: 6, height: 5 } as const;
 
@@ -33,7 +33,7 @@ const MachineMint = () => {
   const [devMode, setDevMode] = useState(false);
   const [imgSrc, setImgSrc] = useState<string>(MACHINE_PUBLIC);
   const [hotspot, setHotspot] = useState(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && import.meta.env.DEV) {
       const params = new URLSearchParams(window.location.search);
       if (params.has('hotspot')) {
         const stored = localStorage.getItem('machineHotspot');
@@ -57,7 +57,7 @@ const MachineMint = () => {
 
   const [videoDev, setVideoDev] = useState(false);
   const [videoWindow, setVideoWindow] = useState(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && import.meta.env.DEV) {
       const params = new URLSearchParams(window.location.search);
       if (params.has('hotspotVideo')) {
         const stored = localStorage.getItem('machineVideoWindow');
@@ -74,7 +74,7 @@ const MachineMint = () => {
     return { ...DEFAULT_VIDEO_WINDOW } as { left: number; top: number; width: number; height: number };
   });
   const [videoPosX, setVideoPosX] = useState(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && import.meta.env.DEV) {
       const params = new URLSearchParams(window.location.search);
       if (params.has('hotspotVideo')) {
         try {
@@ -86,7 +86,7 @@ const MachineMint = () => {
     return 50;
   });
   const [videoPosY, setVideoPosY] = useState(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && import.meta.env.DEV) {
       const params = new URLSearchParams(window.location.search);
       if (params.has('hotspotVideo')) {
         try {
@@ -98,7 +98,7 @@ const MachineMint = () => {
     return 50;
   });
   const [videoZoom, setVideoZoom] = useState(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && import.meta.env.DEV) {
       const params = new URLSearchParams(window.location.search);
       if (params.has('hotspotVideo')) {
         try {
@@ -115,7 +115,7 @@ const MachineMint = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined' || !import.meta.env.DEV) return;
     const params = new URLSearchParams(window.location.search);
     setDevMode(params.has('hotspot'));
     setVideoDev(params.has('hotspotVideo'));
@@ -279,9 +279,11 @@ const MachineMint = () => {
               const img = e.currentTarget as HTMLImageElement;
               if (img.naturalWidth && img.naturalHeight) {
                 setDisplayRatio(img.naturalWidth / img.naturalHeight);
+              } else {
+                console.warn('Machine image loaded with zero natural size:', imgSrc);
               }
             }}
-            onError={() => setImgSrc('/machine.png')}
+            onError={() => console.warn('Machine image failed to load:', imgSrc)}
           />
 
           {/* Dev calibration click layer */}
