@@ -8,11 +8,12 @@ import { Button } from '@/components/ui/button';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { toast } from '@/components/ui/use-toast';
 import { MINT_CONFIG } from '@/config/mintConfig';
+import machineAsset from '@/assets/spare-parts-machine.png';
 
 // Artwork: replace this file with your uploaded machine image to update the UI
-const MACHINE_SRC = '/Minting%20Machine%20copy.png';
+const MACHINE_PUBLIC = '/Minting%20Machine%20copy.png';
 // Locked hotspot defaults (percent relative to image)
-const LOCKED_HOTSPOT = { left: 51, top: 75.5, size: 34 } as const;
+const LOCKED_HOTSPOT = { left: 86, top: 86, width: 30, height: 12 } as const;
 
 type Stage = 'idle' | 'minting' | 'success' | 'error';
 
@@ -23,9 +24,28 @@ const MachineMint = () => {
   const [minting, setMinting] = useState(false);
   const [displayRatio, setDisplayRatio] = useState(3 / 4);
   const [devMode, setDevMode] = useState(false);
+  const [imgSrc, setImgSrc] = useState<string>(MACHINE_PUBLIC);
   const [hotspot, setHotspot] = useState(() => {
-    if (typeof window !== 'undefined') { const params = new URLSearchParams(window.location.search); if (params.has('hotspot')) { const stored = localStorage.getItem('machineHotspot'); if (stored) return JSON.parse(stored); } }
-    return { ...LOCKED_HOTSPOT } as { left: number; top: number; size: number };
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('hotspot')) {
+        const stored = localStorage.getItem('machineHotspot');
+        if (stored) {
+          try {
+            const parsed = JSON.parse(stored);
+            if (parsed && typeof parsed === 'object') {
+              if ('size' in parsed) {
+                return { left: parsed.left, top: parsed.top, width: parsed.size, height: parsed.size };
+              }
+              if ('width' in parsed && 'height' in parsed) {
+                return parsed;
+              }
+            }
+          } catch {}
+        }
+      }
+    }
+    return { ...LOCKED_HOTSPOT } as { left: number; top: number; width: number; height: number };
   });
 
 
@@ -97,7 +117,7 @@ const MachineMint = () => {
       <div className="relative select-none">
         <AspectRatio ratio={displayRatio}>
           <img
-            src={MACHINE_SRC}
+            src={imgSrc}
             alt="Minting machine UI — user-provided artwork"
             className="absolute inset-0 h-full w-full object-contain pointer-events-none"
             loading="eager"
@@ -107,6 +127,7 @@ const MachineMint = () => {
                 setDisplayRatio(img.naturalWidth / img.naturalHeight);
               }
             }}
+            onError={() => setImgSrc(machineAsset)}
           />
 
           {/* Dev calibration click layer */}
@@ -135,8 +156,8 @@ const MachineMint = () => {
             style={{
               left: `${hotspot.left}%`,
               top: `${hotspot.top}%`,
-              width: `${hotspot.size}%`,
-              height: `${hotspot.size}%`,
+              width: `${hotspot.width}%`,
+              height: `${hotspot.height}%`,
               minWidth: '0px',
               minHeight: '0px',
             }}
@@ -177,7 +198,7 @@ const MachineMint = () => {
         {devMode && (
           <div className="mt-4 w-full max-w-md rounded-lg border bg-card/60 p-3 text-left">
             <p className="text-sm font-medium mb-2">Hotspot calibration</p>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-2 gap-3">
               <label className="text-xs">
                 Left
                 <input
@@ -203,19 +224,36 @@ const MachineMint = () => {
                 <span className="text-[10px] text-muted-foreground">{hotspot.top}%</span>
               </label>
               <label className="text-xs">
-                Size
+                Width
                 <input
                   type="range"
                   min={5}
-                  max={50}
-                  value={hotspot.size}
-                  onChange={(e) => setHotspot((h: any) => ({ ...h, size: Number(e.target.value) }))}
+                  max={60}
+                  value={(hotspot as any).width}
+                  onChange={(e) => setHotspot((h: any) => ({ ...h, width: Number(e.target.value) }))}
                   className="w-full"
                 />
-                <span className="text-[10px] text-muted-foreground">{hotspot.size}%</span>
+                <span className="text-[10px] text-muted-foreground">{(hotspot as any).width}%</span>
+              </label>
+              <label className="text-xs">
+                Height
+                <input
+                  type="range"
+                  min={5}
+                  max={30}
+                  value={(hotspot as any).height}
+                  onChange={(e) => setHotspot((h: any) => ({ ...h, height: Number(e.target.value) }))}
+                  className="w-full"
+                />
+                <span className="text-[10px] text-muted-foreground">{(hotspot as any).height}%</span>
               </label>
             </div>
-            <p className="mt-2 text-[10px] text-muted-foreground">Tip: append <code>?hotspot</code> to the URL. Settings auto-save.</p>
+            <div className="mt-3 flex items-center justify-between">
+              <p className="text-[10px] text-muted-foreground">Tip: append <code>?hotspot</code> to the URL. Settings auto-save.</p>
+              <Button size="sm" variant="secondary" onClick={() => {
+                try { navigator.clipboard.writeText(JSON.stringify(hotspot)); toast({ title: 'Hotspot JSON copied' }); } catch {}
+              }}>Copy JSON</Button>
+            </div>
           </div>
         )}
       </div>
