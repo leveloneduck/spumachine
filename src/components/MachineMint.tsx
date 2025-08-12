@@ -7,7 +7,7 @@ import { Copy, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { toast } from '@/components/ui/use-toast';
-import { MINT_CONFIG } from '@/config/mintConfig';
+import { MINT_CONFIG, getRpcEndpoint } from '@/config/mintConfig';
 import machineAsset from '@/assets/spare-parts-machine.png';
 
 // Artwork: replace this file with your uploaded machine image to update the UI
@@ -18,7 +18,7 @@ const LOCKED_HOTSPOT = { left: 47.212929223602664, top: 53.54015074572062, width
 type Stage = 'idle' | 'minting' | 'success' | 'error';
 
 const MachineMint = () => {
-  const { connected, publicKey } = useWallet();
+  const { connected, publicKey, wallet } = useWallet();
   const { setVisible } = useWalletModal();
   const [stage, setStage] = useState<Stage>('idle');
   const [minting, setMinting] = useState(false);
@@ -74,13 +74,45 @@ const MachineMint = () => {
       setStage('error');
       return;
     }
+    if (!(wallet as any)?.adapter) {
+      toast({ title: 'Wallet not ready', description: 'Open your wallet or reconnect.' });
+      setStage('error');
+      return;
+    }
 
     try {
       setMinting(true);
       setStage('minting');
-      // Simulated mint — replace with real Candy Machine mint flow
-      await new Promise((res) => setTimeout(res, 1500));
-      toast({ title: 'Mint simulated', description: 'Replace with real mint logic.' });
+
+      const [
+        { createUmi },
+        { publicKey, generateSigner },
+        { fetchCandyMachine, mintV2 },
+        { walletAdapterIdentity }
+      ] = await Promise.all([
+        import('@metaplex-foundation/umi-bundle-defaults'),
+        import('@metaplex-foundation/umi'),
+        import('@metaplex-foundation/mpl-candy-machine'),
+        import('@metaplex-foundation/umi-signer-wallet-adapters')
+      ]);
+
+      const endpoint = getRpcEndpoint();
+      const umi = createUmi(endpoint).use(walletAdapterIdentity((wallet as any).adapter));
+
+      const cm = await fetchCandyMachine(umi, publicKey(MINT_CONFIG.candyMachineId as string));
+      const nftMint = generateSigner(umi);
+
+      const group = MINT_CONFIG.guardGroupLabel;
+      const sig = await mintV2(umi, {
+        candyMachine: cm.publicKey,
+        nftMint,
+        collectionMint: (cm as any).collectionMint,
+        collectionUpdateAuthority: (cm as any).authority,
+        ...(group ? { group } : {}),
+        mintArgs: {}
+      }).sendAndConfirm(umi);
+
+      toast({ title: 'Mint successful', description: `NFT: ${nftMint.publicKey.toString()}\nTx: ${String(sig).slice(0, 8)}…` });
       setStage('success');
     } catch (e: any) {
       console.error(e);
@@ -90,7 +122,7 @@ const MachineMint = () => {
       setMinting(false);
       setTimeout(() => setStage('idle'), 1500);
     }
-  }, [connected]);
+  }, [connected, wallet]);
 
   const onCopy = useCallback(async () => {
     if (!MINT_CONFIG.candyMachineId) {
