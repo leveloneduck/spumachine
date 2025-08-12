@@ -279,15 +279,11 @@ const MachineMint = () => {
           >
             <div className="relative h-full w-full rounded-full overflow-hidden ring-2 ring-primary/50 shadow-[0_0_24px_hsl(var(--primary)/0.35)]">
               <img
-                src="/lovable-uploads/ad119d0a-cdfc-44cf-8cea-58b2b4ef5690.png"
+                src="/PRESS HERE.png"
                 alt={connected ? 'Press to mint' : 'Connect wallet to mint'}
                 className="h-full w-full object-fill select-none pointer-events-none"
                 draggable={false}
                 loading="lazy"
-                onError={(e) => {
-                  e.currentTarget.onerror = null;
-                  e.currentTarget.src = '/PRESS HERE.png';
-                }}
               />
               {minting && (
                 <div className="absolute inset-0 grid place-items-center bg-background/70">
