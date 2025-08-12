@@ -280,10 +280,8 @@ const MachineMint = () => {
       {/* Machine + hotspot */}
       <div className="relative select-none origin-top transition-transform duration-300 md:scale-[0.69] md:-translate-y-[3%] lg:-translate-y-[4%] 2xl:-translate-y-[5%]">
         <AspectRatio ratio={displayRatio}>
-          {/* Platform underlay (two-color split) */}
+          {/* Invisible anchor for platform position (no visual underlay) */}
           <div ref={platformRef} className="absolute inset-0 z-0 pointer-events-none">
-            <div className="absolute left-0 right-0 top-0 bg-background" style={{ height: `${platformY}%` }} />
-            <div className="absolute left-0 right-0 bottom-0 bg-muted" style={{ top: `${platformY}%` }} />
             {platformDev && (
               <div className="absolute left-0 right-0" style={{ top: `${platformY}%` }}>
                 <div className="h-px bg-primary/60" />
