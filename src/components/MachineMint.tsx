@@ -114,7 +114,7 @@ const MachineMint = () => {
   return (
     <div className="mx-auto w-full max-w-[780px]">
       {/* Machine + hotspot */}
-      <div className="relative select-none origin-top transition-transform duration-300 md:scale-[0.765] md:-translate-y-[6%] lg:-translate-y-[8%] 2xl:-translate-y-[10%]">
+      <div className="relative select-none origin-top transition-transform duration-300 md:scale-[0.69] md:-translate-y-[3%] lg:-translate-y-[4%] 2xl:-translate-y-[5%]">
         <AspectRatio ratio={displayRatio}>
           <img
             src={imgSrc}
