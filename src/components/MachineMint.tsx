@@ -19,6 +19,9 @@ const LOCKED_HOTSPOT = { left: 47.212929223602664, top: 53.54015074572062, width
 // Default video window (percent relative to image)
 const DEFAULT_VIDEO_WINDOW = { left: 37, top: 35, width: 25, height: 18 } as const;
 
+// Platform split (percent from top of machine area)
+const LOCKED_PLATFORM_Y = 62 as const;
+
 // Video sources (local, small clips)
 const VIDEO_SOURCES = ['/videos/spu-vid.MP4', '/videos/spu-vid1.MP4'] as const;
 
@@ -114,11 +117,29 @@ const MachineMint = () => {
   const [videoSrc, setVideoSrc] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
+  // Platform calibration state
+  const [platformDev, setPlatformDev] = useState(false);
+  const [platformY, setPlatformY] = useState<number>(() => {
+    if (typeof window !== 'undefined' && import.meta.env.DEV) {
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('platform')) {
+        const stored = localStorage.getItem('machinePlatformY');
+        if (stored) {
+          const n = Number(stored);
+          if (!Number.isNaN(n)) return Math.max(0, Math.min(100, n));
+        }
+      }
+    }
+    return LOCKED_PLATFORM_Y as number;
+  });
+  const platformRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (typeof window === 'undefined' || !import.meta.env.DEV) return;
     const params = new URLSearchParams(window.location.search);
     setDevMode(params.has('hotspot'));
     setVideoDev(params.has('hotspotVideo'));
+    setPlatformDev(params.has('platform'));
   }, []);
   useEffect(() => {
     // Pick a random video on mount
@@ -130,6 +151,11 @@ const MachineMint = () => {
     if (typeof window === 'undefined' || !devMode) return;
     try { localStorage.setItem('machineHotspot', JSON.stringify(hotspot)); } catch {}
   }, [hotspot, devMode]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || !platformDev) return;
+    try { localStorage.setItem('machinePlatformY', String(platformY)); } catch {}
+  }, [platformY, platformDev]);
 
   useEffect(() => {
     if (typeof window === 'undefined' || !videoDev) return;
@@ -228,10 +254,21 @@ const MachineMint = () => {
       {/* Machine + hotspot */}
       <div className="relative select-none origin-top transition-transform duration-300 md:scale-[0.69] md:-translate-y-[3%] lg:-translate-y-[4%] 2xl:-translate-y-[5%]">
         <AspectRatio ratio={displayRatio}>
+          {/* Platform underlay (two-color split) */}
+          <div ref={platformRef} className="absolute inset-0 z-0 pointer-events-none">
+            <div className="absolute left-0 right-0 top-0 bg-background" style={{ height: `${platformY}%` }} />
+            <div className="absolute left-0 right-0 bottom-0 bg-muted" style={{ top: `${platformY}%` }} />
+            {platformDev && (
+              <div className="absolute left-0 right-0" style={{ top: `${platformY}%` }}>
+                <div className="h-px bg-primary/60" />
+              </div>
+            )}
+          </div>
+
           {/* Random video layer behind the machine artwork */}
           {videoSrc && (
             <div
-              className={`absolute z-0 overflow-hidden pointer-events-none ${videoDev ? 'ring-2 ring-primary/60' : ''}`}
+              className={`absolute z-10 overflow-hidden pointer-events-none ${videoDev ? 'ring-2 ring-primary/60' : ''}`}
               style={{
                 left: `${videoWindow.left}%`,
                 top: `${videoWindow.top}%`,
@@ -273,7 +310,7 @@ const MachineMint = () => {
           <img
             src={imgSrc}
             alt="Minting machine UI — user-provided artwork"
-            className="absolute inset-0 z-10 h-full w-full object-contain pointer-events-none"
+            className="absolute inset-0 z-20 h-full w-full object-contain pointer-events-none"
             loading="eager"
             onLoad={(e) => {
               const img = e.currentTarget as HTMLImageElement;
@@ -284,6 +321,16 @@ const MachineMint = () => {
               }
             }}
             onError={() => console.warn('Machine image failed to load:', imgSrc)}
+          />
+
+          {/* Platform calibration click layer */}
+          <div
+            className={`absolute inset-0 ${platformDev ? 'z-30 cursor-row-resize' : 'pointer-events-none'}`}
+            onClick={platformDev ? (e) => {
+              const rect = (e.currentTarget as HTMLDivElement).getBoundingClientRect();
+              const top = ((e.clientY - rect.top) / rect.height) * 100;
+              setPlatformY(Math.max(0, Math.min(100, top)));
+            } : undefined}
           />
 
           {/* Dev calibration click layer */}
@@ -417,6 +464,33 @@ const MachineMint = () => {
               <Button size="sm" variant="secondary" onClick={() => {
                 try { navigator.clipboard.writeText(JSON.stringify(hotspot)); toast({ title: 'Hotspot JSON copied' }); } catch {}
               }}>Copy JSON</Button>
+            </div>
+          </div>
+        )}
+
+        {platformDev && (
+          <div className="mt-4 w-full max-w-md rounded-lg border bg-card/60 p-3 text-left">
+            <p className="text-sm font-medium mb-2">Platform split calibration</p>
+            <label className="text-xs block">
+              Y position
+              <input
+                type="range"
+                min={0}
+                max={100}
+                value={platformY}
+                onChange={(e) => setPlatformY(Number(e.target.value))}
+                className="w-full"
+              />
+              <span className="text-[10px] text-muted-foreground">{platformY}%</span>
+            </label>
+            <div className="mt-3 flex items-center justify-between">
+              <p className="text-[10px] text-muted-foreground">Tip: append <code>?platform</code> to the URL. Auto-saves.</p>
+              <div className="flex gap-2">
+                <Button size="sm" variant="secondary" onClick={() => {
+                  try { navigator.clipboard.writeText(String(platformY)); toast({ title: 'Platform Y copied' }); } catch {}
+                }}>Copy Y</Button>
+                <Button size="sm" variant="secondary" onClick={() => setPlatformY(LOCKED_PLATFORM_Y as number)}>Reset</Button>
+              </div>
             </div>
           </div>
         )}
