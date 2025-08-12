@@ -12,12 +12,12 @@ import machineAsset from '@/assets/spare-parts-machine.png';
 
 
 // Artwork: replace this file with your uploaded machine image to update the UI
-const MACHINE_PUBLIC = '/machine.png';
+const MACHINE_PUBLIC = machineAsset;
 // Locked hotspot defaults (percent relative to image)
 const LOCKED_HOTSPOT = { left: 47.212929223602664, top: 53.54015074572062, width: 6, height: 5 } as const;
 
 // Default video window (percent relative to image)
-const DEFAULT_VIDEO_WINDOW = { left: 52, top: 42, width: 22, height: 14 } as const;
+const DEFAULT_VIDEO_WINDOW = { left: 37, top: 35, width: 25, height: 18 } as const;
 
 // Video sources (local, small clips)
 const VIDEO_SOURCES = ['/spu-vid.MP4', '/spu-vid1.MP4'] as const;
@@ -95,6 +95,11 @@ const MachineMint = () => {
     if (typeof window === 'undefined' || !devMode) return;
     try { localStorage.setItem('machineHotspot', JSON.stringify(hotspot)); } catch {}
   }, [hotspot, devMode]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || !videoDev) return;
+    try { localStorage.setItem('machineVideoWindow', JSON.stringify(videoWindow)); } catch {}
+  }, [videoWindow, videoDev]);
 
 
   const startMint = useCallback(async () => {
@@ -196,7 +201,7 @@ const MachineMint = () => {
               <motion.video
                 ref={videoRef}
                 key={videoSrc}
-                className="h-full w-full object-contain"
+                className="h-full w-full object-cover"
                 src={videoSrc}
                 autoPlay
                 muted={muted}
@@ -371,6 +376,68 @@ const MachineMint = () => {
               <p className="text-[10px] text-muted-foreground">Tip: append <code>?hotspot</code> to the URL. Settings auto-save.</p>
               <Button size="sm" variant="secondary" onClick={() => {
                 try { navigator.clipboard.writeText(JSON.stringify(hotspot)); toast({ title: 'Hotspot JSON copied' }); } catch {}
+              }}>Copy JSON</Button>
+            </div>
+          </div>
+        )}
+
+        {videoDev && (
+          <div className="mt-4 w-full max-w-md rounded-lg border bg-card/60 p-3 text-left">
+            <p className="text-sm font-medium mb-2">Video window calibration</p>
+            <div className="grid grid-cols-2 gap-3">
+              <label className="text-xs">
+                Left
+                <input
+                  type="range"
+                  min={0}
+                  max={100}
+                  value={videoWindow.left}
+                  onChange={(e) => setVideoWindow((v) => ({ ...v, left: Number(e.target.value) }))}
+                  className="w-full"
+                />
+                <span className="text-[10px] text-muted-foreground">{videoWindow.left}%</span>
+              </label>
+              <label className="text-xs">
+                Top
+                <input
+                  type="range"
+                  min={0}
+                  max={100}
+                  value={videoWindow.top}
+                  onChange={(e) => setVideoWindow((v) => ({ ...v, top: Number(e.target.value) }))}
+                  className="w-full"
+                />
+                <span className="text-[10px] text-muted-foreground">{videoWindow.top}%</span>
+              </label>
+              <label className="text-xs">
+                Width
+                <input
+                  type="range"
+                  min={5}
+                  max={60}
+                  value={videoWindow.width}
+                  onChange={(e) => setVideoWindow((v) => ({ ...v, width: Number(e.target.value) }))}
+                  className="w-full"
+                />
+                <span className="text-[10px] text-muted-foreground">{videoWindow.width}%</span>
+              </label>
+              <label className="text-xs">
+                Height
+                <input
+                  type="range"
+                  min={5}
+                  max={60}
+                  value={videoWindow.height}
+                  onChange={(e) => setVideoWindow((v) => ({ ...v, height: Number(e.target.value) }))}
+                  className="w-full"
+                />
+                <span className="text-[10px] text-muted-foreground">{videoWindow.height}%</span>
+              </label>
+            </div>
+            <div className="mt-3 flex items-center justify-between">
+              <p className="text-[10px] text-muted-foreground">Tip: append <code>?hotspotVideo</code> to the URL. Settings auto-save.</p>
+              <Button size="sm" variant="secondary" onClick={() => {
+                try { navigator.clipboard.writeText(JSON.stringify(videoWindow)); toast({ title: 'Video window JSON copied' }); } catch {}
               }}>Copy JSON</Button>
             </div>
           </div>
