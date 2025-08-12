@@ -12,7 +12,7 @@ const Hero = () => {
     // Fixed two-color split for platform look with optional URL override (?split=NUMBER)
     const params = new URLSearchParams(window.location.search);
     const splitParam = params.get('split');
-    const splitPx = splitParam && /^\d+$/.test(splitParam) ? `${splitParam}px` : '540px';
+    const splitPx = splitParam && /^\d+$/.test(splitParam) ? `${splitParam}px` : '560px';
     el.style.setProperty('--hero-split', splitPx);
     el.style.setProperty('--hero-top', 'hsl(var(--background))'); // light/white
     el.style.setProperty('--hero-bottom', 'hsl(var(--muted))'); // dark
@@ -32,7 +32,7 @@ const Hero = () => {
       {/* Glow */}
       <div className="absolute -z-10 left-1/2 top-1/3 h-[60vw] w-[60vw] max-h-[700px] max-w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-3xl" />
 
-      <div className="container mx-auto pt-6 md:pt-8 pb-16 md:pb-20">
+      <div className="container mx-auto pt-6 md:pt-8 pb-8 md:pb-10">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
