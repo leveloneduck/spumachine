@@ -36,24 +36,88 @@ const PageFrame: React.FC<PageFrameProps> = ({
   const finalSlice = params?.get("frameSlice") ? Number(params.get("frameSlice")) : slice;
   const finalSize = params?.get("frameSize") || size;
   const finalRepeat = (params?.get("frameRepeat") as "stretch" | "round" | "repeat") || repeat;
+  const mode = (params?.get("frameMode") as "image" | "strips") || "image";
+  const thickness = params?.get("frameThickness") || finalSize;
+  const rotateSides = params?.get("frameRotateSides") === "true";
 
   return (
-    <div
-      aria-hidden
-      className="pointer-events-none fixed inset-0 z-[9999]"
-      style={{
-        boxSizing: "border-box",
-        // Draw a frame using the provided image
-        borderStyle: "solid",
-        borderWidth: finalSize,
-        borderColor: "transparent", // Hide solid border if image fails to load
-        borderImageSource: `url("${finalSrc}")`,
-        borderImageSlice: finalSlice,
-        borderImageWidth: 1,
-        borderImageOutset: 0,
-        borderImageRepeat: finalRepeat,
-      }}
-    />
+    mode === "image" ? (
+      <div
+        aria-hidden
+        className="pointer-events-none fixed inset-0 z-[9999]"
+        style={{
+          boxSizing: "border-box",
+          // Draw a frame using the provided image
+          borderStyle: "solid",
+          borderWidth: finalSize,
+          borderColor: "transparent", // Hide solid border if image fails to load
+          borderImageSource: `url("${finalSrc}")`,
+          borderImageSlice: finalSlice,
+          borderImageWidth: 1,
+          borderImageOutset: 0,
+          borderImageRepeat: finalRepeat,
+        }}
+      />
+    ) : (
+      <div aria-hidden className="pointer-events-none fixed inset-0 z-[9999]">
+        <div style={{ position: "absolute", inset: 0 }}>
+          {/* Top strip */}
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              height: thickness,
+              backgroundImage: `url("${finalSrc}")`,
+              backgroundRepeat: "repeat-x",
+              backgroundSize: "auto 100%",
+            }}
+          />
+          {/* Bottom strip */}
+          <div
+            style={{
+              position: "absolute",
+              bottom: 0,
+              left: 0,
+              right: 0,
+              height: thickness,
+              backgroundImage: `url("${finalSrc}")`,
+              backgroundRepeat: "repeat-x",
+              backgroundSize: "auto 100%",
+              transform: "scaleY(-1)",
+            }}
+          />
+          {/* Left strip */}
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              bottom: 0,
+              left: 0,
+              width: thickness,
+              backgroundImage: `url("${finalSrc}")`,
+              backgroundRepeat: "repeat-y",
+              backgroundSize: rotateSides ? "auto 100%" : "100% auto",
+            }}
+          />
+          {/* Right strip */}
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              bottom: 0,
+              right: 0,
+              width: thickness,
+              backgroundImage: `url("${finalSrc}")`,
+              backgroundRepeat: "repeat-y",
+              backgroundSize: rotateSides ? "auto 100%" : "100% auto",
+              transform: "scaleX(-1)",
+            }}
+          />
+        </div>
+      </div>
+    )
   );
 };
 
