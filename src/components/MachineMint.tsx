@@ -8,11 +8,11 @@ import { Button } from '@/components/ui/button';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { toast } from '@/components/ui/use-toast';
 import { MINT_CONFIG, getRpcEndpoint } from '@/config/mintConfig';
-import machineAsset from '@/assets/spare-parts-machine.png';
+
 
 
 // Artwork: replace this file with your uploaded machine image to update the UI
-const MACHINE_PUBLIC = machineAsset;
+const MACHINE_PUBLIC = '/machine.png';
 // Locked hotspot defaults (percent relative to image)
 const LOCKED_HOTSPOT = { left: 47.212929223602664, top: 53.54015074572062, width: 6, height: 5 } as const;
 
@@ -20,7 +20,7 @@ const LOCKED_HOTSPOT = { left: 47.212929223602664, top: 53.54015074572062, width
 const DEFAULT_VIDEO_WINDOW = { left: 37, top: 35, width: 25, height: 18 } as const;
 
 // Video sources (local, small clips)
-const VIDEO_SOURCES = ['/spu-vid.MP4', '/spu-vid1.MP4'] as const;
+const VIDEO_SOURCES = ['/videos/spu-vid.MP4', '/videos/spu-vid1.MP4'] as const;
 
 type Stage = 'idle' | 'minting' | 'success' | 'error';
 
@@ -73,11 +73,46 @@ const MachineMint = () => {
     }
     return { ...DEFAULT_VIDEO_WINDOW } as { left: number; top: number; width: number; height: number };
   });
+  const [videoPosX, setVideoPosX] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('hotspotVideo')) {
+        try {
+          const stored = localStorage.getItem('machineVideoStyle');
+          if (stored) { const s = JSON.parse(stored); if (typeof s?.posX === 'number') return s.posX; }
+        } catch {}
+      }
+    }
+    return 50;
+  });
+  const [videoPosY, setVideoPosY] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('hotspotVideo')) {
+        try {
+          const stored = localStorage.getItem('machineVideoStyle');
+          if (stored) { const s = JSON.parse(stored); if (typeof s?.posY === 'number') return s.posY; }
+        } catch {}
+      }
+    }
+    return 50;
+  });
+  const [videoZoom, setVideoZoom] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('hotspotVideo')) {
+        try {
+          const stored = localStorage.getItem('machineVideoStyle');
+          if (stored) { const s = JSON.parse(stored); if (typeof s?.zoom === 'number') return s.zoom; }
+        } catch {}
+      }
+    }
+    return 1.04;
+  });
 
   const [muted, setMuted] = useState(true);
   const [videoSrc, setVideoSrc] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -101,6 +136,12 @@ const MachineMint = () => {
     try { localStorage.setItem('machineVideoWindow', JSON.stringify(videoWindow)); } catch {}
   }, [videoWindow, videoDev]);
 
+  useEffect(() => {
+    if (typeof window === 'undefined' || !videoDev) return;
+    try {
+      localStorage.setItem('machineVideoStyle', JSON.stringify({ posX: videoPosX, posY: videoPosY, zoom: videoZoom }));
+    } catch {}
+  }, [videoDev, videoPosX, videoPosY, videoZoom]);
 
   const startMint = useCallback(async () => {
     if (!connected) {
@@ -202,6 +243,7 @@ const MachineMint = () => {
                 ref={videoRef}
                 key={videoSrc}
                 className="h-full w-full object-cover"
+                style={{ objectPosition: `${videoPosX}% ${videoPosY}%`, transform: `scale(${videoZoom})`, transformOrigin: 'center' }}
                 src={videoSrc}
                 autoPlay
                 muted={muted}
@@ -239,7 +281,7 @@ const MachineMint = () => {
                 setDisplayRatio(img.naturalWidth / img.naturalHeight);
               }
             }}
-            onError={() => setImgSrc(machineAsset)}
+            onError={() => setImgSrc('/machine.png')}
           />
 
           {/* Dev calibration click layer */}
@@ -428,6 +470,46 @@ const MachineMint = () => {
                   className="w-full"
                 />
                 <span className="text-[10px] text-muted-foreground">{videoWindow.height}%</span>
+              </label>
+            </div>
+            <div className="mt-3 grid grid-cols-2 gap-3">
+              <p className="col-span-2 text-xs font-medium">Video fit</p>
+              <label className="text-xs">
+                X
+                <input
+                  type="range"
+                  min={0}
+                  max={100}
+                  value={videoPosX}
+                  onChange={(e) => setVideoPosX(Number(e.target.value))}
+                  className="w-full"
+                />
+                <span className="text-[10px] text-muted-foreground">{videoPosX}%</span>
+              </label>
+              <label className="text-xs">
+                Y
+                <input
+                  type="range"
+                  min={0}
+                  max={100}
+                  value={videoPosY}
+                  onChange={(e) => setVideoPosY(Number(e.target.value))}
+                  className="w-full"
+                />
+                <span className="text-[10px] text-muted-foreground">{videoPosY}%</span>
+              </label>
+              <label className="text-xs col-span-2">
+                Zoom
+                <input
+                  type="range"
+                  min={1}
+                  max={1.2}
+                  step={0.005}
+                  value={videoZoom}
+                  onChange={(e) => setVideoZoom(Number(e.target.value))}
+                  className="w-full"
+                />
+                <span className="text-[10px] text-muted-foreground">{videoZoom.toFixed(3)}x</span>
               </label>
             </div>
             <div className="mt-3 flex items-center justify-between">
