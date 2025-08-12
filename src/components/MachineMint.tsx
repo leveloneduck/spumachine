@@ -10,7 +10,7 @@ import { toast } from '@/components/ui/use-toast';
 import { MINT_CONFIG } from '@/config/mintConfig';
 
 // Artwork: replace this file with your uploaded machine image to update the UI
-import machineImg from '@/assets/spare-parts-machine.png';
+const MACHINE_SRC = '/Minting%20Machine%20copy.png';
 import pressImg from '@/assets/press-here.png';
 
 type Stage = 'idle' | 'minting' | 'success' | 'error';
@@ -75,8 +75,8 @@ const MachineMint = () => {
       <div className="relative select-none">
         <AspectRatio ratio={3 / 4}>
           <img
-            src={machineImg}
-            alt="Retro gumball mint machine UI"
+            src={MACHINE_SRC}
+            alt="Minting machine UI — user-provided artwork"
             className="absolute inset-0 h-full w-full object-contain pointer-events-none"
             loading="eager"
           />
