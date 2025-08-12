@@ -7,12 +7,14 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import { SolanaWalletProvider } from "./solana/WalletProvider";
 import { Toaster as HotToaster } from "react-hot-toast";
+import PageFrame from "@/components/PageFrame";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
+      <PageFrame />
       <HotToaster position="top-right" />
       <Toaster />
       <Sonner />
