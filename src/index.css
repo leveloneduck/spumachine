@@ -154,4 +154,7 @@
   .story-link:hover::after { transform: scaleX(1); transform-origin: bottom left; }
 
   .glow-border { box-shadow: 0 0 0 1px hsl(var(--primary) / 0.3), 0 0 30px hsl(var(--primary-glow) / 0.25); }
+
+  /* Safe-area utility for iOS notch to avoid phantom top gap */
+  .pt-safe { padding-top: env(safe-area-inset-top); }
 }
