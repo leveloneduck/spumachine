@@ -109,13 +109,24 @@ const MachineMint = () => {
             }}
           />
 
+          {/* Dev calibration click layer */}
+          <div
+            className={`absolute inset-0 ${devMode ? 'z-20 cursor-crosshair' : 'pointer-events-none'}`}
+            onClick={devMode ? (e) => {
+              const rect = (e.currentTarget as HTMLDivElement).getBoundingClientRect();
+              const left = ((e.clientX - rect.left) / rect.width) * 100;
+              const top = ((e.clientY - rect.top) / rect.height) * 100;
+              setHotspot((h: any) => ({ ...h, left: Math.max(0, Math.min(100, left)), top: Math.max(0, Math.min(100, top)) }));
+            } : undefined}
+          />
+
           {/* Hotspot overlay */}
           <motion.button
             type="button"
             aria-label={connected ? 'Press to mint' : 'Connect wallet to mint'}
-            onClick={onPress}
+            onClick={!devMode ? onPress : undefined}
             onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
+              if (!devMode && (e.key === 'Enter' || e.key === ' ')) {
                 e.preventDefault();
                 onPress();
               }
@@ -124,10 +135,12 @@ const MachineMint = () => {
             style={{
               left: `${hotspot.left}%`,
               top: `${hotspot.top}%`,
-              width: `clamp(56px, ${hotspot.size}%, 128px)`,
-              height: `clamp(56px, ${hotspot.size}%, 128px)`,
+              width: `${hotspot.size}%`,
+              height: `${hotspot.size}%`,
+              minWidth: '56px',
+              minHeight: '56px',
             }}
-animate={stage === 'idle' ? { scale: [1, 1.06, 1], transition: { duration: 1.8, repeat: Infinity, ease: 'easeInOut' } } : undefined}
+            animate={stage === 'idle' ? { scale: [1, 1.06, 1], transition: { duration: 1.8, repeat: Infinity, ease: 'easeInOut' } } : undefined}
             whileTap={{ scale: 0.96 }}
           >
             <div className="relative h-full w-full rounded-full">
