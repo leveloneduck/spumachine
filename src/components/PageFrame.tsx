@@ -36,9 +36,9 @@ const PageFrame: React.FC<PageFrameProps> = ({
   const finalSlice = params?.get("frameSlice") ? Number(params.get("frameSlice")) : slice;
   const finalSize = params?.get("frameSize") || size;
   const finalRepeat = (params?.get("frameRepeat") as "stretch" | "round" | "repeat") || repeat;
-  const mode = (params?.get("frameMode") as "image" | "strips") || "image";
-  const thickness = params?.get("frameThickness") || finalSize;
-  const rotateSides = params?.get("frameRotateSides") === "true";
+  const mode = (params?.get("frameMode") as "image" | "strips") || "strips";
+  const thickness = params?.get("frameThickness") || "clamp(28px, 5vw, 120px)";
+  const rotateSides = params?.get("frameRotateSides") ? params.get("frameRotateSides") === "true" : true;
 
   return (
     mode === "image" ? (
