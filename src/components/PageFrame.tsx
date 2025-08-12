@@ -24,19 +24,18 @@ interface PageFrameProps {
  * This sits above the app UI but does not intercept pointer events.
  */
 const PageFrame: React.FC<PageFrameProps> = ({
-  // Default to an existing public asset so you can immediately see the frame.
-  // Replace with your border file (e.g., "/border-frame.png") or use ?frameSrc=/your-file.png
+  // Default to a single-image frame. Swap with your asset in /public or via ?frameSrc=/your-file.png
   src = "/PRESS HERE.png",
   slice = 256,
-  size = "clamp(12px, 3vw, 48px)",
-  repeat = "round",
+  size = "clamp(24px, 4vw, 96px)",
+  repeat = "stretch",
 }) => {
   const params = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : undefined;
   const finalSrc = (params?.get("frameSrc") || src).toString();
   const finalSlice = params?.get("frameSlice") ? Number(params.get("frameSlice")) : slice;
   const finalSize = params?.get("frameSize") || size;
   const finalRepeat = (params?.get("frameRepeat") as "stretch" | "round" | "repeat") || repeat;
-  const mode = (params?.get("frameMode") as "image" | "strips") || "strips";
+  const mode = (params?.get("frameMode") as "image" | "strips") || "image";
   const thickness = params?.get("frameThickness") || "clamp(28px, 5vw, 120px)";
   const rotateSides = params?.get("frameRotateSides") ? params.get("frameRotateSides") === "true" : true;
 
