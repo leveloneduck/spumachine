@@ -141,7 +141,7 @@ const [platformOffsetPx] = useState<number>(() => {
       if (!Number.isNaN(n)) return n;
     }
   }
-  return 15; // default 15px upward offset
+  return 0; // default 0px offset; use percent by default
 });
 const [platformOffsetPct] = useState<number>(() => {
   if (typeof window !== 'undefined') {
@@ -152,7 +152,7 @@ const [platformOffsetPct] = useState<number>(() => {
       if (!Number.isNaN(n)) return n;
     }
   }
-  return 0; // default 0%
+  return 15; // default 15% upward offset
 });
 const platformRef = useRef<HTMLDivElement>(null);
 
