@@ -10,8 +10,9 @@ import { toast } from '@/components/ui/use-toast';
 import { MINT_CONFIG } from '@/config/mintConfig';
 
 // Artwork: replace this file with your uploaded machine image to update the UI
-const MACHINE_SRC = '/Minting%20Machine%20copy.png';
-import pressImg from '@/assets/press-here.png';
+const MACHINE_SRC = '/Minting%20Machine%20copy.png'; const PRESS_SRC = '/PRESS%20HERE.png';
+// Locked hotspot defaults (percent relative to image)
+const LOCKED_HOTSPOT = { left: 49, top: 64, size: 18 } as const;
 
 type Stage = 'idle' | 'minting' | 'success' | 'error';
 
@@ -23,12 +24,12 @@ const MachineMint = () => {
   const [displayRatio, setDisplayRatio] = useState(3 / 4);
   const [devMode, setDevMode] = useState(false);
   const [hotspot, setHotspot] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem('machineHotspot');
-      if (stored) return JSON.parse(stored);
-    }
-    return { left: 50, top: 46, size: 18 } as { left: number; top: number; size: number };
+    if (typeof window !== 'undefined') { const params = new URLSearchParams(window.location.search); if (params.has('hotspot')) { const stored = localStorage.getItem('machineHotspot'); if (stored) return JSON.parse(stored); } }
+    return { ...LOCKED_HOTSPOT } as { left: number; top: number; size: number };
   });
+
+
+
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -37,11 +38,11 @@ const MachineMint = () => {
   }, []);
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-    try {
-      localStorage.setItem('machineHotspot', JSON.stringify(hotspot));
-    } catch {}
-  }, [hotspot]);
+    if (typeof window === 'undefined' || !devMode) return;
+    try { localStorage.setItem('machineHotspot', JSON.stringify(hotspot)); } catch {}
+  }, [hotspot, devMode]);
+
+
   const startMint = useCallback(async () => {
     if (!connected) {
       toast({ title: 'Connect your wallet first' });
@@ -119,7 +120,7 @@ const MachineMint = () => {
                 onPress();
               }
             }}
-            className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
+            className="absolute z-10 -translate-x-1/2 -translate-y-1/2 rounded-full outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
             style={{
               left: `${hotspot.left}%`,
               top: `${hotspot.top}%`,
@@ -130,7 +131,7 @@ animate={stage === 'idle' ? { scale: [1, 1.06, 1], transition: { duration: 1.8, 
             whileTap={{ scale: 0.96 }}
           >
             <div className="relative h-full w-full rounded-full">
-              <img src={pressImg} alt="" className="h-full w-full object-contain" draggable={false} />
+              <img src={PRESS_SRC} alt="Press Here mint button overlay" className="h-full w-full object-contain" draggable={false} />
               {minting && (
                 <div className="absolute inset-0 grid place-items-center rounded-full bg-background/70">
                   <Loader2 className="h-6 w-6 animate-spin" />
