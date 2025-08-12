@@ -4,12 +4,12 @@ import MintPanel from '@/components/MintPanel';
 
 const Hero = () => {
   return (
-      <section className="relative isolate overflow-hidden min-h-[100svh]">
-        <div className="absolute inset-0 z-0">
-          <img src={heroImage} alt="Cyberpunk neon cityscape hero for 404 NFT mint" loading="eager" className="absolute inset-0 w-full h-full object-cover object-center opacity-60" />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/70 pointer-events-none" />
-        </div>
-        <div className="container mx-auto pt-safe pb-24 md:pb-32">
+      <section
+        className="relative isolate overflow-hidden min-h-[100svh] bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${heroImage})` }}
+      >
+        <div className="absolute inset-0 z-0 bg-gradient-to-b from-transparent via-transparent to-background/70 pointer-events-none" />
+        <div className="container mx-auto pb-24 md:pb-32">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
