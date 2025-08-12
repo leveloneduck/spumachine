@@ -10,11 +10,18 @@ const Hero = () => {
       const el = sectionRef.current;
       if (!el) return;
       const detail = e?.detail || {};
-      el.style.setProperty('--hero-split', `${detail.pixelY ?? 0}px`);
-      el.style.setProperty('--hero-top', detail.colors?.top ?? 'hsl(var(--background))');
-      el.style.setProperty('--hero-bottom', detail.colors?.bottom ?? 'hsl(var(--muted))');
+      const heroTop = el.getBoundingClientRect().top || 0;
+      const split = Math.max(0, (detail.pixelY ?? 0) - heroTop);
+      el.style.setProperty('--hero-split', `${split}px`);
+      const top = detail.colors?.top ?? 'hsl(var(--background))';
+      const bottom = detail.colors?.bottom ?? 'hsl(var(--muted))';
+      el.style.setProperty('--hero-top', top);
+      el.style.setProperty('--hero-bottom', bottom);
+      document.documentElement.style.setProperty('--page-after-bg', bottom);
     };
     window.addEventListener('machine-platform', handler as any);
+    // Initialize page background to match hero bottom by default
+    document.documentElement.style.setProperty('--page-after-bg', 'hsl(var(--muted))');
     return () => window.removeEventListener('machine-platform', handler as any);
   }, []);
 

@@ -134,6 +134,22 @@ const MachineMint = () => {
   });
   const platformRef = useRef<HTMLDivElement>(null);
 
+  // Sync platform split with Hero background
+  const syncPlatform = useCallback(() => {
+    const el = platformRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const pixelY = rect.top + (rect.height * platformY) / 100;
+    window.dispatchEvent(
+      new CustomEvent('machine-platform', {
+        detail: {
+          pixelY,
+          colors: { top: 'hsl(var(--background))', bottom: 'hsl(var(--muted))' },
+        },
+      })
+    );
+  }, [platformY]);
+
   useEffect(() => {
     if (typeof window === 'undefined' || !import.meta.env.DEV) return;
     const params = new URLSearchParams(window.location.search);
@@ -141,6 +157,16 @@ const MachineMint = () => {
     setVideoDev(params.has('hotspotVideo'));
     setPlatformDev(params.has('platform'));
   }, []);
+
+  useEffect(() => {
+    syncPlatform();
+  }, [syncPlatform, displayRatio]);
+
+  useEffect(() => {
+    const onResize = () => syncPlatform();
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, [syncPlatform]);
   useEffect(() => {
     // Pick a random video on mount
     const index = Math.floor(Math.random() * VIDEO_SOURCES.length);
