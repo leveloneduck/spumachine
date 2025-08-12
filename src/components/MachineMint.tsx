@@ -132,23 +132,47 @@ const MachineMint = () => {
     }
     return LOCKED_PLATFORM_Y as number;
   });
-  const platformRef = useRef<HTMLDivElement>(null);
+const [platformOffsetPx] = useState<number>(() => {
+  if (typeof window !== 'undefined') {
+    const params = new URLSearchParams(window.location.search);
+    const pox = params.get('pox'); // dev override: pixels
+    if (pox !== null) {
+      const n = Number(pox);
+      if (!Number.isNaN(n)) return n;
+    }
+  }
+  return 15; // default 15px upward offset
+});
+const [platformOffsetPct] = useState<number>(() => {
+  if (typeof window !== 'undefined') {
+    const params = new URLSearchParams(window.location.search);
+    const po = params.get('po'); // dev override: percent
+    if (po !== null) {
+      const n = Number(po);
+      if (!Number.isNaN(n)) return n;
+    }
+  }
+  return 0; // default 0%
+});
+const platformRef = useRef<HTMLDivElement>(null);
 
-  // Sync platform split with Hero background
-  const syncPlatform = useCallback(() => {
-    const el = platformRef.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const pixelY = rect.top + (rect.height * platformY) / 100;
-    window.dispatchEvent(
-      new CustomEvent('machine-platform', {
-        detail: {
-          pixelY,
-          colors: { top: 'hsl(var(--background))', bottom: 'hsl(var(--muted))' },
-        },
-      })
-    );
-  }, [platformY]);
+// Sync platform split with Hero background
+const syncPlatform = useCallback(() => {
+  const el = platformRef.current;
+  if (!el) return;
+  const rect = el.getBoundingClientRect();
+  const basePixelY = rect.top + (rect.height * platformY) / 100;
+  const offset = platformOffsetPx + (rect.height * platformOffsetPct) / 100;
+  const pixelY = basePixelY - offset; // move split slightly above the base
+  window.dispatchEvent(
+    new CustomEvent('machine-platform', {
+      detail: {
+        pixelY,
+        colors: { top: 'hsl(var(--background))', bottom: 'hsl(var(--muted))' },
+      },
+    })
+  );
+}, [platformY, platformOffsetPx, platformOffsetPct]);
 
   useEffect(() => {
     if (typeof window === 'undefined' || !import.meta.env.DEV) return;
