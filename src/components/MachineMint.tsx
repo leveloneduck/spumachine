@@ -10,9 +10,9 @@ import { toast } from '@/components/ui/use-toast';
 import { MINT_CONFIG } from '@/config/mintConfig';
 
 // Artwork: replace this file with your uploaded machine image to update the UI
-const MACHINE_SRC = '/Minting%20Machine%20copy.png'; const PRESS_SRC = '/PRESS%20HERE.png';
+const MACHINE_SRC = '/Minting%20Machine%20copy.png';
 // Locked hotspot defaults (percent relative to image)
-const LOCKED_HOTSPOT = { left: 49, top: 64, size: 24 } as const;
+const LOCKED_HOTSPOT = { left: 51, top: 75.5, size: 34 } as const;
 
 type Stage = 'idle' | 'minting' | 'success' | 'error';
 
@@ -120,7 +120,7 @@ const MachineMint = () => {
             } : undefined}
           />
 
-          {/* Hotspot overlay */}
+          {/* Hotspot overlay (invisible in production, visible in ?hotspot mode) */}
           <motion.button
             type="button"
             aria-label={connected ? 'Press to mint' : 'Connect wallet to mint'}
@@ -131,25 +131,25 @@ const MachineMint = () => {
                 onPress();
               }
             }}
-            className="absolute z-30 -translate-x-1/2 -translate-y-1/2 rounded-full outline-none pointer-events-auto focus-visible:ring-2 focus-visible:ring-primary/70 ring-1 ring-primary/40"
+            className={`absolute z-50 -translate-x-1/2 -translate-y-1/2 rounded-full outline-none pointer-events-auto focus-visible:ring-2 focus-visible:ring-primary/70 ${devMode ? 'ring-2 ring-primary/60 bg-primary/10' : 'ring-0'}`}
             style={{
               left: `${hotspot.left}%`,
               top: `${hotspot.top}%`,
               width: `${hotspot.size}%`,
               height: `${hotspot.size}%`,
-              minWidth: '96px',
-              minHeight: '96px',
+              minWidth: '0px',
+              minHeight: '0px',
             }}
             animate={stage === 'idle' ? { scale: [1, 1.06, 1], transition: { duration: 1.8, repeat: Infinity, ease: 'easeInOut' } } : undefined}
             whileTap={{ scale: 0.96 }}
           >
             <div className="relative h-full w-full rounded-full">
-              <img src={PRESS_SRC} alt="Press Here mint button overlay" className="h-full w-full object-contain drop-shadow-lg select-none pointer-events-none" draggable={false} />
               {minting && (
                 <div className="absolute inset-0 grid place-items-center rounded-full bg-background/70">
                   <Loader2 className="h-6 w-6 animate-spin" />
                 </div>
               )}
+              <span className="sr-only">{connected ? 'Press to mint' : 'Connect wallet to mint'}</span>
             </div>
           </motion.button>
         </AspectRatio>
