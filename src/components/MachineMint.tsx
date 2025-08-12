@@ -9,7 +9,7 @@ import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { toast } from '@/components/ui/use-toast';
 import { MINT_CONFIG, getRpcEndpoint } from '@/config/mintConfig';
 import machineAsset from '@/assets/spare-parts-machine.png';
-import pressHere from '@/assets/press-here.png';
+
 
 // Artwork: replace this file with your uploaded machine image to update the UI
 const MACHINE_PUBLIC = '/machine.png';
@@ -185,7 +185,7 @@ const MachineMint = () => {
                 onPress();
               }
             }}
-            className={`absolute z-50 -translate-x-1/2 -translate-y-1/2 outline-none pointer-events-auto focus-visible:ring-2 focus-visible:ring-primary/70 ${devMode ? 'ring-2 ring-primary/60' : 'ring-0'} transition-transform`}
+            className={`absolute z-50 -translate-x-1/2 -translate-y-1/2 outline-none pointer-events-auto focus-visible:ring-2 focus-visible:ring-primary/70 ${devMode ? 'ring-2 ring-primary/60' : 'ring-0'} transition-transform rounded-full overflow-hidden`}
             style={{
               left: `${hotspot.left}%`,
               top: `${hotspot.top}%`,
@@ -198,8 +198,8 @@ const MachineMint = () => {
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.96 }}
           >
-            <div className="relative h-full w-full">
-              <img src={pressHere} alt={connected ? 'Press to mint' : 'Connect wallet to mint'} className="h-full w-full object-fill select-none pointer-events-none" draggable={false} />
+            <div className="relative h-full w-full rounded-full overflow-hidden">
+              <img src="/PRESS HERE.png" alt={connected ? 'Press to mint' : 'Connect wallet to mint'} className="h-full w-full object-fill select-none pointer-events-none" draggable={false} />
               {minting && (
                 <div className="absolute inset-0 grid place-items-center bg-background/70">
                   <Loader2 className="h-6 w-6 animate-spin" />
