@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useWalletModal } from '@solana/wallet-adapter-react-ui';
 import { motion } from 'framer-motion';
@@ -20,7 +20,28 @@ const MachineMint = () => {
   const { setVisible } = useWalletModal();
   const [stage, setStage] = useState<Stage>('idle');
   const [minting, setMinting] = useState(false);
+  const [displayRatio, setDisplayRatio] = useState(3 / 4);
+  const [devMode, setDevMode] = useState(false);
+  const [hotspot, setHotspot] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('machineHotspot');
+      if (stored) return JSON.parse(stored);
+    }
+    return { left: 50, top: 46, size: 18 } as { left: number; top: number; size: number };
+  });
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+    setDevMode(params.has('hotspot'));
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      localStorage.setItem('machineHotspot', JSON.stringify(hotspot));
+    } catch {}
+  }, [hotspot]);
   const startMint = useCallback(async () => {
     if (!connected) {
       toast({ title: 'Connect your wallet first' });
@@ -73,12 +94,18 @@ const MachineMint = () => {
     <div className="mx-auto w-full max-w-[780px]">
       {/* Machine + hotspot */}
       <div className="relative select-none">
-        <AspectRatio ratio={3 / 4}>
+        <AspectRatio ratio={displayRatio}>
           <img
             src={MACHINE_SRC}
             alt="Minting machine UI — user-provided artwork"
             className="absolute inset-0 h-full w-full object-contain pointer-events-none"
             loading="eager"
+            onLoad={(e) => {
+              const img = e.currentTarget as HTMLImageElement;
+              if (img.naturalWidth && img.naturalHeight) {
+                setDisplayRatio(img.naturalWidth / img.naturalHeight);
+              }
+            }}
           />
 
           {/* Hotspot overlay */}
@@ -94,10 +121,10 @@ const MachineMint = () => {
             }}
             className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
             style={{
-              left: '50%',
-              top: '46%',
-              width: 'clamp(56px, 18%, 128px)',
-              height: 'clamp(56px, 18%, 128px)',
+              left: `${hotspot.left}%`,
+              top: `${hotspot.top}%`,
+              width: `clamp(56px, ${hotspot.size}%, 128px)`,
+              height: `clamp(56px, ${hotspot.size}%, 128px)`,
             }}
 animate={stage === 'idle' ? { scale: [1, 1.06, 1], transition: { duration: 1.8, repeat: Infinity, ease: 'easeInOut' } } : undefined}
             whileTap={{ scale: 0.96 }}
@@ -132,6 +159,51 @@ animate={stage === 'idle' ? { scale: [1, 1.06, 1], transition: { duration: 1.8, 
             <Copy size={14} className="mr-1.5" /> Copy
           </Button>
         </div>
+
+        {devMode && (
+          <div className="mt-4 w-full max-w-md rounded-lg border bg-card/60 p-3 text-left">
+            <p className="text-sm font-medium mb-2">Hotspot calibration</p>
+            <div className="grid grid-cols-3 gap-3">
+              <label className="text-xs">
+                Left
+                <input
+                  type="range"
+                  min={0}
+                  max={100}
+                  value={hotspot.left}
+                  onChange={(e) => setHotspot((h: any) => ({ ...h, left: Number(e.target.value) }))}
+                  className="w-full"
+                />
+                <span className="text-[10px] text-muted-foreground">{hotspot.left}%</span>
+              </label>
+              <label className="text-xs">
+                Top
+                <input
+                  type="range"
+                  min={0}
+                  max={100}
+                  value={hotspot.top}
+                  onChange={(e) => setHotspot((h: any) => ({ ...h, top: Number(e.target.value) }))}
+                  className="w-full"
+                />
+                <span className="text-[10px] text-muted-foreground">{hotspot.top}%</span>
+              </label>
+              <label className="text-xs">
+                Size
+                <input
+                  type="range"
+                  min={5}
+                  max={35}
+                  value={hotspot.size}
+                  onChange={(e) => setHotspot((h: any) => ({ ...h, size: Number(e.target.value) }))}
+                  className="w-full"
+                />
+                <span className="text-[10px] text-muted-foreground">{hotspot.size}%</span>
+              </label>
+            </div>
+            <p className="mt-2 text-[10px] text-muted-foreground">Tip: append <code>?hotspot</code> to the URL. Settings auto-save.</p>
+          </div>
+        )}
       </div>
     </div>
   );
