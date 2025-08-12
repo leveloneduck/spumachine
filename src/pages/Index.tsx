@@ -7,7 +7,7 @@ import NeonFooter from '@/components/NeonFooter';
 const Index = () => {
   return (
     <div>
-      <main className="m-0 p-0">
+      <main className="m-0 p-0 overflow-x-hidden">
         <Hero />
         <Stats />
         <section id="about" className="container mx-auto py-16 max-w-3xl">
