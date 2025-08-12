@@ -13,7 +13,7 @@ import machineAsset from '@/assets/spare-parts-machine.png';
 // Artwork: replace this file with your uploaded machine image to update the UI
 const MACHINE_PUBLIC = '/machine.png';
 // Locked hotspot defaults (percent relative to image)
-const LOCKED_HOTSPOT = { left: 86, top: 86, width: 30, height: 12 } as const;
+const LOCKED_HOTSPOT = { left: 47.212929223602664, top: 53.54015074572062, width: 6, height: 5 } as const;
 
 type Stage = 'idle' | 'minting' | 'success' | 'error';
 
