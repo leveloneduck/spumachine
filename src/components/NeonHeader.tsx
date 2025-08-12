@@ -14,6 +14,8 @@ const NeonHeader = () => {
         </Link>
         <div className="flex items-center gap-3">
           <a href="#mint" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Mint</a>
+          <a href="#features" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Features</a>
+          <a href="#faq" className="text-sm text-muted-foreground hover:text-foreground transition-colors">FAQ</a>
           <a href="#about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">About</a>
           <WalletMultiButton className="wallet-adapter-button !bg-primary !text-primary-foreground hover:!bg-primary/90 !rounded-md !border !border-primary/40 !shadow-[0_0_30px_hsl(var(--primary-glow)/0.2)]" />
         </div>

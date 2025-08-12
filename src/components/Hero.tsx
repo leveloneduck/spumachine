@@ -19,7 +19,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative overflow-hidden">
+    <section id="mint" ref={sectionRef} className="relative overflow-hidden">
       {/* Split background that can sync with machine platform */}
       <div
         className="absolute inset-0 -z-10"
