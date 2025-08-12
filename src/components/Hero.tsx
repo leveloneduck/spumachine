@@ -9,8 +9,11 @@ const Hero = () => {
     const el = sectionRef.current;
     if (!el) return;
 
-    // Fixed two-color split for platform look
-    el.style.setProperty('--hero-split', '520px'); // adjust as needed
+    // Fixed two-color split for platform look with optional URL override (?split=NUMBER)
+    const params = new URLSearchParams(window.location.search);
+    const splitParam = params.get('split');
+    const splitPx = splitParam && /^\d+$/.test(splitParam) ? `${splitParam}px` : '540px';
+    el.style.setProperty('--hero-split', splitPx);
     el.style.setProperty('--hero-top', 'hsl(var(--background))'); // light/white
     el.style.setProperty('--hero-bottom', 'hsl(var(--muted))'); // dark
     document.documentElement.style.setProperty('--page-after-bg', 'hsl(var(--muted))');
