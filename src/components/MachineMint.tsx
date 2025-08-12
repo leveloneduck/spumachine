@@ -164,7 +164,7 @@ const MachineMint = () => {
       {/* Machine + hotspot */}
       <div className="relative select-none origin-top transition-transform duration-300 md:scale-[0.69] md:-translate-y-[3%] lg:-translate-y-[4%] 2xl:-translate-y-[5%]">
         <AspectRatio ratio={displayRatio}>
-          {/* Random video layer behind the machine artwork */
+          {/* Random video layer behind the machine artwork */}
           {videoSrc && (
             <motion.video
               ref={videoRef}
@@ -182,7 +182,7 @@ const MachineMint = () => {
             />
           )}
 
-          {/* Machine artwork overlay (PNG with transparent window) */
+          {/* Machine artwork overlay (PNG with transparent window) */}
           <img
             src={imgSrc}
             alt="Minting machine UI — user-provided artwork"
