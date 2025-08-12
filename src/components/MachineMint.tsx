@@ -11,7 +11,7 @@ import { MINT_CONFIG } from '@/config/mintConfig';
 import machineAsset from '@/assets/spare-parts-machine.png';
 
 // Artwork: replace this file with your uploaded machine image to update the UI
-const MACHINE_PUBLIC = '/Minting%20Machine%20copy.png';
+const MACHINE_PUBLIC = '/machine.png';
 // Locked hotspot defaults (percent relative to image)
 const LOCKED_HOTSPOT = { left: 86, top: 86, width: 30, height: 12 } as const;
 
