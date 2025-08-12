@@ -12,7 +12,7 @@ import { MINT_CONFIG } from '@/config/mintConfig';
 // Artwork: replace this file with your uploaded machine image to update the UI
 const MACHINE_SRC = '/Minting%20Machine%20copy.png'; const PRESS_SRC = '/PRESS%20HERE.png';
 // Locked hotspot defaults (percent relative to image)
-const LOCKED_HOTSPOT = { left: 49, top: 64, size: 18 } as const;
+const LOCKED_HOTSPOT = { left: 49, top: 64, size: 24 } as const;
 
 type Stage = 'idle' | 'minting' | 'success' | 'error';
 
@@ -131,20 +131,20 @@ const MachineMint = () => {
                 onPress();
               }
             }}
-            className="absolute z-10 -translate-x-1/2 -translate-y-1/2 rounded-full outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
+            className="absolute z-30 -translate-x-1/2 -translate-y-1/2 rounded-full outline-none pointer-events-auto focus-visible:ring-2 focus-visible:ring-primary/70 ring-1 ring-primary/40"
             style={{
               left: `${hotspot.left}%`,
               top: `${hotspot.top}%`,
               width: `${hotspot.size}%`,
               height: `${hotspot.size}%`,
-              minWidth: '56px',
-              minHeight: '56px',
+              minWidth: '96px',
+              minHeight: '96px',
             }}
             animate={stage === 'idle' ? { scale: [1, 1.06, 1], transition: { duration: 1.8, repeat: Infinity, ease: 'easeInOut' } } : undefined}
             whileTap={{ scale: 0.96 }}
           >
             <div className="relative h-full w-full rounded-full">
-              <img src={PRESS_SRC} alt="Press Here mint button overlay" className="h-full w-full object-contain" draggable={false} />
+              <img src={PRESS_SRC} alt="Press Here mint button overlay" className="h-full w-full object-contain drop-shadow-lg select-none pointer-events-none" draggable={false} />
               {minting && (
                 <div className="absolute inset-0 grid place-items-center rounded-full bg-background/70">
                   <Loader2 className="h-6 w-6 animate-spin" />
@@ -207,7 +207,7 @@ const MachineMint = () => {
                 <input
                   type="range"
                   min={5}
-                  max={35}
+                  max={50}
                   value={hotspot.size}
                   onChange={(e) => setHotspot((h: any) => ({ ...h, size: Number(e.target.value) }))}
                   className="w-full"
