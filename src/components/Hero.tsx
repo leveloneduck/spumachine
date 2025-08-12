@@ -1,23 +1,22 @@
-import heroImage from '@/assets/hero-neon.jpg';
 import { motion } from 'framer-motion';
-import MintPanel from '@/components/MintPanel';
+import MachineMint from '@/components/MachineMint';
 
 const Hero = () => {
   return (
     <section className="relative overflow-hidden">
-      <div className="absolute inset-0 -z-10">
-        <img src={heroImage} alt="Cyberpunk neon cityscape hero for 404 NFT mint" loading="eager" className="h-[60vh] w-full object-cover opacity-60" />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-background/60 to-background" />
-      </div>
-      <div className="container mx-auto py-24 md:py-32">
+      {/* Soft gradient background and glow */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-background via-background/95 to-background" />
+      <div className="absolute -z-10 left-1/2 top-1/3 h-[60vw] w-[60vw] max-h-[700px] max-w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-3xl" />
+
+      <div className="container mx-auto py-16 md:py-20">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
           className="flex justify-center"
         >
-          <h1 className="sr-only">Mint the 404 Cyberpunk Collection</h1>
-          <MintPanel />
+          <h1 className="sr-only">Mint Spare Parts Machine NFT</h1>
+          <MachineMint />
         </motion.div>
       </div>
     </section>
