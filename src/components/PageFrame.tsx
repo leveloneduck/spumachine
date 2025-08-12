@@ -24,11 +24,19 @@ interface PageFrameProps {
  * This sits above the app UI but does not intercept pointer events.
  */
 const PageFrame: React.FC<PageFrameProps> = ({
-  src = "/border-frame.png",
+  // Default to an existing public asset so you can immediately see the frame.
+  // Replace with your border file (e.g., "/border-frame.png") or use ?frameSrc=/your-file.png
+  src = "/PRESS HERE.png",
   slice = 256,
   size = "clamp(12px, 3vw, 48px)",
-  repeat = "stretch",
+  repeat = "round",
 }) => {
+  const params = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : undefined;
+  const finalSrc = (params?.get("frameSrc") || src).toString();
+  const finalSlice = params?.get("frameSlice") ? Number(params.get("frameSlice")) : slice;
+  const finalSize = params?.get("frameSize") || size;
+  const finalRepeat = (params?.get("frameRepeat") as "stretch" | "round" | "repeat") || repeat;
+
   return (
     <div
       aria-hidden
@@ -37,13 +45,13 @@ const PageFrame: React.FC<PageFrameProps> = ({
         boxSizing: "border-box",
         // Draw a frame using the provided image
         borderStyle: "solid",
-        borderWidth: size,
+        borderWidth: finalSize,
         borderColor: "transparent", // Hide solid border if image fails to load
-        borderImageSource: `url(${src})`,
-        borderImageSlice: slice,
+        borderImageSource: `url("${finalSrc}")`,
+        borderImageSlice: finalSlice,
         borderImageWidth: 1,
         borderImageOutset: 0,
-        borderImageRepeat: repeat,
+        borderImageRepeat: finalRepeat,
       }}
     />
   );
