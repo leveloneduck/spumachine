@@ -5,7 +5,7 @@ import MintPanel from '@/components/MintPanel';
 const Hero = () => {
   return (
       <section
-        className="relative isolate overflow-hidden min-h-[100svh] bg-cover bg-center bg-no-repeat"
+        className="relative isolate overflow-hidden h-[100svh] bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${heroImage})` }}
       >
         <div className="absolute inset-0 z-0 bg-gradient-to-b from-transparent via-transparent to-background/70 pointer-events-none" />
