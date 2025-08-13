@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import MachineMint from '@/components/MachineMint';
 import Stats from '@/components/Stats';
+import BackgroundElements from '@/components/BackgroundElements';
 
 const Hero = () => {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -30,8 +31,8 @@ const Hero = () => {
             'linear-gradient(to bottom, var(--hero-top, hsl(var(--background))) 0px, var(--hero-top, hsl(var(--background))) var(--hero-split, 100000px), var(--hero-bottom, hsl(var(--muted))) var(--hero-split, 100000px), var(--hero-bottom, hsl(var(--muted))) 100%)',
         }}
       />
-      {/* Glow */}
-      <div className="absolute -z-10 left-1/2 top-1/3 h-[60vw] w-[60vw] max-h-[700px] max-w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-3xl" />
+      {/* Enhanced Background Elements */}
+      <BackgroundElements />
 
       <div className="container mx-auto pt-2 md:pt-4 pb-0 -mb-8">
         <motion.div
