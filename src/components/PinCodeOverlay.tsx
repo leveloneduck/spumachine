@@ -39,8 +39,10 @@ const PinCodeOverlay: React.FC = () => {
   return <div className="fixed inset-0 z-50 bg-background/95 backdrop-blur-md flex items-center justify-center" onKeyDown={handleKeyDown} tabIndex={0}>
       <div className="w-full max-w-md mx-auto p-8">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent">Spare Parts Universe
-Exclusive Access Only</h1>
+          <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent">
+            <div>Spare Parts Universe</div>
+            <div className="text-3xl">Exclusive Access Only</div>
+          </h1>
           <p className="text-muted-foreground text-lg">
             Enter PIN to continue
           </p>
