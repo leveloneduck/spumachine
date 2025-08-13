@@ -302,7 +302,7 @@ const syncPlatform = useCallback(() => {
   return (
     <div className="mx-auto w-full max-w-[780px]">
       {/* Machine + hotspot */}
-      <div className="relative select-none origin-top transition-transform duration-300 md:scale-[0.69] md:-translate-y-[3%] lg:-translate-y-[4%] 2xl:-translate-y-[5%]">
+      <div className="relative select-none origin-top transition-transform duration-300 md:scale-[0.69] md:-translate-y-[1%] lg:-translate-y-[2%] 2xl:-translate-y-[3%]">
         <AspectRatio ratio={displayRatio}>
           {/* Invisible anchor for platform position (no visual underlay) */}
           <div ref={platformRef} className="absolute inset-0 z-0 pointer-events-none">
@@ -436,7 +436,7 @@ const syncPlatform = useCallback(() => {
       </div>
 
       {/* Status row */}
-      <div className="mt-4 flex flex-col items-center gap-2 text-center">
+      <div className="mt-2 flex flex-col items-center gap-2 text-center">
         <h2 className="sr-only">Mint Spare Parts Machine NFT</h2>
         <p className="text-sm text-muted-foreground">
           {connected
