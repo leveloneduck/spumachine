@@ -1,1 +1,7 @@
 project_id = "ajfhvksbhrpmjclchrrb"
+
+[functions.verify-pin]
+verify_jwt = false
+
+[functions.validate-session]
+verify_jwt = false

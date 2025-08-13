@@ -8,12 +8,29 @@ import NotFound from "./pages/NotFound";
 import { SolanaWalletProvider } from "./solana/WalletProvider";
 import { Toaster as HotToaster } from "react-hot-toast";
 import PageFrame from "@/components/PageFrame";
+import { PinAuthProvider, usePinAuth } from "@/contexts/PinAuthContext";
+import PinCodeOverlay from "@/components/PinCodeOverlay";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
+const AppContent = () => {
+  const { isAuthenticated, isLoading } = usePinAuth();
+
+  if (isLoading) {
+    return <div className="fixed inset-0 bg-background flex items-center justify-center">
+      <div className="text-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+        <p className="text-muted-foreground">Checking access...</p>
+      </div>
+    </div>;
+  }
+
+  if (!isAuthenticated) {
+    return <PinCodeOverlay />;
+  }
+
+  return (
+    <>
       <PageFrame />
       <HotToaster position="top-right" />
       <Toaster />
@@ -27,6 +44,16 @@ const App = () => (
           </Routes>
         </BrowserRouter>
       </SolanaWalletProvider>
+    </>
+  );
+};
+
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <TooltipProvider>
+      <PinAuthProvider>
+        <AppContent />
+      </PinAuthProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );

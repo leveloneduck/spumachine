@@ -14,7 +14,60 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      access_logs: {
+        Row: {
+          attempted_at: string
+          browser_fingerprint: string
+          id: string
+          ip_address: unknown
+          success: boolean
+          user_agent: string | null
+        }
+        Insert: {
+          attempted_at?: string
+          browser_fingerprint: string
+          id?: string
+          ip_address: unknown
+          success?: boolean
+          user_agent?: string | null
+        }
+        Update: {
+          attempted_at?: string
+          browser_fingerprint?: string
+          id?: string
+          ip_address?: unknown
+          success?: boolean
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
+      active_sessions: {
+        Row: {
+          browser_fingerprint: string
+          created_at: string
+          expires_at: string
+          id: string
+          ip_address: unknown
+          session_token: string
+        }
+        Insert: {
+          browser_fingerprint: string
+          created_at?: string
+          expires_at?: string
+          id?: string
+          ip_address: unknown
+          session_token: string
+        }
+        Update: {
+          browser_fingerprint?: string
+          created_at?: string
+          expires_at?: string
+          id?: string
+          ip_address?: unknown
+          session_token?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
