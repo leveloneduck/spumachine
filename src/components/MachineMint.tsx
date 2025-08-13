@@ -444,7 +444,7 @@ const syncPlatform = useCallback(() => {
             : 'Connect your wallet to mint'}
         </p>
 
-        <div className="mt-2 flex w-full max-w-sm items-center justify-between rounded-lg border bg-card/60 p-3">
+        <div className="mt-0 flex w-full max-w-sm items-center justify-between rounded-lg border bg-card/60 p-3">
           <div className="min-w-0 text-left">
             <p className="text-xs text-muted-foreground">Candy Machine</p>
             <p className="font-mono text-xs truncate">{MINT_CONFIG.candyMachineId || 'Not set'}</p>
