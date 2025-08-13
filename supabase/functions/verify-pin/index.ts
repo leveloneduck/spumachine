@@ -21,16 +21,6 @@ Deno.serve(async (req) => {
   try {
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    const correctPin = Deno.env.get('PIN_CODE');
-
-    if (!correctPin) {
-      console.error('PIN_CODE not configured');
-      return new Response(
-        JSON.stringify({ error: 'Server configuration error' }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    }
-
     const supabase = createClient(supabaseUrl, supabaseKey);
     
     const { pin, browserFingerprint, ipAddress, userAgent }: VerifyPinRequest = await req.json();
@@ -65,7 +55,23 @@ Deno.serve(async (req) => {
       );
     }
 
-    const isCorrect = pin === correctPin;
+    // Check if PIN exists in database and is active
+    const { data: validPin, error: pinCheckError } = await supabase
+      .from('valid_pins')
+      .select('pin_code')
+      .eq('pin_code', pin)
+      .eq('is_active', true)
+      .single();
+
+    if (pinCheckError && pinCheckError.code !== 'PGRST116') {
+      console.error('PIN check error:', pinCheckError);
+      return new Response(
+        JSON.stringify({ error: 'Authentication system error' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const isCorrect = !!validPin;
 
     // Log the attempt
     const { error: logError } = await supabase.from('access_logs').insert({
