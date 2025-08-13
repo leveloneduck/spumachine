@@ -96,6 +96,21 @@
     /* Extras */
     --primary-glow: 24 94% 60%;
     --glow-neo: 280 100% 65%;
+    
+    /* Metal-Rust Dumpster-Dived Aesthetic */
+    --metal-dark: 15 15% 8%;
+    --metal-base: 20 12% 15%;
+    --metal-light: 25 10% 25%;
+    --rust-dark: 15 85% 25%;
+    --rust-base: 20 75% 35%;
+    --rust-light: 25 65% 45%;
+    --rust-glow: 30 80% 55%;
+    --amber-display: 45 100% 50%;
+    --amber-glow: 45 100% 65%;
+    --steel-base: 210 15% 20%;
+    --steel-light: 210 10% 35%;
+    --copper-base: 25 45% 35%;
+    --brass-base: 50 55% 45%;
   }
 }
 

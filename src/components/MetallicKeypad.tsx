@@ -18,7 +18,7 @@ const MetallicKeypad: React.FC<MetallicKeypadProps> = ({
 
   return (
     <div className="grid grid-cols-3 gap-4 max-w-xs mx-auto">
-      {/* Number buttons */}
+      {/* Number buttons - Heavy Industrial Steel */}
       {numbers.slice(0, 9).map((num) => (
         <Button
           key={num}
@@ -26,53 +26,86 @@ const MetallicKeypad: React.FC<MetallicKeypadProps> = ({
           size="lg"
           onClick={() => onNumberClick(num)}
           disabled={disabled}
-          className="h-16 w-16 text-xl font-mono bg-gradient-to-b from-muted/20 to-muted/40 
-                     border border-border/50 shadow-lg hover:shadow-glow-neo/20 
-                     transition-all duration-200 hover:scale-105 active:scale-95
-                     hover:border-primary/50 hover:bg-gradient-to-b hover:from-primary/10 hover:to-primary/20"
+          className="h-18 w-18 text-2xl font-mono font-bold
+                     bg-gradient-to-b from-[hsl(var(--steel-light))] via-[hsl(var(--steel-base))] to-[hsl(var(--steel-light))]
+                     border-2 border-[hsl(var(--metal-light))] text-[hsl(var(--amber-display))]
+                     shadow-[0_3px_0_hsl(var(--metal-dark)),0_6px_12px_rgba(0,0,0,0.5),inset_0_1px_0_hsl(var(--steel-light)/0.3)]
+                     hover:shadow-[0_1px_0_hsl(var(--metal-dark)),0_3px_8px_rgba(0,0,0,0.7),inset_0_1px_0_hsl(var(--steel-light)/0.3),0_0_12px_hsl(var(--amber-glow)/0.2)]
+                     hover:translate-y-[2px] hover:border-[hsl(var(--amber-glow)/0.4)]
+                     active:translate-y-[3px] active:shadow-[inset_0_3px_6px_rgba(0,0,0,0.6)]
+                     transition-all duration-100
+                     relative overflow-hidden
+                     before:absolute before:inset-0 before:bg-gradient-to-br before:from-[hsl(var(--rust-base)/0.05)] before:via-transparent before:to-[hsl(var(--rust-dark)/0.1)]
+                     after:absolute after:top-0 after:left-0 after:right-0 after:h-px after:bg-[hsl(var(--steel-light)/0.4)]
+                     disabled:opacity-60 disabled:translate-y-0"
         >
           {num}
         </Button>
       ))}
       
       {/* Bottom row with special buttons */}
+      {/* CLR Button - Brass Warning */}
       <Button
         variant="mechanical"
         size="lg"
         onClick={onClear}
         disabled={disabled}
-        className="h-16 w-16 text-sm font-mono bg-gradient-to-b from-destructive/20 to-destructive/40 
-                   border border-border/50 shadow-lg hover:shadow-destructive/20 
-                   transition-all duration-200 hover:scale-105 active:scale-95
-                   hover:border-destructive/50"
+        className="h-18 w-18 text-sm font-mono font-bold uppercase
+                   bg-gradient-to-b from-[hsl(var(--brass-base))] via-[hsl(var(--copper-base))] to-[hsl(var(--brass-base))]
+                   border-2 border-[hsl(var(--rust-base))] text-[hsl(var(--metal-dark))]
+                   shadow-[0_3px_0_hsl(var(--metal-dark)),0_6px_12px_rgba(0,0,0,0.5),inset_0_1px_0_hsl(var(--brass-base)/0.6)]
+                   hover:shadow-[0_1px_0_hsl(var(--metal-dark)),0_3px_8px_rgba(0,0,0,0.7),inset_0_1px_0_hsl(var(--brass-base)/0.6),0_0_12px_hsl(var(--rust-glow)/0.3)]
+                   hover:translate-y-[2px] hover:border-[hsl(var(--rust-glow))]
+                   active:translate-y-[3px] active:shadow-[inset_0_3px_6px_rgba(0,0,0,0.6)]
+                   transition-all duration-100
+                   relative overflow-hidden
+                   before:absolute before:inset-0 before:bg-gradient-to-br before:from-[hsl(var(--rust-light)/0.1)] before:to-transparent
+                   disabled:opacity-60 disabled:translate-y-0"
       >
         CLR
       </Button>
       
+      {/* 0 Button - Steel */}
       <Button
         variant="mechanical"
         size="lg"
         onClick={() => onNumberClick('0')}
         disabled={disabled}
-        className="h-16 w-16 text-xl font-mono bg-gradient-to-b from-muted/20 to-muted/40 
-                   border border-border/50 shadow-lg hover:shadow-glow-neo/20 
-                   transition-all duration-200 hover:scale-105 active:scale-95
-                   hover:border-primary/50 hover:bg-gradient-to-b hover:from-primary/10 hover:to-primary/20"
+        className="h-18 w-18 text-2xl font-mono font-bold
+                   bg-gradient-to-b from-[hsl(var(--steel-light))] via-[hsl(var(--steel-base))] to-[hsl(var(--steel-light))]
+                   border-2 border-[hsl(var(--metal-light))] text-[hsl(var(--amber-display))]
+                   shadow-[0_3px_0_hsl(var(--metal-dark)),0_6px_12px_rgba(0,0,0,0.5),inset_0_1px_0_hsl(var(--steel-light)/0.3)]
+                   hover:shadow-[0_1px_0_hsl(var(--metal-dark)),0_3px_8px_rgba(0,0,0,0.7),inset_0_1px_0_hsl(var(--steel-light)/0.3),0_0_12px_hsl(var(--amber-glow)/0.2)]
+                   hover:translate-y-[2px] hover:border-[hsl(var(--amber-glow)/0.4)]
+                   active:translate-y-[3px] active:shadow-[inset_0_3px_6px_rgba(0,0,0,0.6)]
+                   transition-all duration-100
+                   relative overflow-hidden
+                   before:absolute before:inset-0 before:bg-gradient-to-br before:from-[hsl(var(--rust-base)/0.05)] before:via-transparent before:to-[hsl(var(--rust-dark)/0.1)]
+                   after:absolute after:top-0 after:left-0 after:right-0 after:h-px after:bg-[hsl(var(--steel-light)/0.4)]
+                   disabled:opacity-60 disabled:translate-y-0"
       >
         0
       </Button>
       
+      {/* Backspace Button - Copper */}
       <Button
         variant="mechanical"
         size="lg"
         onClick={onBackspace}
         disabled={disabled}
-        className="h-16 w-16 text-sm font-mono bg-gradient-to-b from-muted/20 to-muted/40 
-                   border border-border/50 shadow-lg hover:shadow-glow-neo/20 
-                   transition-all duration-200 hover:scale-105 active:scale-95
-                   hover:border-primary/50"
+        className="h-18 w-18 text-xl font-mono font-bold
+                   bg-gradient-to-b from-[hsl(var(--copper-base))] via-[hsl(var(--rust-base))] to-[hsl(var(--copper-base))]
+                   border-2 border-[hsl(var(--rust-dark))] text-[hsl(var(--amber-display))]
+                   shadow-[0_3px_0_hsl(var(--metal-dark)),0_6px_12px_rgba(0,0,0,0.5),inset_0_1px_0_hsl(var(--copper-base)/0.4)]
+                   hover:shadow-[0_1px_0_hsl(var(--metal-dark)),0_3px_8px_rgba(0,0,0,0.7),inset_0_1px_0_hsl(var(--copper-base)/0.4),0_0_12px_hsl(var(--rust-glow)/0.2)]
+                   hover:translate-y-[2px] hover:border-[hsl(var(--rust-glow)/0.6)]
+                   active:translate-y-[3px] active:shadow-[inset_0_3px_6px_rgba(0,0,0,0.6)]
+                   transition-all duration-100
+                   relative overflow-hidden
+                   before:absolute before:inset-0 before:bg-gradient-to-br before:from-[hsl(var(--rust-light)/0.1)] before:to-transparent
+                   disabled:opacity-60 disabled:translate-y-0"
       >
-        ←
+        ⌫
       </Button>
     </div>
   );
