@@ -436,7 +436,7 @@ const syncPlatform = useCallback(() => {
       </div>
 
       {/* Status row */}
-      <div className="mt-0 flex flex-col items-center gap-2 text-center">
+      <div className="mt-0 pt-4 flex flex-col items-center gap-2 text-center">
         <h2 className="sr-only">Mint Spare Parts Machine NFT</h2>
         <p className="text-sm text-muted-foreground">
           {connected
