@@ -55,23 +55,20 @@ Deno.serve(async (req) => {
       );
     }
 
-    // Check if PIN exists in database and is active
-    const { data: validPin, error: pinCheckError } = await supabase
-      .from('valid_pins')
-      .select('pin_code')
-      .eq('pin_code', pin)
-      .eq('is_active', true)
-      .single();
+    // Check PIN against PIN_ONE through PIN_EIGHT secrets
+    const validPins = [
+      Deno.env.get('PIN_ONE'),
+      Deno.env.get('PIN_TWO'), 
+      Deno.env.get('PIN_THREE'),
+      Deno.env.get('PIN_FOUR'),
+      Deno.env.get('PIN_FIVE'),
+      Deno.env.get('PIN_SIX'),
+      Deno.env.get('PIN_SEVEN'),
+      Deno.env.get('PIN_EIGHT')
+    ].filter(Boolean); // Remove undefined values
 
-    if (pinCheckError && pinCheckError.code !== 'PGRST116') {
-      console.error('PIN check error:', pinCheckError);
-      return new Response(
-        JSON.stringify({ error: 'Authentication system error' }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    }
-
-    const isCorrect = !!validPin;
+    const isCorrect = validPins.includes(pin);
+    console.log('PIN validation attempt:', { pin: pin.substring(0, 2) + '***', isCorrect });
 
     // Log the attempt
     const { error: logError } = await supabase.from('access_logs').insert({
