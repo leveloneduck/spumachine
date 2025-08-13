@@ -7,7 +7,7 @@ const Stats = () => {
   const percent = Math.min(100, Math.max(0, (stats.minted / stats.total) * 100));
 
   return (
-    <section className="container mx-auto pb-4 mb-20 relative z-10">
+    <section className="container mx-auto pb-4 mb-12 relative z-10">
       <motion.div initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="grid md:grid-cols-3 gap-6">
         <div className="rounded-xl bg-card/60 glow-border p-6">
           <p className="text-sm text-muted-foreground">Minted</p>
