@@ -403,7 +403,7 @@ const syncPlatform = useCallback(() => {
                 onPress();
               }
             }}
-            className={`absolute z-50 -translate-x-1/2 -translate-y-1/2 outline-none pointer-events-auto focus-visible:ring-2 focus-visible:ring-primary/70 ${devMode ? 'ring-2 ring-primary/60' : 'ring-0'} transition-transform rounded-full overflow-hidden`}
+            className={`absolute z-50 -translate-x-1/2 -translate-y-1/2 outline-none pointer-events-auto focus-visible:ring-2 focus-visible:ring-primary/70 ${devMode ? 'ring-2 ring-primary/60' : 'ring-0'} transition-all duration-200 rounded-full overflow-hidden will-change-transform`}
             style={{
               left: `${hotspot.left}%`,
               top: `${hotspot.top}%`,
@@ -412,25 +412,153 @@ const syncPlatform = useCallback(() => {
               minWidth: '0px',
               minHeight: '0px',
             }}
-            animate={stage === 'idle' ? { scale: [1, 1.04, 1], transition: { duration: 1.8, repeat: Infinity, ease: 'easeInOut' } } : undefined}
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.96 }}
+            animate={stage === 'idle' ? { 
+              scale: [1, 1.04, 1], 
+              transition: { 
+                duration: 1.8, 
+                repeat: Infinity, 
+                ease: 'easeInOut' 
+              } 
+            } : undefined}
+            whileHover={{ 
+              scale: 1.08,
+              transition: { duration: 0.2, ease: "easeOut" }
+            }}
+            whileTap={{
+              scale: [0.88, 1.02, 1.0],
+              transition: {
+                duration: 0.3,
+                times: [0, 0.4, 1],
+                ease: "easeOut"
+              }
+            }}
           >
-            <div className="relative h-full w-full rounded-full overflow-hidden ring-2 ring-primary/50 shadow-[0_0_24px_hsl(var(--primary)/0.35)]">
-              <img
-                src="/PRESS HERE.png"
-                alt={connected ? 'Press to mint' : 'Connect wallet to mint'}
-                className="h-full w-full object-fill select-none pointer-events-none"
-                draggable={false}
-                loading="lazy"
-              />
-              {minting && (
-                <div className="absolute inset-0 grid place-items-center bg-background/70">
-                  <Loader2 className="h-6 w-6 animate-spin" />
-                </div>
-              )}
+            <motion.div 
+              className="relative h-full w-full rounded-full overflow-hidden"
+              style={{
+                boxShadow: `
+                  0 0 24px hsl(var(--primary) / 0.35),
+                  0 0 8px hsl(var(--primary) / 0.25),
+                  inset 0 1px 2px hsl(var(--foreground) / 0.1)
+                `,
+              }}
+              whileHover={{
+                boxShadow: `
+                  0 0 36px hsl(var(--primary) / 0.5),
+                  0 0 16px hsl(var(--primary) / 0.4),
+                  inset 0 1px 2px hsl(var(--foreground) / 0.15)
+                `,
+                transition: { duration: 0.2 }
+              }}
+              whileTap={{
+                boxShadow: `
+                  0 0 48px hsl(var(--primary) / 0.7),
+                  0 0 24px hsl(var(--primary) / 0.6),
+                  inset 0 2px 4px hsl(var(--foreground) / 0.2)
+                `,
+                transition: { duration: 0.1 }
+              }}
+            >
+              {/* Ring Animation Layer */}
+              <motion.div 
+                className="absolute inset-0 rounded-full"
+                style={{
+                  background: `conic-gradient(from 0deg, 
+                    hsl(var(--primary) / 0.3), 
+                    hsl(var(--primary) / 0.1), 
+                    hsl(var(--primary) / 0.3))`,
+                  padding: '2px',
+                }}
+                whileHover={{
+                  background: `conic-gradient(from 0deg, 
+                    hsl(var(--primary) / 0.5), 
+                    hsl(var(--primary) / 0.2), 
+                    hsl(var(--primary) / 0.5))`,
+                  transition: { duration: 0.2 }
+                }}
+                whileTap={{
+                  background: `conic-gradient(from 0deg, 
+                    hsl(var(--primary) / 0.8), 
+                    hsl(var(--primary) / 0.4), 
+                    hsl(var(--primary) / 0.8))`,
+                  transition: { duration: 0.1 }
+                }}
+              >
+                <div className="w-full h-full rounded-full bg-background/20" />
+              </motion.div>
+
+              {/* Main Button Content */}
+              <motion.div className="relative z-10 h-full w-full rounded-full overflow-hidden">
+                <motion.img
+                  src="/PRESS HERE.png"
+                  alt={connected ? 'Press to mint' : 'Connect wallet to mint'}
+                  className="h-full w-full object-fill select-none pointer-events-none"
+                  draggable={false}
+                  loading="lazy"
+                  whileTap={{
+                    filter: "brightness(1.2) contrast(1.1)",
+                    transition: { duration: 0.1 }
+                  }}
+                />
+                
+                {/* Press Ripple Effect */}
+                <motion.div
+                  className="absolute inset-0 bg-primary/20 rounded-full"
+                  initial={{ scale: 0, opacity: 0 }}
+                  whileTap={{
+                    scale: [0, 1.2],
+                    opacity: [0, 0.8, 0],
+                    transition: { duration: 0.4, ease: "easeOut" }
+                  }}
+                />
+
+                {/* Loading State Enhancement */}
+                {minting && (
+                  <motion.div 
+                    className="absolute inset-0 grid place-items-center bg-background/70"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <motion.div
+                      animate={{ 
+                        boxShadow: [
+                          "0 0 8px hsl(var(--primary) / 0.3)",
+                          "0 0 16px hsl(var(--primary) / 0.6)",
+                          "0 0 8px hsl(var(--primary) / 0.3)"
+                        ]
+                      }}
+                      transition={{ 
+                        duration: 1.5, 
+                        repeat: Infinity, 
+                        ease: "easeInOut" 
+                      }}
+                      className="rounded-full p-1"
+                    >
+                      <Loader2 className="h-6 w-6 animate-spin text-primary" />
+                    </motion.div>
+                  </motion.div>
+                )}
+
+                {/* Success/Error Flash */}
+                {(stage === 'success' || stage === 'error') && (
+                  <motion.div
+                    className={`absolute inset-0 ${stage === 'success' ? 'bg-green-500/30' : 'bg-red-500/30'} rounded-full`}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ 
+                      opacity: [0, 0.8, 0], 
+                      scale: [0.8, 1, 1] 
+                    }}
+                    transition={{ 
+                      duration: 0.6, 
+                      ease: "easeOut" 
+                    }}
+                  />
+                )}
+              </motion.div>
+              
               <span className="sr-only">{connected ? 'Press to mint' : 'Connect wallet to mint'}</span>
-            </div>
+            </motion.div>
           </motion.button>
         </AspectRatio>
       </div>
