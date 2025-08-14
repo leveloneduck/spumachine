@@ -38,7 +38,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
-          className="flex justify-center mb-8"
+          className="flex justify-center mb-4"
         >
           <h1 className="sr-only">Mint Spare Parts Machine NFT</h1>
           <MachineMint />
@@ -49,6 +49,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
+          className="mt-6 md:mt-2"
         >
           <Stats />
         </motion.div>
