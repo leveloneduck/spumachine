@@ -302,7 +302,7 @@ const syncPlatform = useCallback(() => {
   return (
     <div className="mx-auto w-full max-w-[780px]">
       {/* Machine + hotspot */}
-      <div className="relative select-none origin-top transition-transform duration-300 md:scale-[0.69] md:-translate-y-[1%] lg:-translate-y-[1.5%] 2xl:-translate-y-[2%]">
+      <div className="relative select-none origin-top transition-transform duration-300 md:scale-[0.69]">
         <AspectRatio ratio={displayRatio}>
           {/* Invisible anchor for platform position (no visual underlay) */}
           <div ref={platformRef} className="absolute inset-0 z-0 pointer-events-none">
