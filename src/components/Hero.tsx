@@ -49,7 +49,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="-mt-8 md:-mt-12"
+          className="-mt-16 md:-mt-20"
         >
           <Stats />
         </motion.div>
