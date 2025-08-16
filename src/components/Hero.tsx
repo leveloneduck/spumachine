@@ -46,7 +46,7 @@ const Hero = () => {
       </div>
       
       {/* Stats integrated within Hero section */}
-      <div className="relative -mt-16 md:-mt-20 pt-0">
+      <div className="relative mt-8 pt-0">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
