@@ -13,7 +13,7 @@ const Hero = () => {
     // Fixed two-color split for platform look with optional URL override (?split=NUMBER)
     const params = new URLSearchParams(window.location.search);
     const splitParam = params.get('split');
-    const splitPx = splitParam && /^\d+$/.test(splitParam) ? `${splitParam}px` : '500px';
+    const splitPx = splitParam && /^\d+$/.test(splitParam) ? `${splitParam}px` : '650px';
     el.style.setProperty('--hero-split', splitPx);
     el.style.setProperty('--hero-top', 'hsl(var(--background))'); // light/white
     el.style.setProperty('--hero-bottom', 'hsl(var(--muted))'); // dark
@@ -22,7 +22,7 @@ const Hero = () => {
 
   return (
     <>
-      <section ref={sectionRef} className="relative overflow-hidden min-h-[600px] max-h-[700px]">
+      <section ref={sectionRef} className="relative overflow-hidden min-h-[600px]">
         {/* Split background that can sync with machine platform */}
         <div
           className="absolute inset-0 -z-10"
@@ -47,8 +47,8 @@ const Hero = () => {
         </div>
       </section>
       
-      {/* Stats in separate light section to close the gap */}
-      <section className="relative bg-background -mt-20 md:-mt-32 pt-0">
+      {/* Stats positioned on the grey platform */}
+      <section className="relative -mt-12 md:-mt-16 pt-0">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
