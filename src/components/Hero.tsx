@@ -13,7 +13,7 @@ const Hero = () => {
     // Fixed two-color split for platform look with optional URL override (?split=NUMBER)
     const params = new URLSearchParams(window.location.search);
     const splitParam = params.get('split');
-    const splitPx = splitParam && /^\d+$/.test(splitParam) ? `${splitParam}px` : '520px';
+    const splitPx = splitParam && /^\d+$/.test(splitParam) ? `${splitParam}px` : '560px';
     el.style.setProperty('--hero-split', splitPx);
     el.style.setProperty('--hero-top', 'hsl(var(--background))'); // light/white
     el.style.setProperty('--hero-bottom', 'hsl(var(--muted))'); // dark
@@ -38,7 +38,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
-          className="flex justify-center"
+          className="flex justify-center mb-1"
         >
           <h1 className="sr-only">Mint Spare Parts Machine NFT</h1>
           <MachineMint />
@@ -49,7 +49,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="-mt-16 md:-mt-20"
+          className="-mt-8 md:-mt-12"
         >
           <Stats />
         </motion.div>
