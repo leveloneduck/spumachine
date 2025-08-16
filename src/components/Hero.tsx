@@ -48,7 +48,7 @@ const Hero = () => {
       </section>
       
       {/* Stats positioned on the grey platform */}
-      <section className="relative -mt-24 md:-mt-32 pt-0">
+      <section className="relative -mt-28 md:-mt-36 pt-0">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
