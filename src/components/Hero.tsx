@@ -33,7 +33,7 @@ const Hero = () => {
       {/* Glow */}
       <div className="absolute -z-10 left-1/2 top-1/3 h-[60vw] w-[60vw] max-h-[700px] max-w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-3xl" />
 
-      <div className="container mx-auto pt-8 md:pt-12 pb-0">
+      <div className="container mx-auto pt-4 md:pt-8 pb-0">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
