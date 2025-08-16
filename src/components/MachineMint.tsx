@@ -300,7 +300,7 @@ const syncPlatform = useCallback(() => {
 
 
   return (
-    <div className="mx-auto w-full max-w-[600px]">
+    <div className="mx-auto w-full max-w-[600px] -mt-12">
       {/* Machine + hotspot */}
       <div className="relative select-none origin-top transition-transform duration-300">
         <AspectRatio ratio={displayRatio}>
