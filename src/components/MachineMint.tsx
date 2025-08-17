@@ -312,7 +312,7 @@ const syncPlatform = useCallback(() => {
 
 
   return (
-    <div className="mx-auto w-full max-w-[600px] -mt-12 relative z-20">
+    <div className="mx-auto w-full max-w-[350px] md:max-w-[600px] -mt-6 md:-mt-12 relative z-20">
       {/* Loading skeleton */}
       {!assetsReady && (
         <div className="relative select-none origin-top">
