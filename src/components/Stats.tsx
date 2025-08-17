@@ -9,15 +9,15 @@ const Stats = () => {
   return (
     <section className="container mx-auto pb-0 relative z-10">
       <motion.div initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="grid md:grid-cols-3 gap-6">
-        <div className="rounded-xl bg-card/60 glow-border p-6">
+        <div className="rounded-xl bg-card/60 p-6">
           <p className="text-sm text-muted-foreground">Minted</p>
           <p className="mt-2 text-3xl font-bold">{loading ? '...' : stats.minted}</p>
         </div>
-        <div className="rounded-xl bg-card/60 glow-border p-6">
+        <div className="rounded-xl bg-card/60 p-6">
           <p className="text-sm text-muted-foreground">Remaining</p>
           <p className="mt-2 text-3xl font-bold">{loading ? '...' : stats.remaining}</p>
         </div>
-        <div className="rounded-xl bg-card/60 glow-border p-6">
+        <div className="rounded-xl bg-card/60 p-6">
           <p className="text-sm text-muted-foreground">Progress</p>
           <div className="mt-4">
             <Progress value={percent} />
