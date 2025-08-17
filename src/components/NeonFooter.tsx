@@ -2,7 +2,7 @@ import { Twitter, Link as LinkIcon, MessageCircle } from 'lucide-react';
 
 const NeonFooter = () => {
   return (
-    <footer className="border-t mt-0">
+    <footer className="border-t mt-0 bg-muted">
       <div className="container mx-auto py-4 flex flex-col md:flex-row items-center justify-between gap-4">
         <p className="text-sm text-muted-foreground">© {new Date().getFullYear()} 404 Cyberpunk Collection</p>
         <div className="flex items-center gap-4">
