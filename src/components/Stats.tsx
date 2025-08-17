@@ -13,17 +13,17 @@ const Stats = () => {
         whileInView={{ opacity: 1, y: 0 }} 
         viewport={{ once: true }} 
         transition={{ duration: 0.5 }} 
-        className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 max-w-xs sm:max-w-3xl mx-auto"
+        className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 max-w-[280px] sm:max-w-3xl mx-auto"
       >
-        <div className="rounded-xl bg-card/60 backdrop-blur-sm p-3 sm:p-6">
+        <div className="rounded-xl bg-muted/80 backdrop-blur-sm p-3 sm:p-6">
           <p className="text-sm text-muted-foreground">Minted</p>
           <p className="mt-2 text-2xl sm:text-3xl font-bold">{loading ? '...' : stats.minted}</p>
         </div>
-        <div className="rounded-xl bg-card/60 backdrop-blur-sm p-3 sm:p-6">
+        <div className="rounded-xl bg-muted/80 backdrop-blur-sm p-3 sm:p-6">
           <p className="text-sm text-muted-foreground">Remaining</p>
           <p className="mt-2 text-2xl sm:text-3xl font-bold">{loading ? '...' : stats.remaining}</p>
         </div>
-        <div className="rounded-xl bg-card/60 backdrop-blur-sm p-3 sm:p-6">
+        <div className="rounded-xl bg-muted/80 backdrop-blur-sm p-3 sm:p-6">
           <p className="text-sm text-muted-foreground">Progress</p>
           <div className="mt-4">
             <Progress value={percent} />

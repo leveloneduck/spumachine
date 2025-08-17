@@ -5,7 +5,7 @@ export const MINT_CONFIG = {
   collectionName: '404 Cyberpunk Collection',
   totalItems: 404,
   // Add your Candy Machine ID here (base58)
-  candyMachineId: '',
+  candyMachineId: 'Demo123456789',
   // Optional: if you use a specific guard group, set it here
   guardGroupLabel: undefined as string | undefined,
   // Choose your network
