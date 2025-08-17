@@ -38,19 +38,19 @@ const Hero = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
-          className="flex justify-center -mt-4"
+          className="flex justify-center -mt-9"
         >
           <h1 className="sr-only">Mint Spare Parts Machine NFT</h1>
           <MachineMint />
         </motion.div>
       </div>
       
-      {/* Stats integrated within Hero section */}
-      <div className="relative mt-8 pt-0">
+      {/* Stats integrated within Hero section with mobile spacing */}
+      <div className="relative mt-12 md:mt-8 pt-0">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
           className="relative z-10"
         >
           <Stats />

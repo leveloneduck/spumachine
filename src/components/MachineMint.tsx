@@ -6,6 +6,7 @@ import { Copy, Loader2, Volume2, VolumeX } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { MachineSkeleton } from '@/components/ui/skeleton';
 import { toast } from '@/components/ui/use-toast';
 import { MINT_CONFIG, getRpcEndpoint } from '@/config/mintConfig';
 
@@ -26,12 +27,16 @@ const LOCKED_PLATFORM_Y = 62 as const;
 const VIDEO_SOURCES = ['/videos/spu-vid.MP4', '/videos/spu-vid1.MP4'] as const;
 
 type Stage = 'idle' | 'minting' | 'success' | 'error';
+type LoadingState = 'loading' | 'loaded' | 'error';
 
 const MachineMint = () => {
   const { connected, publicKey, wallet } = useWallet();
   const { setVisible } = useWalletModal();
   const [stage, setStage] = useState<Stage>('idle');
   const [minting, setMinting] = useState(false);
+  const [imageLoading, setImageLoading] = useState<LoadingState>('loading');
+  const [videoLoading, setVideoLoading] = useState<LoadingState>('loading');
+  const [assetsReady, setAssetsReady] = useState(false);
   const [displayRatio, setDisplayRatio] = useState(3 / 4);
   const [devMode, setDevMode] = useState(false);
   const [imgSrc, setImgSrc] = useState<string>(MACHINE_PUBLIC);
@@ -197,6 +202,13 @@ const syncPlatform = useCallback(() => {
     setVideoSrc(VIDEO_SOURCES[index]);
   }, []);
 
+  // Check if assets are ready and trigger fade-in animation
+  useEffect(() => {
+    if (imageLoading === 'loaded' && videoLoading === 'loaded') {
+      setAssetsReady(true);
+    }
+  }, [imageLoading, videoLoading]);
+
   useEffect(() => {
     if (typeof window === 'undefined' || !devMode) return;
     try { localStorage.setItem('machineHotspot', JSON.stringify(hotspot)); } catch {}
@@ -300,9 +312,23 @@ const syncPlatform = useCallback(() => {
 
 
   return (
-    <div className="mx-auto w-full max-w-[600px] -mt-12">
+    <div className="mx-auto w-full max-w-[600px] -mt-12 relative z-20">
+      {/* Loading skeleton */}
+      {!assetsReady && (
+        <div className="relative select-none origin-top">
+          <AspectRatio ratio={displayRatio}>
+            <MachineSkeleton className="absolute inset-0" />
+          </AspectRatio>
+        </div>
+      )}
+      
       {/* Machine + hotspot */}
-      <div className="relative select-none origin-top transition-transform duration-300">
+      <motion.div 
+        className="relative select-none origin-top transition-transform duration-300"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: assetsReady ? 1 : 0 }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
+      >
         <AspectRatio ratio={displayRatio}>
           {/* Invisible anchor for platform position (no visual underlay) */}
           <div ref={platformRef} className="absolute inset-0 z-0 pointer-events-none">
@@ -335,8 +361,10 @@ const syncPlatform = useCallback(() => {
                 loop
                 playsInline
                 preload="metadata"
+                onLoadedData={() => setVideoLoading('loaded')}
+                onError={() => setVideoLoading('error')}
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                animate={{ opacity: assetsReady ? 1 : 0 }}
                 transition={{ duration: 0.6 }}
               />
             </div>
@@ -367,8 +395,12 @@ const syncPlatform = useCallback(() => {
               } else {
                 console.warn('Machine image loaded with zero natural size:', imgSrc);
               }
+              setImageLoading('loaded');
             }}
-            onError={() => console.warn('Machine image failed to load:', imgSrc)}
+            onError={() => {
+              console.warn('Machine image failed to load:', imgSrc);
+              setImageLoading('error');
+            }}
           />
 
           {/* Platform calibration click layer */}
@@ -561,7 +593,7 @@ const syncPlatform = useCallback(() => {
             </motion.div>
           </motion.button>
         </AspectRatio>
-      </div>
+      </motion.div>
 
       {/* Status row */}
       <div className="mt-0 flex flex-col items-center gap-2 text-center">

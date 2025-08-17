@@ -7,17 +7,23 @@ const Stats = () => {
   const percent = Math.min(100, Math.max(0, (stats.minted / stats.total) * 100));
 
   return (
-    <section className="container mx-auto pb-0 relative z-10">
-      <motion.div initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="grid md:grid-cols-3 gap-6">
-        <div className="rounded-xl bg-card/60 p-6">
+    <section className="container mx-auto pb-0 relative z-10 px-4">
+      <motion.div 
+        initial={{ opacity: 0, y: 8 }} 
+        whileInView={{ opacity: 1, y: 0 }} 
+        viewport={{ once: true }} 
+        transition={{ duration: 0.5 }} 
+        className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto"
+      >
+        <div className="rounded-xl bg-card/60 backdrop-blur-sm p-4 sm:p-6">
           <p className="text-sm text-muted-foreground">Minted</p>
-          <p className="mt-2 text-3xl font-bold">{loading ? '...' : stats.minted}</p>
+          <p className="mt-2 text-2xl sm:text-3xl font-bold">{loading ? '...' : stats.minted}</p>
         </div>
-        <div className="rounded-xl bg-card/60 p-6">
+        <div className="rounded-xl bg-card/60 backdrop-blur-sm p-4 sm:p-6">
           <p className="text-sm text-muted-foreground">Remaining</p>
-          <p className="mt-2 text-3xl font-bold">{loading ? '...' : stats.remaining}</p>
+          <p className="mt-2 text-2xl sm:text-3xl font-bold">{loading ? '...' : stats.remaining}</p>
         </div>
-        <div className="rounded-xl bg-card/60 p-6">
+        <div className="rounded-xl bg-card/60 backdrop-blur-sm p-4 sm:p-6">
           <p className="text-sm text-muted-foreground">Progress</p>
           <div className="mt-4">
             <Progress value={percent} />
