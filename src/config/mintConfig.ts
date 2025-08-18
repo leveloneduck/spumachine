@@ -4,8 +4,8 @@ export type VisualMode = 'svg' | '3d';
 export const MINT_CONFIG = {
   collectionName: '404 Cyberpunk Collection',
   totalItems: 404,
-  // Add your Candy Machine ID here (base58)
-  candyMachineId: 'Demo123456789',
+  // REPLACE WITH YOUR ACTUAL CANDY MACHINE ID (32-44 character base58 string)
+  candyMachineId: 'REPLACE_WITH_YOUR_CANDY_MACHINE_ID',
   // Optional: if you use a specific guard group, set it here
   guardGroupLabel: undefined as string | undefined,
   // Choose your network
