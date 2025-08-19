@@ -48,9 +48,9 @@ const Hero = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-4xl md:text-6xl font-bold gradient-text leading-tight"
             >
-              404 CYBERPUNK
+              SPARE PARTS UNIVERSE
               <br />
-              ARTIFACTS
+              LIMBOTS
             </motion.h1>
             
             <motion.p
@@ -59,7 +59,7 @@ const Hero = () => {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="text-lg md:text-xl text-muted-foreground max-w-md mx-auto md:mx-0"
             >
-              Mint your digital relic from the neon-soaked future. Each NFT is a unique portal into the cyberpunk underworld.
+              Mint your exclusive limbot from the Spare Parts Universe. Each NFT is a unique mechanical being with its own identity.
             </motion.p>
             
             <motion.div

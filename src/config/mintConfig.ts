@@ -2,7 +2,7 @@ export type NetworkType = 'devnet' | 'mainnet-beta';
 export type VisualMode = 'svg' | '3d';
 
 export const MINT_CONFIG = {
-  collectionName: '404 Cyberpunk Collection',
+  collectionName: 'Spare Parts Universe Limbots',
   totalItems: 404,
   // REPLACE WITH YOUR ACTUAL CANDY MACHINE ID (32-44 character base58 string)
   candyMachineId: 'REPLACE_WITH_YOUR_CANDY_MACHINE_ID',
