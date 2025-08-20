@@ -48,7 +48,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
-          className="flex justify-center scale-150 md:scale-100"
+          className="flex justify-center scale-[1.8] md:scale-100"
         >
           <h1 className="sr-only">Mint Spare Parts Machine NFT</h1>
           <MachineMint />
