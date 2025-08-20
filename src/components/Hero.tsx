@@ -43,12 +43,12 @@ const Hero = () => {
       {/* Glow */}
       <div className="absolute -z-10 left-1/2 top-1/3 h-[60vw] w-[60vw] max-h-[700px] max-w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/20 blur-3xl" />
 
-      <div className="container mx-auto pt-40 md:pt-12 pb-16 px-4 md:px-8">
+      <div className="container mx-auto pt-48 md:pt-12 pb-16 px-4 md:px-8">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
-          className="flex justify-center"
+          className="flex justify-center scale-110 md:scale-100"
         >
           <h1 className="sr-only">Mint Spare Parts Machine NFT</h1>
           <MachineMint />
