@@ -24,7 +24,7 @@ const DEFAULT_VIDEO_WINDOW = { left: 37, top: 35, width: 25, height: 18 } as con
 const LOCKED_PLATFORM_Y = 62 as const;
 
 // Video sources (local, small clips)
-const VIDEO_SOURCES = ['/videos/spu-vid.MP4', '/videos/spu-vid1.MP4'] as const;
+const VIDEO_SOURCES = ['/spu-vid.mp4'] as const;
 
 type Stage = 'idle' | 'minting' | 'success' | 'error';
 type LoadingState = 'loading' | 'loaded' | 'error';
