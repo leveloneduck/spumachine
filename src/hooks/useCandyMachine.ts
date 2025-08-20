@@ -13,8 +13,10 @@ export function useCandyMachine() {
   const [error, setError] = useState<string | null>(null);
 
   const fetchStats = useCallback(async () => {
-    if (!MINT_CONFIG.candyMachineId) {
-      setError('Candy Machine ID not configured.');
+    if (!MINT_CONFIG.candyMachineId || MINT_CONFIG.candyMachineId === 'REPLACE_WITH_YOUR_CANDY_MACHINE_ID') {
+      // Don't show error for placeholder, just set default stats
+      setStats({ minted: 0, total: MINT_CONFIG.totalItems, remaining: MINT_CONFIG.totalItems });
+      setError(null);
       return;
     }
     try {
