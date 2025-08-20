@@ -34,61 +34,15 @@ const Hero = () => {
       <div className="absolute -z-10 left-1/2 top-1/3 h-[60vw] w-[60vw] max-h-[700px] max-w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-3xl" />
 
       <div className="container mx-auto pt-40 md:pt-12 pb-16 px-4 md:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          {/* Header Text Section */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: 'easeOut', delay: 0.1 }}
-            className="space-y-6 text-center md:text-left order-2 md:order-1"
-          >
-            <motion.h1
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-4xl md:text-6xl font-bold gradient-text leading-tight"
-            >
-              SPARE PARTS UNIVERSE
-              <br />
-              LIMBOTS
-            </motion.h1>
-            
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-lg md:text-xl text-muted-foreground max-w-md mx-auto md:mx-0"
-            >
-              Mint your exclusive limbot from the Spare Parts Universe. Each NFT is a unique mechanical being with its own identity.
-            </motion.p>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="flex flex-col sm:flex-row gap-4 items-center justify-center md:justify-start"
-            >
-              <div className="text-primary font-semibold">
-                404 Total Supply
-              </div>
-              <div className="hidden sm:block text-muted-foreground">•</div>
-              <div className="text-accent font-semibold">
-                Solana Blockchain
-              </div>
-            </motion.div>
-          </motion.div>
-
-          {/* Machine Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
-            className="flex justify-center order-1 md:order-2"
-          >
-            <h2 className="sr-only">Interactive Minting Machine</h2>
-            <MachineMint />
-          </motion.div>
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
+          className="flex justify-center"
+        >
+          <h1 className="sr-only">Mint Spare Parts Machine NFT</h1>
+          <MachineMint />
+        </motion.div>
       </div>
       
       {/* Stats integrated within Hero section with mobile spacing */}
