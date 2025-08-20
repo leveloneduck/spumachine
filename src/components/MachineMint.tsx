@@ -204,10 +204,10 @@ const syncPlatform = useCallback(() => {
 
   // Check if assets are ready and trigger fade-in animation
   useEffect(() => {
-    if (imageLoading === 'loaded' && (videoLoading === 'loaded' || videoLoading === 'error')) {
+    if (imageLoading === 'loaded') {
       setAssetsReady(true);
     }
-  }, [imageLoading, videoLoading]);
+  }, [imageLoading]);
 
   // Fallback timeout to prevent infinite loading
   useEffect(() => {
@@ -216,7 +216,7 @@ const syncPlatform = useCallback(() => {
         console.warn('Loading timeout - forcing assets ready');
         setAssetsReady(true);
       }
-    }, 5000); // 5 second timeout
+    }, 1500); // 1.5 second timeout
     return () => clearTimeout(timeout);
   }, [assetsReady]);
 
@@ -371,7 +371,7 @@ const syncPlatform = useCallback(() => {
                 muted={muted}
                 loop
                 playsInline
-                preload="auto"
+                preload="metadata"
                 onCanPlay={() => setVideoLoading('loaded')}
                 onLoadedData={() => setVideoLoading('loaded')}
                 onError={() => {
