@@ -32,16 +32,14 @@ const Hero = () => {
           backgroundRepeat: 'no-repeat',
         }}
       />
-      {/* Split background overlay */}
+      {/* Split background overlay with transparency */}
       <div
         className="absolute inset-0 -z-10"
         style={{
           backgroundImage:
-            'linear-gradient(to bottom, var(--hero-top, hsl(var(--background))) 0px, var(--hero-top, hsl(var(--background))) var(--hero-split, 100000px), var(--hero-bottom, hsl(var(--muted))) var(--hero-split, 100000px), var(--hero-bottom, hsl(var(--muted))) 100%)',
+            'linear-gradient(to bottom, var(--hero-top, hsl(var(--background) / 0.7)) 0px, var(--hero-top, hsl(var(--background) / 0.7)) var(--hero-split, 100000px), var(--hero-bottom, hsl(var(--muted) / 0.8)) var(--hero-split, 100000px), var(--hero-bottom, hsl(var(--muted) / 0.8)) 100%)',
         }}
       />
-      {/* Overlay for better text readability */}
-      <div className="absolute inset-0 -z-10 bg-background/30" />
       {/* Glow */}
       <div className="absolute -z-10 left-1/2 top-1/3 h-[60vw] w-[60vw] max-h-[700px] max-w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/20 blur-3xl" />
 
