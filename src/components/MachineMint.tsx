@@ -120,6 +120,7 @@ const MachineMint = () => {
 
   const [muted, setMuted] = useState(true);
   const [videoSrc, setVideoSrc] = useState<string | null>(null);
+  const [shouldPlayVideo, setShouldPlayVideo] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   // Platform calibration state
@@ -242,6 +243,24 @@ const syncPlatform = useCallback(() => {
     } catch {}
   }, [videoDev, videoPosX, videoPosY, videoZoom]);
 
+  // Control video playback based on mint stage
+  useEffect(() => {
+    setShouldPlayVideo(stage === 'minting');
+  }, [stage]);
+
+  // Handle programmatic video control
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (shouldPlayVideo) {
+      video.play().catch(console.warn);
+    } else {
+      video.pause();
+      video.currentTime = 0; // Reset to beginning when not playing
+    }
+  }, [shouldPlayVideo]);
+
   const startMint = useCallback(async () => {
     if (!connected) {
       toast({ title: 'Connect your wallet first' });
@@ -361,13 +380,20 @@ const syncPlatform = useCallback(() => {
                 height: `${videoWindow.height}%`,
               }}
             >
+              {/* Dark overlay when video is not playing */}
+              <motion.div
+                className="absolute inset-0 z-10 bg-black"
+                initial={{ opacity: 1 }}
+                animate={{ opacity: shouldPlayVideo ? 0 : 1 }}
+                transition={{ duration: 0.3 }}
+              />
+              
               <motion.video
                 ref={videoRef}
                 key={videoSrc}
                 className="h-full w-full object-cover"
                 style={{ objectPosition: `${videoPosX}% ${videoPosY}%`, transform: `scale(${videoZoom})`, transformOrigin: 'center' }}
                 src={videoSrc}
-                autoPlay
                 muted={muted}
                 loop
                 playsInline
