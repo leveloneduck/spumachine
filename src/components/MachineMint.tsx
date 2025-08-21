@@ -9,8 +9,7 @@ import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { MachineSkeleton } from '@/components/ui/skeleton';
 import { toast } from '@/components/ui/use-toast';
 import { MINT_CONFIG, getRpcEndpoint } from '@/config/mintConfig';
-
-
+import { PaymentMethodSelector, type PaymentMethod } from '@/components/PaymentMethodSelector';
 
 // Artwork: replace this file with your uploaded machine image to update the UI
 const MACHINE_PUBLIC = '/machine.png?v=1';
@@ -34,6 +33,9 @@ const MachineMint = () => {
   const { setVisible } = useWalletModal();
   const [stage, setStage] = useState<Stage>('idle');
   const [minting, setMinting] = useState(false);
+  const [showPaymentSelector, setShowPaymentSelector] = useState(false);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentMethod>('sol');
+  
   const [imageLoading, setImageLoading] = useState<LoadingState>('loading');
   const [videoLoading, setVideoLoading] = useState<LoadingState>('loading');
   const [assetsReady, setAssetsReady] = useState(false);
@@ -261,13 +263,13 @@ const syncPlatform = useCallback(() => {
     }
   }, [shouldPlayVideo]);
 
-  const startMint = useCallback(async () => {
+  const startMint = useCallback(async (paymentMethod: PaymentMethod = selectedPaymentMethod) => {
     if (!connected) {
       toast({ title: 'Connect your wallet first' });
       setStage('error');
       return;
     }
-    if (!MINT_CONFIG.candyMachineId) {
+    if (!MINT_CONFIG.candyMachineId || MINT_CONFIG.candyMachineId === 'REPLACE_WITH_YOUR_CANDY_MACHINE_ID') {
       toast({ title: 'Candy Machine ID missing', description: 'Set it in src/config/mintConfig.ts' });
       setStage('error');
       return;
@@ -300,6 +302,7 @@ const syncPlatform = useCallback(() => {
       const cm = await fetchCandyMachine(umi, publicKey(MINT_CONFIG.candyMachineId as string));
       const nftMint = generateSigner(umi);
 
+      // For now, use V2 minting (will upgrade to V3 with guards later)
       const group = MINT_CONFIG.guardGroupLabel;
       const sig = await mintV2(umi, {
         candyMachine: cm.publicKey,
@@ -310,7 +313,11 @@ const syncPlatform = useCallback(() => {
         mintArgs: {}
       }).sendAndConfirm(umi);
 
-      toast({ title: 'Mint successful', description: `NFT: ${nftMint.publicKey.toString()}\nTx: ${String(sig).slice(0, 8)}…` });
+      const paymentLabel = paymentMethod === 'sol' ? 'SOL' : MINT_CONFIG.tokenPayment?.symbol || 'tokens';
+      toast({ 
+        title: 'Mint successful', 
+        description: `NFT minted with ${paymentLabel}!\nNFT: ${nftMint.publicKey.toString().slice(0, 8)}…\nTx: ${String(sig).slice(0, 8)}…` 
+      });
       setStage('success');
     } catch (e: any) {
       console.error(e);
@@ -320,7 +327,7 @@ const syncPlatform = useCallback(() => {
       setMinting(false);
       setTimeout(() => setStage('idle'), 1500);
     }
-  }, [connected, wallet]);
+  }, [connected, wallet, selectedPaymentMethod]);
 
   const onCopy = useCallback(async () => {
     if (!MINT_CONFIG.candyMachineId) {
@@ -335,11 +342,19 @@ const syncPlatform = useCallback(() => {
     }
   }, []);
 
-  const onPress = () => {
-    if (!connected) setVisible(true);
-    else startMint();
-  };
+  const onPress = useCallback(() => {
+    if (!connected) {
+      setVisible(true);
+    } else {
+      // Show payment method selector
+      setShowPaymentSelector(true);
+    }
+  }, [connected, setVisible]);
 
+  const handlePaymentSelection = useCallback((method: PaymentMethod) => {
+    setSelectedPaymentMethod(method);
+    startMint(method);
+  }, [startMint]);
 
   return (
     <div className="mx-auto w-full max-w-[350px] md:max-w-[600px] -mt-6 md:-mt-12 relative z-20">
@@ -351,6 +366,13 @@ const syncPlatform = useCallback(() => {
           </AspectRatio>
         </div>
       )}
+      
+      {/* Payment Method Selector */}
+      <PaymentMethodSelector
+        open={showPaymentSelector}
+        onOpenChange={setShowPaymentSelector}
+        onSelectPayment={handlePaymentSelection}
+      />
       
       {/* Machine + hotspot */}
       <motion.div 

@@ -23,7 +23,7 @@ export function useCandyMachine() {
       setLoading(true);
       setError(null);
 
-      // Dynamic imports prevent early evaluation of Node-like deps
+      // Dynamic imports for Candy Machine V3
       const [{ createUmi }, { publicKey }, { fetchCandyMachine }] = await Promise.all([
         import('@metaplex-foundation/umi-bundle-defaults'),
         import('@metaplex-foundation/umi'),
