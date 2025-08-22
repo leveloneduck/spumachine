@@ -22,6 +22,9 @@ const Hero = () => {
 
   return (
     <section ref={sectionRef} className="relative overflow-hidden pb-8">
+      {/* Base metallic industrial background */}
+      <div className="absolute inset-0 -z-30 bg-gradient-to-br from-[hsl(var(--metal-dark))] via-[hsl(var(--metal-base))] to-[hsl(var(--metal-dark))]" />
+      
       {/* Top half background - Red mouths */}
       <div
         className="absolute inset-0 -z-20"
@@ -33,7 +36,7 @@ const Hero = () => {
           clipPath: `polygon(0 0, 100% 0, 100% var(--hero-split, 645px), 0 var(--hero-split, 645px))`,
         }}
       />
-      {/* Bottom half background - Cyberpunk collage */}
+      {/* Bottom half background - Limbots collage */}
       <div
         className="absolute inset-0 -z-20"
         style={{
@@ -44,12 +47,14 @@ const Hero = () => {
           clipPath: `polygon(0 var(--hero-split, 645px), 100% var(--hero-split, 645px), 100% 100%, 0 100%)`,
         }}
       />
-      {/* Subtle overlay for readability */}
-      <div
+      {/* Industrial rust overlay matching PIN page */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-tr from-[hsl(var(--rust-dark)/0.4)] via-transparent to-[hsl(var(--rust-base)/0.3)]" />
+      
+      {/* Radial accent overlays */}
+      <div 
         className="absolute inset-0 -z-10"
         style={{
-          backgroundImage:
-            'linear-gradient(to bottom, hsl(var(--background) / 0.1) 0px, hsl(var(--background) / 0.1) var(--hero-split, 645px), hsl(var(--muted) / 0.2) var(--hero-split, 645px), hsl(var(--muted) / 0.2) 100%)',
+          background: 'radial-gradient(circle at 30% 20%, hsl(var(--rust-base)/0.2) 0%, transparent 50%), radial-gradient(circle at 80% 80%, hsl(var(--rust-dark)/0.3) 0%, transparent 50%), radial-gradient(circle at 40% 40%, hsl(var(--metal-light)/0.1) 0%, transparent 50%)'
         }}
       />
       {/* Glow */}

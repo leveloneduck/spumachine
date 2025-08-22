@@ -4,7 +4,7 @@ const NeonFooter = () => {
   return (
     <footer className="border-t mt-0 bg-muted">
       <div className="container mx-auto py-4 flex flex-col md:flex-row items-center justify-between gap-4">
-        <p className="text-sm text-muted-foreground">© {new Date().getFullYear()} 404 Cyberpunk Collection</p>
+        <p className="text-sm text-muted-foreground">© {new Date().getFullYear()} 404 Limbots Collection</p>
         <div className="flex items-center gap-4">
           <a href="https://twitter.com" target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground hover-scale" aria-label="Twitter">
             <Twitter size={18} />
