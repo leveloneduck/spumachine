@@ -9,7 +9,7 @@ const NeonFooter = () => {
       {/* Rust overlay */}
       <div className="absolute inset-0 bg-gradient-to-r from-[hsl(var(--rust-dark)/0.2)] via-transparent to-[hsl(var(--rust-base)/0.2)]" />
       
-      <div className="container mx-auto py-2 flex flex-col md:flex-row items-center justify-between gap-2 relative z-10">
+      <div className="container mx-auto py-1 px-4 flex flex-col md:flex-row items-center justify-between gap-1 relative z-10">
         <p className="text-sm text-[hsl(var(--metal-light))]">© {new Date().getFullYear()} 404 Limbots Collection</p>
         <div className="flex items-center gap-4">
           <a href="https://twitter.com" target="_blank" rel="noreferrer" className="text-[hsl(var(--metal-light))] hover:text-[hsl(var(--amber-glow))] hover-scale transition-colors duration-200" aria-label="Twitter">

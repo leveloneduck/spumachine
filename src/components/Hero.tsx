@@ -21,18 +21,21 @@ const Hero = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative overflow-hidden pb-8">
-      {/* Base metallic industrial background matching PIN page */}
-      <div className="absolute inset-0 -z-20 bg-gradient-to-br from-[hsl(var(--metal-dark))] via-[hsl(var(--metal-base))] to-[hsl(var(--metal-dark))]" />
+    <section ref={sectionRef} className="relative overflow-hidden pb-8 min-h-screen">
+      {/* Base metallic industrial background - extends to full page */}
+      <div className="absolute inset-0 -z-20 bg-gradient-to-br from-[hsl(var(--metal-dark))] via-[hsl(var(--metal-base))] to-[hsl(var(--metal-dark))]" 
+           style={{ minHeight: '100vh' }} />
       
-      {/* Industrial rust overlay matching PIN page */}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-tr from-[hsl(var(--rust-dark)/0.4)] via-transparent to-[hsl(var(--rust-base)/0.3)]" />
+      {/* Industrial rust overlay - extends to full page */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-tr from-[hsl(var(--rust-dark)/0.4)] via-transparent to-[hsl(var(--rust-base)/0.3)]" 
+           style={{ minHeight: '100vh' }} />
       
       {/* Radial accent overlays */}
       <div 
         className="absolute inset-0 -z-10"
         style={{
-          background: 'radial-gradient(circle at 30% 20%, hsl(var(--rust-base)/0.2) 0%, transparent 50%), radial-gradient(circle at 80% 80%, hsl(var(--rust-dark)/0.3) 0%, transparent 50%), radial-gradient(circle at 40% 40%, hsl(var(--metal-light)/0.1) 0%, transparent 50%)'
+          background: 'radial-gradient(circle at 30% 20%, hsl(var(--rust-base)/0.2) 0%, transparent 50%), radial-gradient(circle at 80% 80%, hsl(var(--rust-dark)/0.3) 0%, transparent 50%), radial-gradient(circle at 40% 40%, hsl(var(--metal-light)/0.1) 0%, transparent 50%)',
+          minHeight: '100vh'
         }}
       />
       {/* Glow */}

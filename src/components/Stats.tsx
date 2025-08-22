@@ -16,33 +16,33 @@ const Stats = () => {
         className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 max-w-[240px] sm:max-w-3xl mx-auto"
       >
         <div className="relative rounded-xl p-3 sm:p-6 overflow-hidden
-                        bg-gradient-to-b from-[hsl(var(--steel-light))] via-[hsl(var(--steel-base))] to-[hsl(var(--steel-dark))]
-                        border-2 border-[hsl(var(--metal-light))]
-                        shadow-[0_4px_0_hsl(var(--metal-dark)),0_8px_16px_rgba(0,0,0,0.4),inset_0_1px_0_hsl(var(--steel-light)/0.3)]
+                        bg-gradient-to-b from-[hsl(var(--metal-base))] via-[hsl(var(--metal-dark))] to-[hsl(var(--metal-base))]
+                        border-2 border-[hsl(var(--metal-light)/0.3)]
+                        shadow-[0_4px_0_hsl(var(--metal-dark)),0_8px_16px_rgba(0,0,0,0.4),inset_0_1px_0_hsl(var(--metal-light)/0.2)]
                         before:absolute before:inset-0 before:bg-gradient-to-br before:from-[hsl(var(--rust-base)/0.1)] before:via-transparent before:to-[hsl(var(--rust-dark)/0.15)]
-                        after:absolute after:top-0 after:left-0 after:right-0 after:h-px after:bg-[hsl(var(--steel-light)/0.4)]">
+                        after:absolute after:top-0 after:left-0 after:right-0 after:h-px after:bg-[hsl(var(--metal-light)/0.3)]">
           <p className="text-sm text-[hsl(var(--metal-light))] relative z-10">Minted</p>
           <p className="mt-2 text-2xl sm:text-3xl font-bold text-[hsl(var(--amber-display))] relative z-10">{loading ? '...' : stats.minted}</p>
         </div>
         <div className="relative rounded-xl p-3 sm:p-6 overflow-hidden
-                        bg-gradient-to-b from-[hsl(var(--copper-base))] via-[hsl(var(--rust-base))] to-[hsl(var(--copper-base))]
-                        border-2 border-[hsl(var(--rust-dark))]
-                        shadow-[0_4px_0_hsl(var(--metal-dark)),0_8px_16px_rgba(0,0,0,0.4),inset_0_1px_0_hsl(var(--copper-base)/0.4)]
-                        before:absolute before:inset-0 before:bg-gradient-to-br before:from-[hsl(var(--rust-light)/0.1)] before:to-transparent
-                        after:absolute after:top-0 after:left-0 after:right-0 after:h-px after:bg-[hsl(var(--copper-base)/0.3)]">
+                        bg-gradient-to-b from-[hsl(var(--metal-base))] via-[hsl(var(--metal-dark))] to-[hsl(var(--metal-base))]
+                        border-2 border-[hsl(var(--metal-light)/0.3)]
+                        shadow-[0_4px_0_hsl(var(--metal-dark)),0_8px_16px_rgba(0,0,0,0.4),inset_0_1px_0_hsl(var(--metal-light)/0.2)]
+                        before:absolute before:inset-0 before:bg-gradient-to-br before:from-[hsl(var(--rust-base)/0.15)] before:to-transparent
+                        after:absolute after:top-0 after:left-0 after:right-0 after:h-px after:bg-[hsl(var(--metal-light)/0.3)]">
           <p className="text-sm text-[hsl(var(--metal-light))] relative z-10">Remaining</p>
           <p className="mt-2 text-2xl sm:text-3xl font-bold text-[hsl(var(--amber-display))] relative z-10">{loading ? '...' : stats.remaining}</p>
         </div>
         <div className="relative rounded-xl p-3 sm:p-6 overflow-hidden
-                        bg-gradient-to-b from-[hsl(var(--brass-base))] via-[hsl(var(--copper-base))] to-[hsl(var(--brass-base))]
-                        border-2 border-[hsl(var(--rust-base))]
-                        shadow-[0_4px_0_hsl(var(--metal-dark)),0_8px_16px_rgba(0,0,0,0.4),inset_0_1px_0_hsl(var(--brass-base)/0.6)]
-                        before:absolute before:inset-0 before:bg-gradient-to-br before:from-[hsl(var(--rust-light)/0.1)] before:to-transparent
-                        after:absolute after:top-0 after:left-0 after:right-0 after:h-px after:bg-[hsl(var(--brass-base)/0.4)]">
-          <p className="text-sm text-[hsl(var(--metal-dark))] relative z-10">Progress</p>
+                        bg-gradient-to-b from-[hsl(var(--metal-base))] via-[hsl(var(--metal-dark))] to-[hsl(var(--metal-base))]
+                        border-2 border-[hsl(var(--metal-light)/0.3)]
+                        shadow-[0_4px_0_hsl(var(--metal-dark)),0_8px_16px_rgba(0,0,0,0.4),inset_0_1px_0_hsl(var(--metal-light)/0.2)]
+                        before:absolute before:inset-0 before:bg-gradient-to-br before:from-[hsl(var(--rust-base)/0.1)] before:to-transparent
+                        after:absolute after:top-0 after:left-0 after:right-0 after:h-px after:bg-[hsl(var(--metal-light)/0.3)]">
+          <p className="text-sm text-[hsl(var(--metal-light))] relative z-10">Progress</p>
           <div className="mt-4 relative z-10">
             <Progress value={percent} className="[&>div]:bg-gradient-to-r [&>div]:from-[hsl(var(--amber-glow))] [&>div]:to-[hsl(var(--rust-glow))] bg-[hsl(var(--metal-dark)/0.3)]" />
-            <p className="mt-2 text-sm text-[hsl(var(--metal-dark))]">{loading ? 'Loading...' : `${percent.toFixed(1)}%`}</p>
+            <p className="mt-2 text-sm text-[hsl(var(--metal-light))]">{loading ? 'Loading...' : `${percent.toFixed(1)}%`}</p>
           </div>
         </div>
       </motion.div>
