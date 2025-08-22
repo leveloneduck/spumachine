@@ -539,7 +539,7 @@ const syncPlatform = useCallback(() => {
 
           {/* Main interactive button (hotspot) */}
           <motion.button
-            className="absolute z-20 cursor-pointer disabled:cursor-not-allowed"
+            className="absolute z-20 cursor-pointer disabled:cursor-not-allowed overflow-hidden"
             disabled={minting || stage === 'processing' || stage === 'pressed'}
             onClick={onPress}
             aria-label={connected ? 'Press to mint NFT' : 'Connect wallet to mint NFT'}
@@ -549,16 +549,26 @@ const syncPlatform = useCallback(() => {
               width: `${hotspot.width}%`,
               height: `${hotspot.height}%`,
               aspectRatio: '1 / 1',
+              contain: 'layout style',
+              willChange: 'transform',
+              userSelect: 'none',
+              fontSize: 0,
+              textIndent: '-9999px',
+              color: 'transparent'
             }}
           >
-            {/* Press Here Button Design */}
+            {/* Press Here Button Design with contained animations */}
             <motion.div
-              className="relative h-full w-full rounded-full select-none"
+              className="relative h-full w-full rounded-full select-none overflow-hidden"
+              style={{
+                transformOrigin: 'center',
+                clipPath: 'circle(50% at center)'
+              }}
               animate={connected && stage === 'idle' ? {
                 boxShadow: [
-                  "0 0 16px hsl(var(--primary) / 0.3)",
-                  "0 0 24px hsl(var(--primary) / 0.5)",
-                  "0 0 16px hsl(var(--primary) / 0.3)"
+                  "0 0 8px hsl(var(--primary) / 0.3)",
+                  "0 0 12px hsl(var(--primary) / 0.4)",
+                  "0 0 8px hsl(var(--primary) / 0.3)"
                 ]
               } : {}}
               transition={connected && stage === 'idle' ? {
@@ -567,27 +577,25 @@ const syncPlatform = useCallback(() => {
                 ease: "easeInOut"
               } : {}}
               whileHover={{
-                scale: 1.05,
+                scale: 1.02,
                 boxShadow: `
-                  0 0 36px hsl(var(--primary) / 0.5),
                   0 0 16px hsl(var(--primary) / 0.4),
-                  inset 0 1px 2px hsl(var(--foreground) / 0.15)
+                  0 0 8px hsl(var(--primary) / 0.3)
                 `,
                 transition: { duration: 0.2 }
               }}
               whileTap={{
-                scale: 0.95,
+                scale: 0.98,
                 boxShadow: `
-                  0 0 48px hsl(var(--primary) / 0.7),
-                  0 0 24px hsl(var(--primary) / 0.6),
-                  inset 0 2px 4px hsl(var(--foreground) / 0.2)
+                  0 0 20px hsl(var(--primary) / 0.5),
+                  0 0 10px hsl(var(--primary) / 0.4)
                 `,
                 transition: { duration: 0.1 }
               }}
             >
-              {/* Ring Animation Layer */}
+              {/* Ring Animation Layer with containment */}
               <motion.div 
-                className="absolute inset-0 rounded-full"
+                className="absolute inset-0 rounded-full overflow-hidden"
                 style={{
                   background: `conic-gradient(from 0deg, 
                     hsl(var(--primary) / 0.3), 
@@ -597,51 +605,62 @@ const syncPlatform = useCallback(() => {
                 }}
                 whileHover={{
                   background: `conic-gradient(from 0deg, 
-                    hsl(var(--primary) / 0.5), 
+                    hsl(var(--primary) / 0.4), 
                     hsl(var(--primary) / 0.2), 
-                    hsl(var(--primary) / 0.5))`,
+                    hsl(var(--primary) / 0.4))`,
                   transition: { duration: 0.2 }
                 }}
                 whileTap={{
                   background: `conic-gradient(from 0deg, 
-                    hsl(var(--primary) / 0.8), 
-                    hsl(var(--primary) / 0.4), 
-                    hsl(var(--primary) / 0.8))`,
+                    hsl(var(--primary) / 0.6), 
+                    hsl(var(--primary) / 0.3), 
+                    hsl(var(--primary) / 0.6))`,
                   transition: { duration: 0.1 }
                 }}
               >
                 <div className="w-full h-full rounded-full bg-background/20" />
               </motion.div>
 
-              {/* Main Button Content */}
+              {/* Main Button Content with proper containment */}
               <motion.div className="relative z-10 h-full w-full rounded-full overflow-hidden">
                 <motion.img
                   src="/PRESS HERE.png"
-                  alt={connected ? 'Press to mint' : 'Connect wallet to mint'}
+                  alt=""
                   className="h-full w-full object-fill select-none pointer-events-none"
                   draggable={false}
                   loading="lazy"
+                  style={{
+                    userSelect: 'none',
+                    WebkitUserSelect: 'none',
+                    fontSize: 0,
+                    textIndent: '-9999px'
+                  }}
                   whileTap={{
-                    filter: "brightness(1.2) contrast(1.1)",
+                    filter: "brightness(1.1) contrast(1.05)",
                     transition: { duration: 0.1 }
                   }}
                 />
                 
-                {/* Press Ripple Effect */}
+                {/* Contained Press Ripple Effect */}
                 <motion.div
                   className="absolute inset-0 bg-primary/20 rounded-full"
+                  style={{ 
+                    clipPath: 'circle(50% at center)',
+                    transformOrigin: 'center'
+                  }}
                   initial={{ scale: 0, opacity: 0 }}
                   whileTap={{
-                    scale: [0, 1.5],
-                    opacity: [0, 1, 0],
-                    transition: { duration: 0.5, ease: "easeOut" }
+                    scale: [0, 1.0],
+                    opacity: [0, 0.8, 0],
+                    transition: { duration: 0.4, ease: "easeOut" }
                   }}
                 />
 
-                {/* Button Press State */}
+                {/* Button Press State with containment */}
                 {stage === 'pressed' && (
                   <motion.div 
                     className="absolute inset-0 bg-primary/30 rounded-full"
+                    style={{ clipPath: 'circle(50% at center)' }}
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     exit={{ opacity: 0 }}
@@ -668,7 +687,7 @@ const syncPlatform = useCallback(() => {
                 {/* Loading State Enhancement */}
                 {minting && (
                   <motion.div 
-                    className="absolute inset-0 grid place-items-center bg-background/70"
+                    className="absolute inset-0 grid place-items-center bg-background/70 rounded-full"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.2 }}
@@ -676,9 +695,9 @@ const syncPlatform = useCallback(() => {
                     <motion.div
                       animate={{ 
                         boxShadow: [
-                          "0 0 8px hsl(var(--primary) / 0.3)",
-                          "0 0 16px hsl(var(--primary) / 0.6)",
-                          "0 0 8px hsl(var(--primary) / 0.3)"
+                          "0 0 4px hsl(var(--primary) / 0.3)",
+                          "0 0 8px hsl(var(--primary) / 0.4)",
+                          "0 0 4px hsl(var(--primary) / 0.3)"
                         ]
                       }}
                       transition={{ 
@@ -693,10 +712,11 @@ const syncPlatform = useCallback(() => {
                   </motion.div>
                 )}
 
-                {/* Success/Error Flash */}
+                {/* Success/Error Flash with containment */}
                 {(stage === 'success' || stage === 'error') && (
                   <motion.div
                     className={`absolute inset-0 ${stage === 'success' ? 'bg-green-500/30' : 'bg-red-500/30'} rounded-full`}
+                    style={{ clipPath: 'circle(50% at center)' }}
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ 
                       opacity: [0, 0.8, 0], 
