@@ -107,46 +107,53 @@ export function PaymentMethodSelector({ open, onOpenChange, onSelectPayment }: P
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md bg-background/95 backdrop-blur-sm border border-border/50">
-        <DialogHeader>
-          <DialogTitle className="text-center text-xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-            Select Payment Method
+      <DialogContent className="sm:max-w-md bg-gradient-to-br from-[hsl(var(--metal-dark)/0.95)] to-[hsl(var(--metal-base)/0.9)] backdrop-blur-sm border-2 border-[hsl(var(--rust-base)/0.6)] shadow-[0_0_40px_hsl(var(--amber-glow)/0.3)]">
+        {/* Rust overlay */}
+        <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-[hsl(var(--rust-dark)/0.1)] via-transparent to-[hsl(var(--rust-base)/0.1)]" />
+        
+        <DialogHeader className="relative z-10">
+          <DialogTitle className="text-center text-xl font-bold text-[hsl(var(--amber-display))] drop-shadow-[0_0_20px_hsl(var(--amber-glow)/0.4)] tracking-wide">
+            SELECT PAYMENT METHOD
           </DialogTitle>
         </DialogHeader>
 
-        <div className="space-y-4">
+        <div className="space-y-4 relative z-10">
           {/* SOL Payment Option */}
           <motion.div
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            <Card className="cursor-pointer border-2 hover:border-primary/50 transition-all duration-300">
-              <CardHeader className="pb-3">
-                <CardTitle className="flex items-center gap-3">
-                  <div className="p-2 bg-gradient-to-br from-purple-500/20 to-blue-500/20 rounded-lg">
-                    <Zap className="w-5 h-5 text-primary" />
+            <Card className="cursor-pointer border-2 border-[hsl(var(--rust-base)/0.4)] hover:border-[hsl(var(--amber-glow)/0.6)] transition-all duration-300 bg-gradient-to-br from-[hsl(var(--metal-base)/0.6)] to-[hsl(var(--metal-dark)/0.8)] shadow-[0_4px_20px_hsl(var(--metal-dark)/0.5)]">
+              {/* Inner rust accent */}
+              <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-[hsl(var(--rust-dark)/0.05)] via-transparent to-[hsl(var(--rust-base)/0.05)]" />
+              
+              <CardHeader className="pb-3 relative z-10">
+                <CardTitle className="flex items-center gap-3 text-[hsl(var(--metal-light))]">
+                  <div className="p-2 bg-gradient-to-br from-[hsl(var(--amber-glow)/0.3)] to-[hsl(var(--amber-display)/0.2)] rounded-lg border border-[hsl(var(--rust-base)/0.3)]">
+                    <Zap className="w-5 h-5 text-[hsl(var(--amber-display))]" />
                   </div>
-                  <span>SOL Payment</span>
-                  <Badge variant="secondary" className="ml-auto">Default</Badge>
+                  <span className="font-bold tracking-wide">$SOL PAYMENT</span>
+                  <Badge variant="secondary" className="ml-auto bg-[hsl(var(--rust-base)/0.3)] text-[hsl(var(--amber-display))] border-[hsl(var(--rust-base)/0.5)]">DEFAULT</Badge>
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3">
+              <CardContent className="space-y-3 relative z-10">
                 <div className="flex justify-between items-center">
-                  <span className="text-muted-foreground">Cost:</span>
-                  <span className="font-semibold">{solPrice} SOL</span>
+                  <span className="text-[hsl(var(--metal-light)/0.8)]">Cost:</span>
+                  <span className="font-bold text-[hsl(var(--amber-display))]">{solPrice} $SOL</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-muted-foreground">Your Balance:</span>
-                  <span className={`font-semibold ${balances.sol >= solPrice ? 'text-green-400' : 'text-red-400'}`}>
-                    {balances.loading ? <Loader2 className="w-4 h-4 animate-spin" /> : `${balances.sol.toFixed(4)} SOL`}
+                  <span className="text-[hsl(var(--metal-light)/0.8)]">Your Balance:</span>
+                  <span className={`font-bold ${balances.sol >= solPrice ? 'text-[hsl(var(--amber-glow))]' : 'text-[hsl(var(--rust-base))]'}`}>
+                    {balances.loading ? <Loader2 className="w-4 h-4 animate-spin text-[hsl(var(--amber-glow))]" /> : `${balances.sol.toFixed(4)} $SOL`}
                   </span>
                 </div>
                 <Button 
+                  variant="mechanical"
                   onClick={() => handleSelectPayment('sol')}
-                  className="w-full"
+                  className="w-full font-bold tracking-wide"
                   disabled={balances.loading || balances.sol < solPrice}
                 >
-                  Pay with SOL
+                  PAY WITH $SOL
                 </Button>
               </CardContent>
             </Card>
@@ -158,56 +165,60 @@ export function PaymentMethodSelector({ open, onOpenChange, onSelectPayment }: P
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              <Card className="cursor-pointer border-2 hover:border-primary/50 transition-all duration-300">
-                <CardHeader className="pb-3">
-                  <CardTitle className="flex items-center gap-3">
-                    <div className="p-2 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-lg">
-                      <Coins className="w-5 h-5 text-green-400" />
+              <Card className="cursor-pointer border-2 border-[hsl(var(--rust-base)/0.4)] hover:border-[hsl(var(--amber-glow)/0.6)] transition-all duration-300 bg-gradient-to-br from-[hsl(var(--metal-base)/0.6)] to-[hsl(var(--metal-dark)/0.8)] shadow-[0_4px_20px_hsl(var(--metal-dark)/0.5)]">
+                {/* Inner rust accent */}
+                <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-[hsl(var(--rust-dark)/0.05)] via-transparent to-[hsl(var(--rust-base)/0.05)]" />
+                
+                <CardHeader className="pb-3 relative z-10">
+                  <CardTitle className="flex items-center gap-3 text-[hsl(var(--metal-light))]">
+                    <div className="p-2 bg-gradient-to-br from-[hsl(var(--rust-base)/0.4)] to-[hsl(var(--rust-dark)/0.3)] rounded-lg border border-[hsl(var(--rust-base)/0.5)]">
+                      <Coins className="w-5 h-5 text-[hsl(var(--amber-display))]" />
                     </div>
-                    <span>{tokenSymbol} Payment</span>
-                    <Badge variant="outline" className="ml-auto">Alternative</Badge>
+                    <span className="font-bold tracking-wide">{tokenSymbol} PAYMENT</span>
+                    <Badge variant="outline" className="ml-auto border-[hsl(var(--rust-base)/0.5)] text-[hsl(var(--amber-display))] bg-transparent">ALTERNATIVE</Badge>
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-3">
+                <CardContent className="space-y-3 relative z-10">
                   <div className="flex justify-between items-center">
-                    <span className="text-muted-foreground">Cost:</span>
-                    <span className="font-semibold">{tokenPrice} {tokenSymbol}</span>
+                    <span className="text-[hsl(var(--metal-light)/0.8)]">Cost:</span>
+                    <span className="font-bold text-[hsl(var(--amber-display))]">{tokenPrice} {tokenSymbol}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-muted-foreground">Your Balance:</span>
-                    <span className={`font-semibold ${balances.token >= tokenPrice ? 'text-green-400' : 'text-red-400'}`}>
-                      {balances.loading ? <Loader2 className="w-4 h-4 animate-spin" /> : `${balances.token.toLocaleString()} ${tokenSymbol}`}
+                    <span className="text-[hsl(var(--metal-light)/0.8)]">Your Balance:</span>
+                    <span className={`font-bold ${balances.token >= tokenPrice ? 'text-[hsl(var(--amber-glow))]' : 'text-[hsl(var(--rust-base))]'}`}>
+                      {balances.loading ? <Loader2 className="w-4 h-4 animate-spin text-[hsl(var(--amber-glow))]" /> : `${balances.token.toLocaleString()} ${tokenSymbol}`}
                     </span>
                   </div>
                   
                   {/* Token Address Display */}
-                  <div className="p-3 bg-muted/50 rounded-lg space-y-2">
+                  <div className="p-3 bg-gradient-to-br from-[hsl(var(--metal-dark)/0.6)] to-[hsl(var(--metal-base)/0.4)] rounded-lg border border-[hsl(var(--rust-base)/0.3)] space-y-2">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">Token Address:</span>
+                      <span className="text-sm text-[hsl(var(--metal-light)/0.7)] font-medium">TOKEN ADDRESS:</span>
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={() => copyToClipboard(MINT_CONFIG.tokenPayment?.mintAddress || '', 'Token')}
-                        className="h-6 px-2"
+                        className="h-6 px-2 hover:bg-[hsl(var(--rust-base)/0.2)] text-[hsl(var(--amber-display))]"
                       >
                         {copiedAddress === 'Token' ? (
-                          <Check className="w-3 h-3 text-green-400" />
+                          <Check className="w-3 h-3 text-[hsl(var(--amber-glow))]" />
                         ) : (
                           <Copy className="w-3 h-3" />
                         )}
                       </Button>
                     </div>
-                    <code className="text-xs font-mono block text-muted-foreground break-all">
+                    <code className="text-xs font-mono block text-[hsl(var(--metal-light)/0.6)] break-all bg-[hsl(var(--metal-dark)/0.4)] p-2 rounded border border-[hsl(var(--rust-base)/0.2)]">
                       {MINT_CONFIG.tokenPayment?.mintAddress}
                     </code>
                   </div>
 
                   <Button 
+                    variant="mechanical"
                     onClick={() => handleSelectPayment('token')}
-                    className="w-full"
+                    className="w-full font-bold tracking-wide"
                     disabled={balances.loading || balances.token < tokenPrice}
                   >
-                    Pay with {tokenSymbol}
+                    PAY WITH {tokenSymbol}
                   </Button>
                 </CardContent>
               </Card>

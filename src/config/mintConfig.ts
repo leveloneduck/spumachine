@@ -19,7 +19,7 @@ export const MINT_CONFIG = {
   tokenPayment: {
     mintAddress: 'REPLACE_WITH_TOKEN_MINT_ADDRESS',
     amount: 100, // Number of tokens required
-    symbol: 'CYBER',
+    symbol: '$SPU',
     destinationAta: undefined, // Optional: specific destination for tokens
   } as TokenPaymentConfig,
   // Optional: if you use a specific guard group, set it here
