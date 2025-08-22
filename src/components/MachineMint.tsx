@@ -559,16 +559,17 @@ const syncPlatform = useCallback(() => {
           >
             {/* Press Here Button Design with contained animations */}
             <motion.div
-              className="relative h-full w-full rounded-full select-none overflow-hidden"
+              className="relative h-full w-full rounded-full select-none"
               style={{
                 transformOrigin: 'center',
-                clipPath: 'circle(50% at center)'
+                borderRadius: '50%',
+                isolation: 'isolate'
               }}
               animate={connected && stage === 'idle' ? {
-                boxShadow: [
-                  "0 0 8px hsl(var(--primary) / 0.3)",
-                  "0 0 12px hsl(var(--primary) / 0.4)",
-                  "0 0 8px hsl(var(--primary) / 0.3)"
+                filter: [
+                  "drop-shadow(0 0 8px hsl(var(--primary) / 0.3))",
+                  "drop-shadow(0 0 12px hsl(var(--primary) / 0.4))",
+                  "drop-shadow(0 0 8px hsl(var(--primary) / 0.3))"
                 ]
               } : {}}
               transition={connected && stage === 'idle' ? {
@@ -578,18 +579,12 @@ const syncPlatform = useCallback(() => {
               } : {}}
               whileHover={{
                 scale: 1.02,
-                boxShadow: `
-                  0 0 16px hsl(var(--primary) / 0.4),
-                  0 0 8px hsl(var(--primary) / 0.3)
-                `,
+                filter: "drop-shadow(0 0 16px hsl(var(--primary) / 0.4)) drop-shadow(0 0 8px hsl(var(--primary) / 0.3))",
                 transition: { duration: 0.2 }
               }}
               whileTap={{
                 scale: 0.98,
-                boxShadow: `
-                  0 0 20px hsl(var(--primary) / 0.5),
-                  0 0 10px hsl(var(--primary) / 0.4)
-                `,
+                filter: "drop-shadow(0 0 20px hsl(var(--primary) / 0.5)) drop-shadow(0 0 10px hsl(var(--primary) / 0.4))",
                 transition: { duration: 0.1 }
               }}
             >
