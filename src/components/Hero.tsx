@@ -22,22 +22,34 @@ const Hero = () => {
 
   return (
     <section ref={sectionRef} className="relative overflow-hidden pb-8">
-      {/* Base background image layer */}
+      {/* Top half background - Cyberpunk collage */}
       <div
         className="absolute inset-0 -z-20"
         style={{
-          backgroundImage: `url('/lovable-uploads/ef68daa5-679e-4283-96bd-574f41af0418.png')`,
-          backgroundSize: '120%',
+          backgroundImage: `url('/lovable-uploads/d681815c-9777-4577-9093-7aa659f572e4.png')`,
+          backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
+          clipPath: `polygon(0 0, 100% 0, 100% var(--hero-split, 645px), 0 var(--hero-split, 645px))`,
         }}
       />
-      {/* Split background overlay with transparency */}
+      {/* Bottom half background - Red mouths */}
+      <div
+        className="absolute inset-0 -z-20"
+        style={{
+          backgroundImage: `url('/lovable-uploads/b24f0e31-c458-47e7-b851-9f97a35de64b.png')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          clipPath: `polygon(0 var(--hero-split, 645px), 100% var(--hero-split, 645px), 100% 100%, 0 100%)`,
+        }}
+      />
+      {/* Subtle overlay for readability */}
       <div
         className="absolute inset-0 -z-10"
         style={{
           backgroundImage:
-            'linear-gradient(to bottom, var(--hero-top, hsl(var(--background) / 0.7)) 0px, var(--hero-top, hsl(var(--background) / 0.7)) var(--hero-split, 100000px), var(--hero-bottom, hsl(var(--muted) / 0.8)) var(--hero-split, 100000px), var(--hero-bottom, hsl(var(--muted) / 0.8)) 100%)',
+            'linear-gradient(to bottom, hsl(var(--background) / 0.1) 0px, hsl(var(--background) / 0.1) var(--hero-split, 645px), hsl(var(--muted) / 0.2) var(--hero-split, 645px), hsl(var(--muted) / 0.2) 100%)',
         }}
       />
       {/* Glow */}
