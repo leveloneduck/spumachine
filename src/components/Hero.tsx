@@ -41,20 +41,38 @@ const Hero = () => {
       {/* Glow */}
       <div className="absolute -z-10 left-1/2 top-1/3 h-[60vw] w-[60vw] max-h-[700px] max-w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/20 blur-3xl" />
 
-      <div className="container mx-auto pt-72 md:pt-12 pb-16 px-4 md:px-8">
+      <div className="container mx-auto pt-8 md:pt-12 pb-16 px-4 md:px-8">
+        {/* Industrial Header */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+          className="text-center mb-8 md:mb-12"
+        >
+          <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-[hsl(var(--amber-display))] 
+                         drop-shadow-[0_0_30px_hsl(var(--amber-glow)/0.5)] tracking-wider
+                         bg-gradient-to-r from-[hsl(var(--amber-display))] via-[hsl(var(--amber-glow))] to-[hsl(var(--amber-display))] 
+                         bg-clip-text text-transparent animate-pulse">
+            SPARE PARTS UNIVERSE
+          </h1>
+          <p className="text-sm md:text-base text-[hsl(var(--metal-light))] mt-2 tracking-[0.2em] font-semibold">
+            EXCLUSIVE ACCESS ONLY
+          </p>
+        </motion.div>
+
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
-          className="flex justify-center scale-[1.8] md:scale-100"
+          className="flex justify-center scale-125 md:scale-100"
         >
-          <h1 className="sr-only">Mint Spare Parts Machine NFT</h1>
+          <h2 className="sr-only">Mint Spare Parts Machine NFT</h2>
           <MachineMint />
         </motion.div>
       </div>
       
       {/* Stats integrated within Hero section with mobile spacing */}
-      <div className="relative mt-32 md:mt-8 pt-0">
+      <div className="relative mt-16 md:mt-8 pt-0">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
@@ -62,6 +80,33 @@ const Hero = () => {
           className="relative z-10"
         >
           <Stats />
+        </motion.div>
+      </div>
+
+      {/* About section integrated with same industrial background */}
+      <div className="relative mt-16 md:mt-12 pb-8">
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="container mx-auto px-4 md:px-8 max-w-4xl relative z-10"
+        >
+          <div className="relative p-6 md:p-8 rounded-lg bg-gradient-to-br from-[hsl(var(--metal-dark)/0.8)] to-[hsl(var(--metal-base)/0.6)] 
+                          border border-[hsl(var(--rust-base)/0.4)] backdrop-blur-sm
+                          shadow-[0_8px_32px_hsl(var(--metal-dark)/0.4)]">
+            {/* Rust accent overlay */}
+            <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-[hsl(var(--rust-dark)/0.1)] via-transparent to-[hsl(var(--rust-base)/0.1)]" />
+            
+            <div className="relative z-10">
+              <h3 className="text-xl md:text-2xl font-bold text-[hsl(var(--amber-display))] mb-4 tracking-wide">
+                About the Collection
+              </h3>
+              <p className="text-sm md:text-base text-[hsl(var(--metal-light))] leading-relaxed">
+                404 one-of-a-kind Limbots artifacts. Each NFT is a portal into a neon-soaked future. 
+                Built on Solana using Candy Machine V3 for a smooth, secure minting flow.
+              </p>
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>
