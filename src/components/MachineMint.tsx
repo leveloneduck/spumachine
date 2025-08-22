@@ -25,7 +25,7 @@ const LOCKED_PLATFORM_Y = 62 as const;
 // Video sources (local, small clips)
 const VIDEO_SOURCES = ['/spu-vid.mp4'] as const;
 
-type Stage = 'idle' | 'minting' | 'success' | 'error';
+type Stage = 'idle' | 'pressed' | 'processing' | 'minting' | 'success' | 'error';
 type LoadingState = 'loading' | 'loaded' | 'error';
 
 const MachineMint = () => {
@@ -290,6 +290,12 @@ const syncPlatform = useCallback(() => {
     }
 
     try {
+      // Multi-stage loading: immediate processing feedback
+      setStage('processing');
+      
+      // Brief processing delay for user feedback
+      await new Promise(resolve => setTimeout(resolve, 300));
+      
       setMinting(true);
       setStage('minting');
 
@@ -384,8 +390,14 @@ const syncPlatform = useCallback(() => {
     if (!connected) {
       setVisible(true);
     } else {
-      // Show payment method selector
-      setShowPaymentSelector(true);
+      // Immediate button press feedback
+      setStage('pressed');
+      
+      // Brief delay for tactile feedback before showing selector
+      setTimeout(() => {
+        setStage('idle');
+        setShowPaymentSelector(true);
+      }, 150);
     }
   }, [connected, setVisible]);
 
@@ -525,57 +537,37 @@ const syncPlatform = useCallback(() => {
             } : undefined}
           />
 
-          {/* Hotspot overlay (invisible in production, visible in ?hotspot mode) */}
+          {/* Main interactive button (hotspot) */}
           <motion.button
-            type="button"
-            aria-label={connected ? 'Press to mint' : 'Connect wallet to mint'}
-            onClick={!devMode ? onPress : undefined}
-            onKeyDown={(e) => {
-              if (!devMode && (e.key === 'Enter' || e.key === ' ')) {
-                e.preventDefault();
-                onPress();
-              }
-            }}
-            className={`absolute z-50 -translate-x-1/2 -translate-y-1/2 outline-none pointer-events-auto focus-visible:ring-2 focus-visible:ring-primary/70 ${devMode ? 'ring-2 ring-primary/60' : 'ring-0'} transition-all duration-200 rounded-full overflow-hidden will-change-transform`}
+            className="absolute z-20 cursor-pointer disabled:cursor-not-allowed"
+            disabled={minting || stage === 'processing' || stage === 'pressed'}
+            onClick={onPress}
+            aria-label={connected ? 'Press to mint NFT' : 'Connect wallet to mint NFT'}
             style={{
               left: `${hotspot.left}%`,
               top: `${hotspot.top}%`,
               width: `${hotspot.width}%`,
               height: `${hotspot.height}%`,
-              minWidth: '0px',
-              minHeight: '0px',
-            }}
-            animate={stage === 'idle' ? { 
-              scale: [1, 1.04, 1], 
-              transition: { 
-                duration: 1.8, 
-                repeat: Infinity, 
-                ease: 'easeInOut' 
-              } 
-            } : undefined}
-            whileHover={{ 
-              scale: 1.08,
-              transition: { duration: 0.2, ease: "easeOut" }
-            }}
-            whileTap={{
-              scale: [0.88, 1.02, 1.0],
-              transition: {
-                duration: 0.3,
-                times: [0, 0.4, 1],
-                ease: "easeOut"
-              }
+              aspectRatio: '1 / 1',
             }}
           >
-            <motion.div 
-              className="relative h-full w-full rounded-full overflow-hidden"
-              style={{
-                boxShadow: `
-                  0 0 24px hsl(var(--primary) / 0.35),
-                  0 0 8px hsl(var(--primary) / 0.25),
-                  inset 0 1px 2px hsl(var(--foreground) / 0.1)
-                `,
-              }}
+            {/* Press Here Button Design */}
+            <motion.div
+              className="relative h-full w-full rounded-full select-none"
+              animate={connected && stage === 'idle' ? {
+                boxShadow: [
+                  "0 0 16px hsl(var(--primary) / 0.3)",
+                  "0 0 24px hsl(var(--primary) / 0.5)",
+                  "0 0 16px hsl(var(--primary) / 0.3)"
+                ]
+              } : {}}
+              transition={connected && stage === 'idle' ? {
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              } : {}}
               whileHover={{
+                scale: 1.05,
                 boxShadow: `
                   0 0 36px hsl(var(--primary) / 0.5),
                   0 0 16px hsl(var(--primary) / 0.4),
@@ -584,6 +576,7 @@ const syncPlatform = useCallback(() => {
                 transition: { duration: 0.2 }
               }}
               whileTap={{
+                scale: 0.95,
                 boxShadow: `
                   0 0 48px hsl(var(--primary) / 0.7),
                   0 0 24px hsl(var(--primary) / 0.6),
@@ -639,11 +632,38 @@ const syncPlatform = useCallback(() => {
                   className="absolute inset-0 bg-primary/20 rounded-full"
                   initial={{ scale: 0, opacity: 0 }}
                   whileTap={{
-                    scale: [0, 1.2],
-                    opacity: [0, 0.8, 0],
-                    transition: { duration: 0.4, ease: "easeOut" }
+                    scale: [0, 1.5],
+                    opacity: [0, 1, 0],
+                    transition: { duration: 0.5, ease: "easeOut" }
                   }}
                 />
+
+                {/* Button Press State */}
+                {stage === 'pressed' && (
+                  <motion.div 
+                    className="absolute inset-0 bg-primary/30 rounded-full"
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.15 }}
+                  />
+                )}
+
+                {/* Processing State */}
+                {stage === 'processing' && (
+                  <motion.div 
+                    className="absolute inset-0 grid place-items-center bg-background/50 rounded-full"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <motion.div
+                      className="w-4 h-4 border-2 border-primary/30 border-t-primary rounded-full"
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                    />
+                  </motion.div>
+                )}
 
                 {/* Loading State Enhancement */}
                 {minting && (
@@ -689,8 +709,6 @@ const syncPlatform = useCallback(() => {
                   />
                 )}
               </motion.div>
-              
-              <span className="sr-only">{connected ? 'Press to mint' : 'Connect wallet to mint'}</span>
             </motion.div>
           </motion.button>
         </AspectRatio>
