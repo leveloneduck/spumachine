@@ -71,7 +71,7 @@
     --secondary-foreground: 210 40% 96%;
 
     --muted: 225 15% 18%;
-    --muted-foreground: 215 20% 75%;
+    --muted-foreground: 215 25% 88%;
 
     --accent: 280 100% 65%; /* purple neon accent */
     --accent-foreground: 230 24% 8%;
@@ -100,7 +100,7 @@
     /* Metal-Rust Dumpster-Dived Aesthetic */
     --metal-dark: 15 15% 8%;
     --metal-base: 20 12% 15%;
-    --metal-light: 25 10% 25%;
+    --metal-light: 25 15% 50%;
     --rust-dark: 15 85% 25%;
     --rust-base: 20 75% 35%;
     --rust-light: 25 65% 45%;

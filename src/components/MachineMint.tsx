@@ -563,13 +563,13 @@ const syncPlatform = useCallback(() => {
               style={{
                 transformOrigin: 'center',
                 borderRadius: '50%',
-                isolation: 'isolate'
+                willChange: 'auto'
               }}
               animate={connected && stage === 'idle' ? {
-                filter: [
-                  "drop-shadow(0 0 8px hsl(var(--primary) / 0.3))",
-                  "drop-shadow(0 0 12px hsl(var(--primary) / 0.4))",
-                  "drop-shadow(0 0 8px hsl(var(--primary) / 0.3))"
+                boxShadow: [
+                  "0 0 8px hsl(var(--primary) / 0.3)",
+                  "0 0 12px hsl(var(--primary) / 0.4)",
+                  "0 0 8px hsl(var(--primary) / 0.3)"
                 ]
               } : {}}
               transition={connected && stage === 'idle' ? {
@@ -579,12 +579,12 @@ const syncPlatform = useCallback(() => {
               } : {}}
               whileHover={{
                 scale: 1.02,
-                filter: "drop-shadow(0 0 16px hsl(var(--primary) / 0.4)) drop-shadow(0 0 8px hsl(var(--primary) / 0.3))",
+                boxShadow: "0 0 16px hsl(var(--primary) / 0.4), 0 0 8px hsl(var(--primary) / 0.3)",
                 transition: { duration: 0.2 }
               }}
               whileTap={{
                 scale: 0.98,
-                filter: "drop-shadow(0 0 20px hsl(var(--primary) / 0.5)) drop-shadow(0 0 10px hsl(var(--primary) / 0.4))",
+                boxShadow: "0 0 20px hsl(var(--primary) / 0.5), 0 0 10px hsl(var(--primary) / 0.4)",
                 transition: { duration: 0.1 }
               }}
             >
