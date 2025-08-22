@@ -8,6 +8,7 @@ import NotFound from "./pages/NotFound";
 import { SolanaWalletProvider } from "./solana/WalletProvider";
 import { Toaster as HotToaster } from "react-hot-toast";
 import PageFrame from "@/components/PageFrame";
+import LeftBorder from "@/components/LeftBorder";
 import { PinAuthProvider, usePinAuth } from "@/contexts/PinAuthContext";
 import PinCodeOverlay from "@/components/PinCodeOverlay";
 
@@ -32,6 +33,7 @@ const AppContent = () => {
   return (
     <>
       <PageFrame />
+      <LeftBorder />
       <HotToaster position="top-right" />
       <Toaster />
       <Sonner />

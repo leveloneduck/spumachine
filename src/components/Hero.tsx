@@ -56,8 +56,6 @@ const Hero = () => {
                        tracking-wider bg-gradient-to-r from-[hsl(var(--amber-display))] 
                        via-[hsl(var(--amber-glow))] to-[hsl(var(--amber-display))] 
                        bg-clip-text text-transparent"
-            zapInterval={4000}
-            intensity="high"
           />
           <p className="text-sm md:text-base text-[hsl(var(--metal-light))] mt-2 tracking-[0.2em] font-semibold">
             EXCLUSIVE ACCESS ONLY
