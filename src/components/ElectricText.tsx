@@ -15,23 +15,24 @@ const ElectricText = ({
         className={`relative z-10 ${className}`}
         animate={{
           textShadow: [
-            "0 0 20px hsl(var(--amber-glow)), 0 0 30px hsl(var(--amber-glow)), 0 0 40px #00BFFF",
-            "0 0 25px hsl(var(--amber-glow)), 0 0 35px hsl(var(--amber-glow)), 0 0 45px #00FFFF",
-            "0 0 20px hsl(var(--amber-glow)), 0 0 30px hsl(var(--amber-glow)), 0 0 40px #00BFFF"
+            "0 0 30px hsl(var(--amber-glow)), 0 0 50px hsl(var(--amber-glow)), 0 0 70px hsl(var(--amber-glow)), 0 0 90px hsl(var(--amber-glow))",
+            "0 0 35px hsl(var(--amber-glow)), 0 0 55px hsl(var(--amber-glow)), 0 0 75px hsl(var(--amber-glow)), 0 0 95px hsl(var(--amber-glow))",
+            "0 0 30px hsl(var(--amber-glow)), 0 0 50px hsl(var(--amber-glow)), 0 0 70px hsl(var(--amber-glow)), 0 0 90px hsl(var(--amber-glow))"
           ],
           filter: [
-            "brightness(1.1) saturate(1.2)",
-            "brightness(1.2) saturate(1.3)",
-            "brightness(1.1) saturate(1.2)"
+            "brightness(0.8) saturate(1.1)",
+            "brightness(0.9) saturate(1.2)",
+            "brightness(0.8) saturate(1.1)"
           ]
         }}
         transition={{
-          duration: 2,
+          duration: 2.5,
           repeat: Infinity,
           ease: "easeInOut"
         }}
         style={{
-          willChange: 'filter, text-shadow'
+          willChange: 'filter, text-shadow',
+          transform: 'translateZ(0)', // GPU acceleration
         }}
       >
         {text}
