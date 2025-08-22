@@ -10,7 +10,7 @@ const NeonHeader = () => {
           <span className="inline-flex h-9 w-9 items-center justify-center rounded-md bg-primary/20 glow-border">
             <Sparkles className="text-primary" size={18} />
           </span>
-          <span className="font-semibold tracking-wide">404 Mint</span>
+          <span className="font-semibold tracking-wide">SPU: Limbots</span>
         </Link>
         <div className="flex items-center gap-3">
           <a href="#mint" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Mint</a>

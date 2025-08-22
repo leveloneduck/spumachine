@@ -13,7 +13,7 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
     nodePolyfills({ protocolImports: true }),
-    mode === 'development' && componentTagger(),
+    // componentTagger removed for production builds
   ].filter(Boolean),
   resolve: {
     alias: {

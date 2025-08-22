@@ -1,78 +1,127 @@
-# Welcome to your Lovable project
+# SPU: Limbots Collection
 
-## Project info
+## About the Project
 
-**URL**: https://lovable.dev/projects/3585a047-baba-47dd-92f2-42640703b150
+SPU: Limbots is an exclusive NFT collection from the Spare Parts Universe. This immersive minting experience combines industrial aesthetics with cutting-edge Solana blockchain technology.
 
-## How can I edit this code?
+**Collection Details:**
+- **Total Supply:** 404 unique Limbots
+- **Blockchain:** Solana
+- **Technology:** Candy Machine V3
+- **Payment Options:** SOL or $SPU tokens
 
-There are several ways of editing your application.
+## Features
 
-**Use Lovable**
+- **Interactive Machine Interface:** Industrial-themed minting experience
+- **Dual Payment System:** Support for both SOL and $SPU token payments
+- **Real-time Statistics:** Live minting progress and collection stats
+- **Mobile Optimized:** Fully responsive design for all devices
+- **Immersive Experience:** Video integration and smooth animations
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/3585a047-baba-47dd-92f2-42640703b150) and start prompting.
+## Technology Stack
 
-Changes made via Lovable will be committed automatically to this repo.
+This project is built with modern web technologies:
 
-**Use your preferred IDE**
+- **Frontend:** React 18 with TypeScript
+- **Styling:** Tailwind CSS with custom design system
+- **Build Tool:** Vite for fast development and optimized builds
+- **UI Components:** shadcn/ui component library
+- **Blockchain:** Solana Web3.js and Metaplex Candy Machine V3
+- **Wallet Integration:** Solana Wallet Adapter
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Development Setup
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Prerequisites
 
-Follow these steps:
+- Node.js 18+ and npm installed
+- A Solana wallet (Phantom, Solflare, etc.)
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
+### Installation
+
+```bash
+# Clone the repository
 git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Navigate to project directory
+cd spu-limbots
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Install dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The application will be available at `http://localhost:8080`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Configuration
 
-**Use GitHub Codespaces**
+Before deploying, update the configuration in `src/config/mintConfig.ts`:
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```typescript
+export const MINT_CONFIG = {
+  // Replace with your actual Candy Machine ID
+  candyMachineId: 'YOUR_CANDY_MACHINE_ID',
+  
+  // Configure $SPU token payment
+  tokenPayment: {
+    mintAddress: 'YOUR_SPU_TOKEN_MINT_ADDRESS',
+    amount: 100, // Amount of $SPU tokens required
+    symbol: '$SPU',
+  },
+  
+  // Other configuration options...
+};
+```
 
-## What technologies are used for this project?
+## Deployment
 
-This project is built with:
+### Build for Production
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+```bash
+npm run build
+```
 
-## How can I deploy this project?
+### Deploy
 
-Simply open [Lovable](https://lovable.dev/projects/3585a047-baba-47dd-92f2-42640703b150) and click on Share -> Publish.
+The built files in the `dist` folder can be deployed to any static hosting service:
 
-## Can I connect a custom domain to my Lovable project?
+- Vercel
+- Netlify
+- AWS S3 + CloudFront
+- GitHub Pages
 
-Yes, you can!
+## Project Structure
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+```
+src/
+├── components/          # React components
+│   ├── ui/             # Reusable UI components
+│   ├── MachineMint.tsx # Main minting interface
+│   └── ...
+├── config/             # Configuration files
+├── hooks/              # Custom React hooks
+├── pages/              # Page components
+├── solana/             # Solana/wallet integration
+└── styles/             # Global styles and design tokens
+```
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## Contributing
 
-## Machine artwork lock
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing-feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-- The machine overlay image is fixed at `/machine.png?v=1`. Replace `public/machine.png` to update it.
-- Calibration modes (`?hotspot`, `?hotspotVideo`) are available only in development (`npm run dev`). They are disabled in production.
+## License
+
+This project is part of the Spare Parts Universe ecosystem.
+
+## Support
+
+For questions and support, please contact the SPU team or visit our community channels.
+
+---
+
+*Built with passion for the Spare Parts Universe community*
