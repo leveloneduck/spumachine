@@ -22,22 +22,22 @@ const Hero = () => {
 
   return (
     <section ref={sectionRef} className="relative overflow-hidden pb-8">
-      {/* Top half background - Cyberpunk collage */}
+      {/* Top half background - Red mouths */}
       <div
         className="absolute inset-0 -z-20"
         style={{
-          backgroundImage: `url('/lovable-uploads/d681815c-9777-4577-9093-7aa659f572e4.png')`,
+          backgroundImage: `url('/lovable-uploads/b24f0e31-c458-47e7-b851-9f97a35de64b.png')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
           clipPath: `polygon(0 0, 100% 0, 100% var(--hero-split, 645px), 0 var(--hero-split, 645px))`,
         }}
       />
-      {/* Bottom half background - Red mouths */}
+      {/* Bottom half background - Cyberpunk collage */}
       <div
         className="absolute inset-0 -z-20"
         style={{
-          backgroundImage: `url('/lovable-uploads/b24f0e31-c458-47e7-b851-9f97a35de64b.png')`,
+          backgroundImage: `url('/lovable-uploads/d681815c-9777-4577-9093-7aa659f572e4.png')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
