@@ -22,31 +22,9 @@ const Hero = () => {
 
   return (
     <section ref={sectionRef} className="relative overflow-hidden pb-8">
-      {/* Base metallic industrial background */}
-      <div className="absolute inset-0 -z-30 bg-gradient-to-br from-[hsl(var(--metal-dark))] via-[hsl(var(--metal-base))] to-[hsl(var(--metal-dark))]" />
+      {/* Base metallic industrial background matching PIN page */}
+      <div className="absolute inset-0 -z-20 bg-gradient-to-br from-[hsl(var(--metal-dark))] via-[hsl(var(--metal-base))] to-[hsl(var(--metal-dark))]" />
       
-      {/* Top half background - Red mouths */}
-      <div
-        className="absolute inset-0 -z-20"
-        style={{
-          backgroundImage: `url('/lovable-uploads/b24f0e31-c458-47e7-b851-9f97a35de64b.png')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          clipPath: `polygon(0 0, 100% 0, 100% var(--hero-split, 645px), 0 var(--hero-split, 645px))`,
-        }}
-      />
-      {/* Bottom half background - Limbots collage */}
-      <div
-        className="absolute inset-0 -z-20"
-        style={{
-          backgroundImage: `url('/lovable-uploads/d681815c-9777-4577-9093-7aa659f572e4.png')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          clipPath: `polygon(0 var(--hero-split, 645px), 100% var(--hero-split, 645px), 100% 100%, 0 100%)`,
-        }}
-      />
       {/* Industrial rust overlay matching PIN page */}
       <div className="absolute inset-0 -z-10 bg-gradient-to-tr from-[hsl(var(--rust-dark)/0.4)] via-transparent to-[hsl(var(--rust-base)/0.3)]" />
       
