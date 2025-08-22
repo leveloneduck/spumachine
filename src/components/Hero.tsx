@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import MachineMint from '@/components/MachineMint';
 import Stats from '@/components/Stats';
+import ElectricText from '@/components/ElectricText';
 
 const Hero = () => {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -49,12 +50,15 @@ const Hero = () => {
           transition={{ duration: 0.8, ease: 'easeOut' }}
           className="text-center mb-8 md:mb-12"
         >
-          <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-[hsl(var(--amber-display))] 
-                         drop-shadow-[0_0_30px_hsl(var(--amber-glow)/0.5)] tracking-wider
-                         bg-gradient-to-r from-[hsl(var(--amber-display))] via-[hsl(var(--amber-glow))] to-[hsl(var(--amber-display))] 
-                         bg-clip-text text-transparent animate-pulse">
-            SPARE PARTS UNIVERSE
-          </h1>
+          <ElectricText 
+            text="SPARE PARTS UNIVERSE"
+            className="text-2xl md:text-4xl lg:text-5xl font-bold text-[hsl(var(--amber-display))] 
+                       tracking-wider bg-gradient-to-r from-[hsl(var(--amber-display))] 
+                       via-[hsl(var(--amber-glow))] to-[hsl(var(--amber-display))] 
+                       bg-clip-text text-transparent"
+            zapInterval={4000}
+            intensity="high"
+          />
           <p className="text-sm md:text-base text-[hsl(var(--metal-light))] mt-2 tracking-[0.2em] font-semibold">
             EXCLUSIVE ACCESS ONLY
           </p>
