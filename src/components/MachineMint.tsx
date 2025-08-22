@@ -280,14 +280,23 @@ const syncPlatform = useCallback(() => {
       return;
     }
 
+    // Validate token payment configuration if using token payment
+    if (paymentMethod === 'token') {
+      if (!MINT_CONFIG.tokenPayment?.mintAddress || MINT_CONFIG.tokenPayment.mintAddress === 'REPLACE_WITH_TOKEN_MINT_ADDRESS') {
+        toast({ title: 'Token mint address missing', description: 'Configure $SPU token mint in src/config/mintConfig.ts' });
+        setStage('error');
+        return;
+      }
+    }
+
     try {
       setMinting(true);
       setStage('minting');
 
       const [
         { createUmi },
-        { publicKey, generateSigner },
-        { fetchCandyMachine, mintV2 },
+        { publicKey, generateSigner, some, sol, lamports },
+        { fetchCandyMachine, mint },
         { walletAdapterIdentity }
       ] = await Promise.all([
         import('@metaplex-foundation/umi-bundle-defaults'),
@@ -302,26 +311,55 @@ const syncPlatform = useCallback(() => {
       const cm = await fetchCandyMachine(umi, publicKey(MINT_CONFIG.candyMachineId as string));
       const nftMint = generateSigner(umi);
 
-      // For now, use V2 minting (will upgrade to V3 with guards later)
+      // Prepare mint arguments based on payment method
+      let mintArgs: any = {};
+
+      if (paymentMethod === 'sol') {
+        // SOL Payment guard
+        mintArgs.solPayment = some({ lamports: lamports(MINT_CONFIG.solPrice * 1_000_000_000) });
+      } else if (paymentMethod === 'token' && MINT_CONFIG.tokenPayment) {
+        // Token Payment guard  
+        mintArgs.tokenPayment = some({
+          mint: publicKey(MINT_CONFIG.tokenPayment.mintAddress),
+          amount: MINT_CONFIG.tokenPayment.amount,
+          ...(MINT_CONFIG.tokenPayment.destinationAta ? {
+            destinationAta: publicKey(MINT_CONFIG.tokenPayment.destinationAta)
+          } : {})
+        });
+      }
+
+      // Use mint function with proper guard handling for V3
       const group = MINT_CONFIG.guardGroupLabel;
-      const sig = await mintV2(umi, {
+      const sig = await mint(umi, {
         candyMachine: cm.publicKey,
-        nftMint,
+        nftMint: nftMint.publicKey,
         collectionMint: (cm as any).collectionMint,
         collectionUpdateAuthority: (cm as any).authority,
         ...(group ? { group } : {}),
-        mintArgs: {}
+        mintArgs
       }).sendAndConfirm(umi);
 
-      const paymentLabel = paymentMethod === 'sol' ? 'SOL' : MINT_CONFIG.tokenPayment?.symbol || 'tokens';
+      const paymentLabel = paymentMethod === 'sol' ? '$SOL' : MINT_CONFIG.tokenPayment?.symbol || '$SPU';
       toast({ 
         title: 'Mint successful', 
         description: `NFT minted with ${paymentLabel}!\nNFT: ${nftMint.publicKey.toString().slice(0, 8)}…\nTx: ${String(sig).slice(0, 8)}…` 
       });
       setStage('success');
     } catch (e: any) {
-      console.error(e);
-      toast({ title: 'Mint failed', description: e?.message ?? 'Please try again.' });
+      console.error('Mint error:', e);
+      
+      // Handle specific guard errors
+      let errorMessage = e?.message ?? 'Please try again.';
+      if (errorMessage.includes('insufficient')) {
+        const paymentLabel = paymentMethod === 'sol' ? '$SOL' : '$SPU';
+        errorMessage = `Insufficient ${paymentLabel} balance for minting.`;
+      } else if (errorMessage.includes('TokenPayment')) {
+        errorMessage = 'Token payment failed. Check your $SPU balance.';
+      } else if (errorMessage.includes('SolPayment')) {
+        errorMessage = 'SOL payment failed. Check your SOL balance.';
+      }
+      
+      toast({ title: 'Mint failed', description: errorMessage });
       setStage('error');
     } finally {
       setMinting(false);
