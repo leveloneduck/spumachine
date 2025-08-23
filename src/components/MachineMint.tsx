@@ -7,6 +7,7 @@ import { Copy, Loader2, Volume2, VolumeX } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { MachineSkeleton } from '@/components/ui/skeleton';
+import { Badge } from '@/components/ui/badge';
 import { toast } from '@/components/ui/use-toast';
 import { MINT_CONFIG, getRpcEndpoint } from '@/config/mintConfig';
 import { PaymentMethodSelector, type PaymentMethod } from '@/components/PaymentMethodSelector';
@@ -732,11 +733,11 @@ const syncPlatform = useCallback(() => {
       {/* Status row */}
       <div className="mt-0 flex flex-col items-center gap-2 text-center">
         <h2 className="sr-only">Mint Spare Parts Machine NFT</h2>
-        <p className="text-sm text-muted-foreground">
+        <Badge variant="outline" className="text-sm bg-muted/50">
           {connected
             ? `Connected: ${publicKey?.toBase58().slice(0, 4)}...${publicKey?.toBase58().slice(-4)}`
             : 'Connect your wallet to mint'}
-        </p>
+        </Badge>
 
         {devMode && (
           <div className="mt-4 w-full max-w-md rounded-lg border bg-card/60 p-3 text-left">
