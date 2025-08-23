@@ -141,5 +141,19 @@
   }
   .story-link:hover::after { transform: scaleX(1); transform-origin: bottom left; }
 
+  /* Mobile hover optimizations - disable hover on touch devices */
+  @media (hover: none) {
+    .payment-card:hover {
+      border-color: hsl(var(--rust-base) / 0.4) !important;
+    }
+  }
+
+  /* Performance optimizations for hover cards */
+  .payment-card {
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
   
 }

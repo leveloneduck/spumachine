@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -28,6 +28,8 @@ export function PaymentMethodSelector({ open, onOpenChange, onSelectPayment }: P
   const { toast } = useToast();
   const [balances, setBalances] = useState<TokenBalance>({ sol: 0, token: 0, loading: true });
   const [copiedAddress, setCopiedAddress] = useState<string | null>(null);
+  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     if (!connected || !publicKey) return;
@@ -85,6 +87,26 @@ export function PaymentMethodSelector({ open, onOpenChange, onSelectPayment }: P
     }
   };
 
+  const handleHoverStart = useCallback((cardId: string) => {
+    if (hoverTimeout) {
+      clearTimeout(hoverTimeout);
+    }
+    const timeout = setTimeout(() => {
+      setHoveredCard(cardId);
+    }, 150); // 150ms delay to prevent oversensitive triggering
+    setHoverTimeout(timeout);
+  }, [hoverTimeout]);
+
+  const handleHoverEnd = useCallback(() => {
+    if (hoverTimeout) {
+      clearTimeout(hoverTimeout);
+    }
+    const timeout = setTimeout(() => {
+      setHoveredCard(null);
+    }, 100); // Short delay on hover end
+    setHoverTimeout(timeout);
+  }, [hoverTimeout]);
+
   const handleSelectPayment = (method: PaymentMethod) => {
     const requiredAmount = method === 'sol' ? MINT_CONFIG.solPrice : MINT_CONFIG.tokenPayment?.amount || 0;
     const userBalance = method === 'sol' ? balances.sol : balances.token;
@@ -120,10 +142,27 @@ export function PaymentMethodSelector({ open, onOpenChange, onSelectPayment }: P
         <div className="space-y-4 relative z-10">
           {/* SOL Payment Option */}
           <motion.div
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+            animate={{ 
+              scale: hoveredCard === 'sol' ? 1.01 : 1,
+              y: hoveredCard === 'sol' ? -2 : 0
+            }}
+            whileTap={{ scale: 0.99 }}
+            onHoverStart={() => handleHoverStart('sol')}
+            onHoverEnd={handleHoverEnd}
+            transition={{ 
+              duration: 0.2, 
+              ease: "easeOut",
+              type: "spring",
+              stiffness: 300,
+              damping: 30
+            }}
+            style={{ 
+              willChange: 'transform',
+              transform: 'translateZ(0)' // GPU acceleration
+            }}
+            className="p-1 rounded-lg" // Extra padding for stable hover zone
           >
-            <Card className="cursor-pointer border-2 border-[hsl(var(--rust-base)/0.4)] hover:border-[hsl(var(--amber-glow)/0.6)] transition-all duration-300 bg-gradient-to-br from-[hsl(var(--metal-base)/0.6)] to-[hsl(var(--metal-dark)/0.8)] shadow-[0_4px_20px_hsl(var(--metal-dark)/0.5)]">
+             <Card className="cursor-pointer border-2 border-[hsl(var(--rust-base)/0.4)] hover:border-[hsl(var(--amber-glow)/0.6)] transition-all duration-200 bg-gradient-to-br from-[hsl(var(--metal-base)/0.6)] to-[hsl(var(--metal-dark)/0.8)] shadow-[0_4px_20px_hsl(var(--metal-dark)/0.5)] payment-card">
               {/* Inner rust accent */}
               <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-[hsl(var(--rust-dark)/0.05)] via-transparent to-[hsl(var(--rust-base)/0.05)]" />
               
@@ -162,10 +201,27 @@ export function PaymentMethodSelector({ open, onOpenChange, onSelectPayment }: P
           {/* Token Payment Option */}
           {MINT_CONFIG.tokenPayment && (
             <motion.div
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              animate={{ 
+                scale: hoveredCard === 'token' ? 1.01 : 1,
+                y: hoveredCard === 'token' ? -2 : 0
+              }}
+              whileTap={{ scale: 0.99 }}
+              onHoverStart={() => handleHoverStart('token')}
+              onHoverEnd={handleHoverEnd}
+              transition={{ 
+                duration: 0.2, 
+                ease: "easeOut",
+                type: "spring",
+                stiffness: 300,
+                damping: 30
+              }}
+              style={{ 
+                willChange: 'transform',
+                transform: 'translateZ(0)' // GPU acceleration
+              }}
+              className="p-1 rounded-lg" // Extra padding for stable hover zone
             >
-              <Card className="cursor-pointer border-2 border-[hsl(var(--rust-base)/0.4)] hover:border-[hsl(var(--amber-glow)/0.6)] transition-all duration-300 bg-gradient-to-br from-[hsl(var(--metal-base)/0.6)] to-[hsl(var(--metal-dark)/0.8)] shadow-[0_4px_20px_hsl(var(--metal-dark)/0.5)]">
+              <Card className="cursor-pointer border-2 border-[hsl(var(--rust-base)/0.4)] hover:border-[hsl(var(--amber-glow)/0.6)] transition-all duration-200 bg-gradient-to-br from-[hsl(var(--metal-base)/0.6)] to-[hsl(var(--metal-dark)/0.8)] shadow-[0_4px_20px_hsl(var(--metal-dark)/0.5)] payment-card">
                 {/* Inner rust accent */}
                 <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-[hsl(var(--rust-dark)/0.05)] via-transparent to-[hsl(var(--rust-base)/0.05)]" />
                 
