@@ -744,7 +744,9 @@ const syncPlatform = useCallback(() => {
         </Badge>
 
         {devMode && (
-          <div className="mt-4 w-full max-w-md rounded-lg border bg-card/60 p-3 text-left">
+          <div className="mt-4 w-full max-w-md rounded-lg metal-card metal-holes p-3 text-left">
+            <div className="corner-hole-bl"></div>
+            <div className="corner-hole-br"></div>
             <p className="text-sm font-medium mb-2">Hotspot calibration</p>
             <div className="grid grid-cols-2 gap-3">
               <label className="text-xs">
@@ -806,7 +808,9 @@ const syncPlatform = useCallback(() => {
         )}
 
         {platformDev && (
-          <div className="mt-4 w-full max-w-md rounded-lg border bg-card/60 p-3 text-left">
+          <div className="mt-4 w-full max-w-md rounded-lg metal-card metal-holes p-3 text-left">
+            <div className="corner-hole-bl"></div>
+            <div className="corner-hole-br"></div>
             <p className="text-sm font-medium mb-2">Platform split calibration</p>
             <label className="text-xs block">
               Y position
@@ -833,7 +837,9 @@ const syncPlatform = useCallback(() => {
         )}
 
         {videoDev && (
-          <div className="mt-4 w-full max-w-md rounded-lg border bg-card/60 p-3 text-left">
+          <div className="mt-4 w-full max-w-md rounded-lg metal-card metal-holes p-3 text-left">
+            <div className="corner-hole-bl"></div>
+            <div className="corner-hole-br"></div>
             <p className="text-sm font-medium mb-2">Video window calibration</p>
             <div className="grid grid-cols-2 gap-3">
               <label className="text-xs">

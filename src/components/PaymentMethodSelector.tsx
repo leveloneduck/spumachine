@@ -162,7 +162,9 @@ export function PaymentMethodSelector({ open, onOpenChange, onSelectPayment }: P
             }}
             className="p-1 rounded-lg" // Extra padding for stable hover zone
           >
-             <Card className="cursor-pointer border-2 border-[hsl(var(--rust-base)/0.4)] hover:border-[hsl(var(--amber-glow)/0.6)] transition-all duration-200 bg-gradient-to-br from-[hsl(var(--metal-base)/0.6)] to-[hsl(var(--metal-dark)/0.8)] shadow-[0_4px_20px_hsl(var(--metal-dark)/0.5)] payment-card">
+             <Card className="cursor-pointer border-2 border-[hsl(var(--rust-base)/0.4)] hover:border-[hsl(var(--amber-glow)/0.6)] transition-all duration-200 bg-gradient-to-br from-[hsl(var(--metal-base)/0.6)] to-[hsl(var(--metal-dark)/0.8)] shadow-[0_4px_20px_hsl(var(--metal-dark)/0.5)] payment-card metal-holes">
+               <div className="corner-hole-bl"></div>
+               <div className="corner-hole-br"></div>
               {/* Inner rust accent */}
               <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-[hsl(var(--rust-dark)/0.05)] via-transparent to-[hsl(var(--rust-base)/0.05)]" />
               
@@ -221,7 +223,9 @@ export function PaymentMethodSelector({ open, onOpenChange, onSelectPayment }: P
               }}
               className="p-1 rounded-lg" // Extra padding for stable hover zone
             >
-              <Card className="cursor-pointer border-2 border-[hsl(var(--rust-base)/0.4)] hover:border-[hsl(var(--amber-glow)/0.6)] transition-all duration-200 bg-gradient-to-br from-[hsl(var(--metal-base)/0.6)] to-[hsl(var(--metal-dark)/0.8)] shadow-[0_4px_20px_hsl(var(--metal-dark)/0.5)] payment-card">
+              <Card className="cursor-pointer border-2 border-[hsl(var(--rust-base)/0.4)] hover:border-[hsl(var(--amber-glow)/0.6)] transition-all duration-200 bg-gradient-to-br from-[hsl(var(--metal-base)/0.6)] to-[hsl(var(--metal-dark)/0.8)] shadow-[0_4px_20px_hsl(var(--metal-dark)/0.5)] payment-card metal-holes">
+                <div className="corner-hole-bl"></div>
+                <div className="corner-hole-br"></div>
                 {/* Inner rust accent */}
                 <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-[hsl(var(--rust-dark)/0.05)] via-transparent to-[hsl(var(--rust-base)/0.05)]" />
                 

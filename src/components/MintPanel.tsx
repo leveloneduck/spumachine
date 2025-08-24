@@ -66,7 +66,9 @@ const MintPanel = () => {
 
   return (
     <section id="mint" className="container mx-auto py-16">
-      <motion.div initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="mx-auto max-w-xl rounded-2xl bg-card/60 glow-border p-8">
+      <motion.div initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="mx-auto max-w-xl rounded-2xl metal-card metal-holes p-8">
+        <div className="corner-hole-bl"></div>
+        <div className="corner-hole-br"></div>
         <div className="flex flex-col items-center gap-3">
           <Button
             onClick={onActionClick}
@@ -92,7 +94,9 @@ const MintPanel = () => {
           <p className="mt-2 text-muted-foreground">Supply: {MINT_CONFIG.totalItems} • Network: {MINT_CONFIG.network}</p>
         </div>
 
-        <div className="mt-6 flex items-center justify-between rounded-lg border bg-background/40 p-4 w-full">
+        <div className="mt-6 flex items-center justify-between rounded-lg metal-card metal-holes p-4 w-full">
+          <div className="corner-hole-bl"></div>
+          <div className="corner-hole-br"></div>
           <div>
             <p className="text-sm text-muted-foreground">Candy Machine</p>
             <p className="font-mono text-sm truncate max-w-[220px]">
