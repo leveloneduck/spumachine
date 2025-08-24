@@ -16,16 +16,31 @@ export const useBrowserFingerprint = () => {
       
       const canvasFingerprint = canvas.toDataURL();
       
+      // Enhanced browser fingerprinting with more entropy sources
       const components = [
         navigator.userAgent,
         navigator.language,
+        navigator.languages?.join(',') || '',
         screen.width + 'x' + screen.height,
         screen.colorDepth,
+        screen.pixelDepth,
         new Date().getTimezoneOffset(),
         navigator.platform,
         navigator.cookieEnabled,
         navigator.doNotTrack,
+        navigator.hardwareConcurrency || 0,
+        navigator.maxTouchPoints || 0,
+        window.devicePixelRatio || 1,
         canvasFingerprint.substring(0, 100), // Truncate canvas data
+        // WebGL fingerprint
+        (() => {
+          try {
+            const gl = document.createElement('canvas').getContext('webgl');
+            return gl ? gl.getParameter(gl.RENDERER) : 'no-webgl';
+          } catch {
+            return 'webgl-error';
+          }
+        })(),
       ];
       
       // Simple hash function

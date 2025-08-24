@@ -3,12 +3,14 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'X-Content-Type-Options': 'nosniff',
+  'X-Frame-Options': 'DENY',
+  'X-XSS-Protection': '1; mode=block',
 };
 
 interface VerifyPinRequest {
   pin: string;
   browserFingerprint: string;
-  ipAddress: string;
   userAgent?: string;
 }
 
@@ -23,11 +25,19 @@ Deno.serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
     
-    const { pin, browserFingerprint, ipAddress, userAgent }: VerifyPinRequest = await req.json();
+    // Extract IP address from request headers (server-side detection)
+    const ipAddress = req.headers.get('cf-connecting-ip') || 
+                     req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 
+                     req.headers.get('x-real-ip') || 
+                     'unknown';
+    
+    const { pin, browserFingerprint, userAgent }: VerifyPinRequest = await req.json();
 
-    // Check rate limiting - max 3 attempts per hour per IP
+    // Enhanced progressive rate limiting
     const oneHourAgo = new Date();
     oneHourAgo.setHours(oneHourAgo.getHours() - 1);
+    const tenMinutesAgo = new Date();
+    tenMinutesAgo.setMinutes(tenMinutesAgo.getMinutes() - 10);
 
     const { data: recentAttempts, error: rateLimitError } = await supabase
       .from('access_logs')
@@ -36,11 +46,20 @@ Deno.serve(async (req) => {
       .eq('success', false)
       .gte('attempted_at', oneHourAgo.toISOString());
 
-    if (rateLimitError) {
-      console.error('Rate limit check error:', rateLimitError);
+    const { data: veryRecentAttempts, error: shortTermError } = await supabase
+      .from('access_logs')
+      .select('*')
+      .eq('ip_address', ipAddress)
+      .eq('success', false)
+      .gte('attempted_at', tenMinutesAgo.toISOString());
+
+    if (rateLimitError || shortTermError) {
+      console.error('Rate limit check error:', rateLimitError || shortTermError);
     }
 
-    if (recentAttempts && recentAttempts.length >= 3) {
+    // Progressive rate limiting: 3 in 10 minutes = immediate block, 5 in hour = block
+    if ((veryRecentAttempts && veryRecentAttempts.length >= 3) || 
+        (recentAttempts && recentAttempts.length >= 5)) {
       // Log the rate-limited attempt
       await supabase.from('access_logs').insert({
         ip_address: ipAddress,
@@ -68,7 +87,15 @@ Deno.serve(async (req) => {
     ].filter(Boolean); // Remove undefined values
 
     const isCorrect = validPins.includes(pin);
-    console.log('PIN validation attempt:', { pin: pin.substring(0, 2) + '***', isCorrect });
+    
+    // Enhanced security logging (without exposing sensitive data)
+    console.log('PIN validation attempt:', { 
+      pinLength: pin.length,
+      fingerprint: browserFingerprint.substring(0, 8) + '***',
+      ipAddress: ipAddress.includes(':') ? '[IPv6]' : ipAddress.replace(/\.\d+$/, '.***'),
+      isCorrect,
+      timestamp: new Date().toISOString()
+    });
 
     // Log the attempt
     const { error: logError } = await supabase.from('access_logs').insert({
@@ -89,10 +116,10 @@ Deno.serve(async (req) => {
       );
     }
 
-    // Create session token
+    // Create session token with shorter duration (4 hours)
     const sessionToken = crypto.randomUUID();
     const expiresAt = new Date();
-    expiresAt.setHours(expiresAt.getHours() + 24);
+    expiresAt.setHours(expiresAt.getHours() + 4);
 
     const { error: sessionError } = await supabase.from('active_sessions').insert({
       session_token: sessionToken,

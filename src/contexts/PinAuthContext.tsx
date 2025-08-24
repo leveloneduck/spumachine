@@ -73,15 +73,11 @@ export const PinAuthProvider: React.FC<PinAuthProviderProps> = ({ children }) =>
     setIsLoading(true);
 
     try {
-      // Get IP address (simplified for demo)
-      const ipResponse = await fetch('https://api.ipify.org?format=json');
-      const { ip } = await ipResponse.json();
-
+      // Server will extract IP from headers - no external API needed
       const { data, error } = await supabase.functions.invoke('verify-pin', {
         body: {
           pin,
           browserFingerprint: fingerprint,
-          ipAddress: ip,
           userAgent: navigator.userAgent
         }
       });
@@ -104,7 +100,23 @@ export const PinAuthProvider: React.FC<PinAuthProviderProps> = ({ children }) =>
     }
   };
 
-  const logout = () => {
+  const logout = async () => {
+    const sessionToken = localStorage.getItem('pin_session_token');
+    
+    // Clean up session on server if possible
+    if (sessionToken && fingerprint) {
+      try {
+        await supabase.functions.invoke('invalidate-session', {
+          body: {
+            sessionToken,
+            browserFingerprint: fingerprint
+          }
+        });
+      } catch (err) {
+        console.error('Session invalidation error:', err);
+      }
+    }
+    
     localStorage.removeItem('pin_session_token');
     setIsAuthenticated(false);
   };

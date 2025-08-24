@@ -8,7 +8,7 @@ const corsHeaders = {
   'X-XSS-Protection': '1; mode=block',
 };
 
-interface ValidateSessionRequest {
+interface InvalidateSessionRequest {
   sessionToken: string;
   browserFingerprint: string;
 }
@@ -24,42 +24,38 @@ Deno.serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
     
-    const { sessionToken, browserFingerprint }: ValidateSessionRequest = await req.json();
+    const { sessionToken, browserFingerprint }: InvalidateSessionRequest = await req.json();
 
-    // Clean up expired sessions first
+    // Delete the specific session
+    const { error } = await supabase
+      .from('active_sessions')
+      .delete()
+      .eq('session_token', sessionToken)
+      .eq('browser_fingerprint', browserFingerprint);
+
+    if (error) {
+      console.error('Failed to invalidate session:', error);
+      return new Response(
+        JSON.stringify({ error: 'Failed to invalidate session' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // Also clean up expired sessions while we're here
     await supabase
       .from('active_sessions')
       .delete()
       .lt('expires_at', new Date().toISOString());
 
-    // Validate session
-    const { data: session, error } = await supabase
-      .from('active_sessions')
-      .select('*')
-      .eq('session_token', sessionToken)
-      .eq('browser_fingerprint', browserFingerprint)
-      .gt('expires_at', new Date().toISOString())
-      .single();
-
-    if (error || !session) {
-      return new Response(
-        JSON.stringify({ valid: false }),
-        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    }
-
     return new Response(
-      JSON.stringify({ 
-        valid: true,
-        expiresAt: session.expires_at
-      }),
+      JSON.stringify({ success: true }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
 
   } catch (error) {
-    console.error('Validate session error:', error);
+    console.error('Invalidate session error:', error);
     return new Response(
-      JSON.stringify({ valid: false }),
+      JSON.stringify({ error: 'Internal server error' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
