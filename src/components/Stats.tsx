@@ -21,6 +21,8 @@ const Stats = () => {
                         shadow-[0_4px_0_hsl(var(--metal-dark)),0_8px_16px_rgba(0,0,0,0.4),inset_0_1px_0_hsl(var(--metal-light)/0.2)]
                         before:absolute before:inset-0 before:bg-gradient-to-br before:from-[hsl(var(--rust-base)/0.1)] before:via-transparent before:to-[hsl(var(--rust-dark)/0.15)]
                         after:absolute after:top-0 after:left-0 after:right-0 after:h-px after:bg-[hsl(var(--metal-light)/0.3)]">
+          <div className="corner-hole-tl"></div>
+          <div className="corner-hole-tr"></div>
           <div className="corner-hole-bl"></div>
           <div className="corner-hole-br"></div>
           <p className="text-sm text-[hsl(var(--metal-light))] relative z-10">Minted</p>
@@ -32,6 +34,8 @@ const Stats = () => {
                         shadow-[0_4px_0_hsl(var(--metal-dark)),0_8px_16px_rgba(0,0,0,0.4),inset_0_1px_0_hsl(var(--metal-light)/0.2)]
                         before:absolute before:inset-0 before:bg-gradient-to-br before:from-[hsl(var(--rust-base)/0.15)] before:to-transparent
                         after:absolute after:top-0 after:left-0 after:right-0 after:h-px after:bg-[hsl(var(--metal-light)/0.3)]">
+          <div className="corner-hole-tl"></div>
+          <div className="corner-hole-tr"></div>
           <div className="corner-hole-bl"></div>
           <div className="corner-hole-br"></div>
           <p className="text-sm text-[hsl(var(--metal-light))] relative z-10">Remaining</p>
@@ -43,6 +47,8 @@ const Stats = () => {
                         shadow-[0_4px_0_hsl(var(--metal-dark)),0_8px_16px_rgba(0,0,0,0.4),inset_0_1px_0_hsl(var(--metal-light)/0.2)]
                         before:absolute before:inset-0 before:bg-gradient-to-br before:from-[hsl(var(--rust-base)/0.1)] before:to-transparent
                         after:absolute after:top-0 after:left-0 after:right-0 after:h-px after:bg-[hsl(var(--metal-light)/0.3)]">
+          <div className="corner-hole-tl"></div>
+          <div className="corner-hole-tr"></div>
           <div className="corner-hole-bl"></div>
           <div className="corner-hole-br"></div>
           <p className="text-sm text-[hsl(var(--metal-light))] relative z-10">Progress</p>
