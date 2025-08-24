@@ -408,7 +408,7 @@ const syncPlatform = useCallback(() => {
   }, [startMint]);
 
   return (
-    <div className="mx-auto w-full max-w-[350px] md:max-w-[600px] -mt-6 md:-mt-12 relative z-20">
+    <div className="mx-auto w-[min(350px,90vw)] md:w-[min(600px,80vw)] -mt-6 md:-mt-12 relative z-20 px-2 md:px-4">
       {/* Loading skeleton */}
       {!assetsReady && (
         <div className="relative select-none origin-top">
@@ -487,13 +487,13 @@ const syncPlatform = useCallback(() => {
           {/* Mute/unmute toggle */}
           <Button
             type="button"
-            variant="secondary"
+            variant="mechanical"
             size="icon"
             onClick={() => setMuted((m) => !m)}
-            className="absolute right-2 top-2 z-40"
+            className="absolute right-4 top-4 z-50 shadow-[0_0_12px_hsl(var(--primary)/0.3)] border-primary/30 bg-background/80 backdrop-blur-sm hover:shadow-[0_0_16px_hsl(var(--primary)/0.4)] hover:border-primary/50 transition-all duration-200"
             aria-label={muted ? 'Unmute background video' : 'Mute background video'}
           >
-            {muted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+            {muted ? <VolumeX size={16} className="text-primary" /> : <Volume2 size={16} className="text-primary" />}
           </Button>
 
           {/* Machine artwork overlay (PNG with transparent window) */}
