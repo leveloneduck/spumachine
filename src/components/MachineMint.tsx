@@ -579,13 +579,13 @@ const syncPlatform = useCallback(() => {
                 ease: "easeInOut"
               } : {}}
               whileHover={{
-                scale: 1.02,
-                boxShadow: "0 0 16px hsl(var(--primary) / 0.4), 0 0 8px hsl(var(--primary) / 0.3)",
+                scale: 1.08,
+                boxShadow: "0 0 40px hsl(var(--primary) / 0.8), 0 0 20px hsl(var(--primary) / 0.6), 0 0 60px hsl(var(--primary) / 0.4)",
                 transition: { duration: 0.2 }
               }}
               whileTap={{
-                scale: 0.98,
-                boxShadow: "0 0 20px hsl(var(--primary) / 0.5), 0 0 10px hsl(var(--primary) / 0.4)",
+                scale: 0.95,
+                boxShadow: "0 0 50px hsl(var(--primary) / 0.9), 0 0 25px hsl(var(--primary) / 0.7), 0 0 80px hsl(var(--primary) / 0.5)",
                 transition: { duration: 0.1 }
               }}
             >
@@ -601,16 +601,16 @@ const syncPlatform = useCallback(() => {
                 }}
                 whileHover={{
                   background: `conic-gradient(from 0deg, 
-                    hsl(var(--primary) / 0.4), 
-                    hsl(var(--primary) / 0.2), 
-                    hsl(var(--primary) / 0.4))`,
+                    hsl(var(--primary) / 0.8), 
+                    hsl(var(--primary) / 0.5), 
+                    hsl(var(--primary) / 0.8))`,
                   transition: { duration: 0.2 }
                 }}
                 whileTap={{
                   background: `conic-gradient(from 0deg, 
-                    hsl(var(--primary) / 0.6), 
-                    hsl(var(--primary) / 0.3), 
-                    hsl(var(--primary) / 0.6))`,
+                    hsl(var(--primary) / 1.0), 
+                    hsl(var(--primary) / 0.7), 
+                    hsl(var(--primary) / 1.0))`,
                   transition: { duration: 0.1 }
                 }}
               >
@@ -631,8 +631,12 @@ const syncPlatform = useCallback(() => {
                     fontSize: 0,
                     textIndent: '-9999px'
                   }}
+                  whileHover={{
+                    filter: "brightness(1.3) contrast(1.15) saturate(1.2)",
+                    transition: { duration: 0.2 }
+                  }}
                   whileTap={{
-                    filter: "brightness(1.1) contrast(1.05)",
+                    filter: "brightness(1.5) contrast(1.25) saturate(1.4)",
                     transition: { duration: 0.1 }
                   }}
                 />
