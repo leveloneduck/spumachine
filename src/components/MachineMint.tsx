@@ -580,7 +580,7 @@ const syncPlatform = useCallback(() => {
               } : {}}
               whileHover={{
                 scale: 1.08,
-                boxShadow: "0 0 40px hsl(var(--primary) / 0.8), 0 0 20px hsl(var(--primary) / 0.6), 0 0 60px hsl(var(--primary) / 0.4)",
+                boxShadow: "0 0 120px hsl(var(--primary) / 1.0), 0 0 80px hsl(var(--primary) / 0.9), 0 0 40px hsl(var(--primary) / 0.8), 0 0 160px hsl(var(--primary) / 0.7), 0 0 200px hsl(var(--primary) / 0.5)",
                 transition: { duration: 0.2 }
               }}
               whileTap={{
