@@ -561,7 +561,7 @@ const syncPlatform = useCallback(() => {
               color: 'transparent'
             }}
           >
-            {/* Press Here Button Design with contained animations */}
+            {/* Press Here Button Design with pronounced border glow */}
             <motion.div
               className="relative h-full w-full rounded-full select-none"
               style={{
@@ -569,56 +569,44 @@ const syncPlatform = useCallback(() => {
                 borderRadius: '50%',
                 willChange: 'auto'
               }}
-              animate={connected && stage === 'idle' ? {
-                boxShadow: [
-                  "0 0 8px hsl(var(--primary) / 0.3)",
-                  "0 0 12px hsl(var(--primary) / 0.4)",
-                  "0 0 8px hsl(var(--primary) / 0.3)"
-                ]
-              } : {}}
-              transition={connected && stage === 'idle' ? {
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut"
-              } : {}}
               whileHover={{
                 scale: 1.08,
-                boxShadow: "0 0 120px hsl(var(--primary) / 1.0), 0 0 80px hsl(var(--primary) / 0.9), 0 0 40px hsl(var(--primary) / 0.8), 0 0 160px hsl(var(--primary) / 0.7), 0 0 200px hsl(var(--primary) / 0.5)",
                 transition: { duration: 0.2 }
               }}
               whileTap={{
                 scale: 0.95,
-                boxShadow: "0 0 50px hsl(var(--primary) / 0.9), 0 0 25px hsl(var(--primary) / 0.7), 0 0 80px hsl(var(--primary) / 0.5)",
                 transition: { duration: 0.1 }
               }}
             >
-              {/* Ring Animation Layer with containment */}
+              {/* Pulsating Border Glow Ring */}
               <motion.div 
-                className="absolute inset-0 rounded-full overflow-hidden"
+                className="absolute inset-0 rounded-full"
                 style={{
-                  background: `conic-gradient(from 0deg, 
-                    hsl(var(--primary) / 0.3), 
-                    hsl(var(--primary) / 0.1), 
-                    hsl(var(--primary) / 0.3))`,
-                  padding: '2px',
+                  background: 'transparent',
+                  border: '3px solid transparent',
+                  borderRadius: '50%'
                 }}
+                animate={connected && stage === 'idle' ? {
+                  boxShadow: [
+                    "0 0 0 1px hsl(var(--primary) / 0.4), 0 0 20px hsl(var(--primary) / 0.6), 0 0 40px hsl(var(--primary) / 0.3)",
+                    "0 0 0 2px hsl(var(--primary) / 0.7), 0 0 35px hsl(var(--primary) / 0.8), 0 0 60px hsl(var(--primary) / 0.5)",
+                    "0 0 0 1px hsl(var(--primary) / 0.4), 0 0 20px hsl(var(--primary) / 0.6), 0 0 40px hsl(var(--primary) / 0.3)"
+                  ]
+                } : {}}
+                transition={connected && stage === 'idle' ? {
+                  duration: 2.5,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                } : {}}
                 whileHover={{
-                  background: `conic-gradient(from 0deg, 
-                    hsl(var(--primary) / 0.8), 
-                    hsl(var(--primary) / 0.5), 
-                    hsl(var(--primary) / 0.8))`,
+                  boxShadow: "0 0 0 2px hsl(var(--primary) / 0.9), 0 0 45px hsl(var(--primary) / 0.9), 0 0 70px hsl(var(--primary) / 0.6)",
                   transition: { duration: 0.2 }
                 }}
                 whileTap={{
-                  background: `conic-gradient(from 0deg, 
-                    hsl(var(--primary) / 1.0), 
-                    hsl(var(--primary) / 0.7), 
-                    hsl(var(--primary) / 1.0))`,
+                  boxShadow: "0 0 0 3px hsl(var(--primary) / 1.0), 0 0 30px hsl(var(--primary) / 0.8), 0 0 50px hsl(var(--primary) / 0.5)",
                   transition: { duration: 0.1 }
                 }}
-              >
-                <div className="w-full h-full rounded-full bg-background/20" />
-              </motion.div>
+              />
 
               {/* Main Button Content with proper containment */}
               <motion.div className="relative z-10 h-full w-full rounded-full overflow-hidden">
