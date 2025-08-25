@@ -484,19 +484,8 @@ const syncPlatform = useCallback(() => {
             </div>
           )}
 
-          {/* Control buttons: Wallet Connect + Volume */}
+          {/* Control buttons: Volume */}
           <div className="absolute right-4 top-4 z-50 flex gap-2">
-            {/* Wallet Connect Button */}
-            <Button
-              type="button"
-              variant="mechanical"
-              onClick={() => connected ? {} : setVisible(true)}
-              className="h-8 md:h-10 w-auto px-3 md:px-4 shadow-[0_0_12px_hsl(var(--primary)/0.3)] border-primary/30 bg-background/80 backdrop-blur-sm hover:shadow-[0_0_16px_hsl(var(--primary)/0.4)] hover:border-primary/50 transition-all duration-200"
-              aria-label={connected ? `Connected: ${publicKey?.toBase58().slice(0, 4)}...` : 'Connect wallet'}
-            >
-              <span className="text-xs md:text-sm text-primary">Select Wallet</span>
-            </Button>
-
             {/* Mute/unmute toggle */}
             <Button
               type="button"
@@ -756,6 +745,17 @@ const syncPlatform = useCallback(() => {
             ? `Connected: ${publicKey?.toBase58().slice(0, 4)}...${publicKey?.toBase58().slice(-4)}`
             : 'Connect your wallet to mint'}
         </Badge>
+
+        {/* Wallet Connect Button */}
+        <Button
+          type="button"
+          variant="mechanical"
+          onClick={() => connected ? {} : setVisible(true)}
+          className="h-10 md:h-12 w-auto px-4 md:px-6 shadow-[0_0_12px_hsl(var(--primary)/0.3)] border-primary/30 bg-background/80 backdrop-blur-sm hover:shadow-[0_0_16px_hsl(var(--primary)/0.4)] hover:border-primary/50 transition-all duration-200"
+          aria-label={connected ? `Connected: ${publicKey?.toBase58().slice(0, 4)}...` : 'Connect wallet'}
+        >
+          <span className="text-sm md:text-base text-primary">Select Wallet</span>
+        </Button>
 
         {devMode && (
           <div className="mt-4 w-full max-w-md rounded-lg metal-card metal-holes p-3 text-left">
