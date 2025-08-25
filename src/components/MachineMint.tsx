@@ -620,60 +620,29 @@ const syncPlatform = useCallback(() => {
                 <div className="w-full h-full rounded-full bg-background/20" />
               </motion.div>
 
-              {/* Perfect Circular Glow Effect */}
+              {/* Subtle Pulsating Border Glow */}
               <motion.div
                 className="absolute inset-0 rounded-full"
                 style={{
-                  background: `radial-gradient(circle at center, 
-                    hsl(var(--primary) / 0.8) 0%, 
-                    hsl(var(--primary) / 0.4) 40%, 
-                    hsl(var(--primary) / 0.2) 70%, 
-                    transparent 100%)`,
-                  filter: 'blur(12px)',
-                  transform: 'scale(1.4)',
-                  aspectRatio: '1',
+                  border: '2px solid hsl(var(--primary) / 0.6)',
+                  boxShadow: `0 0 20px hsl(var(--primary) / 0.4), 
+                              0 0 40px hsl(var(--primary) / 0.2), 
+                              inset 0 0 15px hsl(var(--primary) / 0.1)`,
                 }}
                 animate={{
-                  opacity: [0.4, 1, 0.4],
-                  scale: [1.4, 1.7, 1.4],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              />
-
-              {/* Strong Pulsating Border Ring */}
-              <motion.div
-                className="absolute inset-0 rounded-full"
-                style={{
-                  border: '3px solid transparent',
-                  background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)) padding-box, 
-                              conic-gradient(from 0deg, 
-                                hsl(var(--primary) / 1), 
-                                hsl(var(--primary) / 0.5), 
-                                hsl(var(--primary) / 1)) border-box`,
-                  boxShadow: `inset 0 0 30px hsl(var(--primary) / 0.6), 
-                              0 0 50px hsl(var(--primary) / 0.8), 
-                              0 0 100px hsl(var(--primary) / 0.6), 
-                              0 0 200px hsl(var(--primary) / 0.4)`,
-                  aspectRatio: '1',
-                }}
-                animate={{
-                  boxShadow: [
-                    `inset 0 0 30px hsl(var(--primary) / 0.6), 0 0 50px hsl(var(--primary) / 0.8), 0 0 100px hsl(var(--primary) / 0.6), 0 0 200px hsl(var(--primary) / 0.4)`,
-                    `inset 0 0 50px hsl(var(--primary) / 1), 0 0 80px hsl(var(--primary) / 1), 0 0 150px hsl(var(--primary) / 0.8), 0 0 300px hsl(var(--primary) / 0.6)`,
-                    `inset 0 0 30px hsl(var(--primary) / 0.6), 0 0 50px hsl(var(--primary) / 0.8), 0 0 100px hsl(var(--primary) / 0.6), 0 0 200px hsl(var(--primary) / 0.4)`
+                  borderColor: [
+                    'hsl(var(--primary) / 0.6)',
+                    'hsl(var(--primary) / 0.9)',
+                    'hsl(var(--primary) / 0.6)'
                   ],
-                  background: [
-                    `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)) padding-box, conic-gradient(from 0deg, hsl(var(--primary) / 1), hsl(var(--primary) / 0.5), hsl(var(--primary) / 1)) border-box`,
-                    `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)) padding-box, conic-gradient(from 180deg, hsl(var(--primary) / 1), hsl(var(--primary) / 0.3), hsl(var(--primary) / 1)) border-box`,
-                    `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)) padding-box, conic-gradient(from 0deg, hsl(var(--primary) / 1), hsl(var(--primary) / 0.5), hsl(var(--primary) / 1)) border-box`
+                  boxShadow: [
+                    `0 0 20px hsl(var(--primary) / 0.4), 0 0 40px hsl(var(--primary) / 0.2), inset 0 0 15px hsl(var(--primary) / 0.1)`,
+                    `0 0 35px hsl(var(--primary) / 0.7), 0 0 70px hsl(var(--primary) / 0.4), inset 0 0 25px hsl(var(--primary) / 0.2)`,
+                    `0 0 20px hsl(var(--primary) / 0.4), 0 0 40px hsl(var(--primary) / 0.2), inset 0 0 15px hsl(var(--primary) / 0.1)`
                   ]
                 }}
                 transition={{
-                  duration: 1.5,
+                  duration: 2,
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
