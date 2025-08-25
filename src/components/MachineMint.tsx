@@ -571,26 +571,25 @@ const syncPlatform = useCallback(() => {
                 overflow: 'visible',
                 transform: 'translate3d(0,0,0)'
               }}
-              animate={connected && stage === 'idle' ? {
-                boxShadow: [
-                  // Primary pulsating glow - more luminous
+              animate={{
+                boxShadow: connected && stage === 'idle' ? [
+                  // Enhanced pulsating glow when connected
                   "0 0 50px #ffd700ff, 0 0 100px #ffd700cc, 0 0 150px #ffd70099, 0 0 30px #ffa500ff, 0 0 60px #ffa500cc, 0 0 90px #ffa50099, 0 0 200px #ffd70066",
                   "0 0 60px #00ffffff, 0 0 120px #00ffffcc, 0 0 180px #00ffff99, 0 0 40px #40e0d0ff, 0 0 80px #40e0d0cc, 0 0 120px #40e0d099, 0 0 220px #00ffff66", 
                   "0 0 50px #ffd700ff, 0 0 100px #ffd700cc, 0 0 150px #ffd70099, 0 0 30px #ffa500ff, 0 0 60px #ffa500cc, 0 0 90px #ffa50099, 0 0 200px #ffd70066"
-                ]
-              } : {
-                // Secondary more luminous pulsating glow when idle
-                boxShadow: [
+                ] : [
+                  // Always active pulsating glow
                   "0 0 30px #ffd700cc, 0 0 60px #ffd70099, 0 0 90px #ffd70066, 0 0 120px #ffd70033",
                   "0 0 40px #ffd700ff, 0 0 80px #ffd700cc, 0 0 120px #ffd70099, 0 0 160px #ffd70066",
                   "0 0 30px #ffd700cc, 0 0 60px #ffd70099, 0 0 90px #ffd70066, 0 0 120px #ffd70033"
                 ]
               }}
-              transition={connected && stage === 'idle' ? {
-                duration: 1.5,
+              transition={{
+                duration: connected && stage === 'idle' ? 1.5 : 2.5,
                 repeat: Infinity,
+                repeatType: "reverse",
                 ease: "easeInOut"
-              } : {}}
+              }}
               whileHover={{
                 scale: 1.08,
                 boxShadow: "0 0 60px #ffffff, 0 0 120px #ffd700, 0 0 180px #00ffff",

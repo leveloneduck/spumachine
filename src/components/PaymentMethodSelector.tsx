@@ -133,13 +133,13 @@ export function PaymentMethodSelector({ open, onOpenChange, onSelectPayment }: P
         {/* Rust overlay */}
         <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-[hsl(var(--rust-dark)/0.1)] via-transparent to-[hsl(var(--rust-base)/0.1)]" />
         
-        <DialogHeader className="relative z-10">
+        <DialogHeader className="relative z-10 pb-2">
           <DialogTitle className="text-center text-xl font-bold text-[hsl(var(--amber-display))] drop-shadow-[0_0_20px_hsl(var(--amber-glow)/0.4)] tracking-wide">
             SELECT PAYMENT METHOD
           </DialogTitle>
         </DialogHeader>
 
-        <div className="space-y-2 sm:space-y-3 relative z-10">
+        <div className="space-y-2 sm:space-y-3 relative z-10 -mt-2">
           {/* SOL Payment Option */}
           <motion.div
             animate={{ 
