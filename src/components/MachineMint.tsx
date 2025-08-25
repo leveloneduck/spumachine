@@ -567,23 +567,24 @@ const syncPlatform = useCallback(() => {
               style={{
                 transformOrigin: 'center',
                 borderRadius: '50%',
-                willChange: 'auto'
+                willChange: 'auto',
+                overflow: 'visible'
               }}
               animate={connected && stage === 'idle' ? {
                 boxShadow: [
-                  "0 0 30px hsl(var(--primary) / 0.8), 0 0 60px hsl(var(--primary) / 0.4), 0 0 100px hsl(var(--primary) / 0.2)",
-                  "0 0 50px hsl(var(--primary) / 1.0), 0 0 100px hsl(var(--primary) / 0.6), 0 0 150px hsl(var(--primary) / 0.3)",
-                  "0 0 30px hsl(var(--primary) / 0.8), 0 0 60px hsl(var(--primary) / 0.4), 0 0 100px hsl(var(--primary) / 0.2)"
+                  "0 0 40px #ffd700, 0 0 80px #ffd700, 0 0 120px #ffd700, 0 0 160px #ffd700",
+                  "0 0 60px #00ffff, 0 0 120px #00ffff, 0 0 180px #00ffff, 0 0 240px #00ffff", 
+                  "0 0 40px #ffd700, 0 0 80px #ffd700, 0 0 120px #ffd700, 0 0 160px #ffd700"
                 ]
               } : {}}
               transition={connected && stage === 'idle' ? {
-                duration: 2,
+                duration: 1.5,
                 repeat: Infinity,
                 ease: "easeInOut"
               } : {}}
               whileHover={{
                 scale: 1.08,
-                boxShadow: "0 0 120px hsl(var(--primary) / 1.0), 0 0 80px hsl(var(--primary) / 0.9), 0 0 40px hsl(var(--primary) / 0.8), 0 0 160px hsl(var(--primary) / 0.7), 0 0 200px hsl(var(--primary) / 0.5)",
+                boxShadow: "0 0 80px #ffffff, 0 0 160px #ffd700, 0 0 240px #00ffff, 0 0 320px #ffd700",
                 transition: { duration: 0.2 }
               }}
               whileTap={{
