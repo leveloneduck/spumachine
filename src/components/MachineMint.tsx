@@ -620,53 +620,67 @@ const syncPlatform = useCallback(() => {
                 <div className="w-full h-full rounded-full bg-background/20" />
               </motion.div>
 
-              {/* Pulsating Glow Effect */}
+              {/* Perfect Circular Glow Effect */}
               <motion.div
                 className="absolute inset-0 rounded-full"
                 style={{
-                  background: `radial-gradient(circle, 
-                    hsl(var(--primary) / 0.6) 0%, 
-                    hsl(var(--primary) / 0.3) 30%, 
-                    hsl(var(--primary) / 0.1) 60%, 
+                  background: `radial-gradient(circle at center, 
+                    hsl(var(--primary) / 0.8) 0%, 
+                    hsl(var(--primary) / 0.4) 40%, 
+                    hsl(var(--primary) / 0.2) 70%, 
                     transparent 100%)`,
-                  filter: 'blur(8px)',
-                  transform: 'scale(1.3)',
+                  filter: 'blur(12px)',
+                  transform: 'scale(1.4)',
+                  aspectRatio: '1',
                 }}
                 animate={{
-                  opacity: [0.3, 0.8, 0.3],
-                  scale: [1.3, 1.5, 1.3],
+                  opacity: [0.4, 1, 0.4],
+                  scale: [1.4, 1.7, 1.4],
                 }}
                 transition={{
-                  duration: 2.5,
+                  duration: 2,
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
               />
 
-              {/* Enhanced Outer Glow Ring */}
+              {/* Strong Pulsating Border Ring */}
               <motion.div
                 className="absolute inset-0 rounded-full"
                 style={{
-                  boxShadow: `0 0 40px hsl(var(--primary) / 0.4), 
-                              0 0 80px hsl(var(--primary) / 0.3), 
-                              0 0 120px hsl(var(--primary) / 0.2)`,
+                  border: '3px solid transparent',
+                  background: `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)) padding-box, 
+                              conic-gradient(from 0deg, 
+                                hsl(var(--primary) / 1), 
+                                hsl(var(--primary) / 0.5), 
+                                hsl(var(--primary) / 1)) border-box`,
+                  boxShadow: `inset 0 0 30px hsl(var(--primary) / 0.6), 
+                              0 0 50px hsl(var(--primary) / 0.8), 
+                              0 0 100px hsl(var(--primary) / 0.6), 
+                              0 0 200px hsl(var(--primary) / 0.4)`,
+                  aspectRatio: '1',
                 }}
                 animate={{
                   boxShadow: [
-                    `0 0 40px hsl(var(--primary) / 0.4), 0 0 80px hsl(var(--primary) / 0.3), 0 0 120px hsl(var(--primary) / 0.2)`,
-                    `0 0 60px hsl(var(--primary) / 0.6), 0 0 100px hsl(var(--primary) / 0.4), 0 0 160px hsl(var(--primary) / 0.3)`,
-                    `0 0 40px hsl(var(--primary) / 0.4), 0 0 80px hsl(var(--primary) / 0.3), 0 0 120px hsl(var(--primary) / 0.2)`
+                    `inset 0 0 30px hsl(var(--primary) / 0.6), 0 0 50px hsl(var(--primary) / 0.8), 0 0 100px hsl(var(--primary) / 0.6), 0 0 200px hsl(var(--primary) / 0.4)`,
+                    `inset 0 0 50px hsl(var(--primary) / 1), 0 0 80px hsl(var(--primary) / 1), 0 0 150px hsl(var(--primary) / 0.8), 0 0 300px hsl(var(--primary) / 0.6)`,
+                    `inset 0 0 30px hsl(var(--primary) / 0.6), 0 0 50px hsl(var(--primary) / 0.8), 0 0 100px hsl(var(--primary) / 0.6), 0 0 200px hsl(var(--primary) / 0.4)`
                   ],
+                  background: [
+                    `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)) padding-box, conic-gradient(from 0deg, hsl(var(--primary) / 1), hsl(var(--primary) / 0.5), hsl(var(--primary) / 1)) border-box`,
+                    `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)) padding-box, conic-gradient(from 180deg, hsl(var(--primary) / 1), hsl(var(--primary) / 0.3), hsl(var(--primary) / 1)) border-box`,
+                    `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)) padding-box, conic-gradient(from 0deg, hsl(var(--primary) / 1), hsl(var(--primary) / 0.5), hsl(var(--primary) / 1)) border-box`
+                  ]
                 }}
                 transition={{
-                  duration: 3,
+                  duration: 1.5,
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
               />
 
               {/* Main Button Content with proper containment */}
-              <motion.div className="relative z-10 h-full w-full rounded-full overflow-hidden">
+              <motion.div className="relative z-10 h-full w-full rounded-full overflow-hidden" style={{ aspectRatio: '1' }}>
                 <motion.img
                   src="/PRESS HERE.png"
                   alt=""
