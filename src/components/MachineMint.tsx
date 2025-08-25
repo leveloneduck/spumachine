@@ -571,9 +571,9 @@ const syncPlatform = useCallback(() => {
               }}
               animate={connected && stage === 'idle' ? {
                 boxShadow: [
-                  "0 0 20px hsl(var(--primary) / 0.4), 0 0 40px hsl(var(--primary) / 0.2), 0 0 60px hsl(var(--primary) / 0.1)",
-                  "0 0 30px hsl(var(--primary) / 0.6), 0 0 60px hsl(var(--primary) / 0.3), 0 0 90px hsl(var(--primary) / 0.15)",
-                  "0 0 20px hsl(var(--primary) / 0.4), 0 0 40px hsl(var(--primary) / 0.2), 0 0 60px hsl(var(--primary) / 0.1)"
+                  "0 0 30px hsl(var(--primary) / 0.8), 0 0 60px hsl(var(--primary) / 0.4), 0 0 100px hsl(var(--primary) / 0.2)",
+                  "0 0 50px hsl(var(--primary) / 1.0), 0 0 100px hsl(var(--primary) / 0.6), 0 0 150px hsl(var(--primary) / 0.3)",
+                  "0 0 30px hsl(var(--primary) / 0.8), 0 0 60px hsl(var(--primary) / 0.4), 0 0 100px hsl(var(--primary) / 0.2)"
                 ]
               } : {}}
               transition={connected && stage === 'idle' ? {
