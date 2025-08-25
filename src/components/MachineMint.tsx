@@ -408,7 +408,7 @@ const syncPlatform = useCallback(() => {
   }, [startMint]);
 
   return (
-    <div className="mx-auto w-[min(403px,104vw)] max-w-[95vw] md:w-[min(600px,80vw)] -mt-6 md:-mt-12 relative z-20 px-1 md:px-4" style={{ padding: '80px' }}>
+    <div className="mx-auto w-[min(403px,104vw)] max-w-[95vw] md:w-[min(600px,80vw)] -mt-6 md:-mt-12 relative z-20 px-1 md:px-4" style={{ margin: '60px 4px' }}>
       {/* Loading skeleton */}
       {!assetsReady && (
         <div className="relative select-none origin-top">
@@ -564,22 +564,18 @@ const syncPlatform = useCallback(() => {
             {/* Press Here Button Design with contained animations */}
             <motion.div
               className="relative h-full w-full rounded-full select-none"
-              style={{
+               style={{
                 transformOrigin: 'center',
                 borderRadius: '50%',
-                willChange: 'auto',
-                overflow: 'visible'
+                willChange: 'transform',
+                overflow: 'visible',
+                transform: 'translate3d(0,0,0)'
               }}
               animate={connected && stage === 'idle' ? {
                 boxShadow: [
-                  "0 0 60px #ffd700, 0 0 120px #ffd700, 0 0 180px #ffd700, 0 0 240px #ffd700",
-                  "0 0 80px #00ffff, 0 0 160px #00ffff, 0 0 240px #00ffff, 0 0 320px #00ffff", 
-                  "0 0 60px #ffd700, 0 0 120px #ffd700, 0 0 180px #ffd700, 0 0 240px #ffd700"
-                ],
-                filter: [
-                  "drop-shadow(0 0 60px #ffd700) drop-shadow(0 0 120px #ffd700)",
-                  "drop-shadow(0 0 80px #00ffff) drop-shadow(0 0 160px #00ffff)",
-                  "drop-shadow(0 0 60px #ffd700) drop-shadow(0 0 120px #ffd700)"
+                  "0 0 40px #ffd700, 0 0 80px #ffd700, 0 0 120px #ffd700",
+                  "0 0 50px #00ffff, 0 0 100px #00ffff, 0 0 150px #00ffff", 
+                  "0 0 40px #ffd700, 0 0 80px #ffd700, 0 0 120px #ffd700"
                 ]
               } : {}}
               transition={connected && stage === 'idle' ? {
@@ -589,8 +585,7 @@ const syncPlatform = useCallback(() => {
               } : {}}
               whileHover={{
                 scale: 1.08,
-                boxShadow: "0 0 100px #ffffff, 0 0 200px #ffd700, 0 0 300px #00ffff, 0 0 400px #ffd700",
-                filter: "drop-shadow(0 0 100px #ffffff) drop-shadow(0 0 200px #ffd700) drop-shadow(0 0 300px #00ffff)",
+                boxShadow: "0 0 60px #ffffff, 0 0 120px #ffd700, 0 0 180px #00ffff",
                 transition: { duration: 0.2 }
               }}
               whileTap={{
