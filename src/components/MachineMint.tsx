@@ -620,51 +620,6 @@ const syncPlatform = useCallback(() => {
                 <div className="w-full h-full rounded-full bg-background/20" />
               </motion.div>
 
-              {/* Pulsating Glow Effect */}
-              <motion.div
-                className="absolute inset-0 rounded-full"
-                style={{
-                  background: `radial-gradient(circle, 
-                    hsl(var(--primary) / 0.6) 0%, 
-                    hsl(var(--primary) / 0.3) 30%, 
-                    hsl(var(--primary) / 0.1) 60%, 
-                    transparent 100%)`,
-                  filter: 'blur(8px)',
-                  transform: 'scale(1.3)',
-                }}
-                animate={{
-                  opacity: [0.3, 0.8, 0.3],
-                  scale: [1.3, 1.5, 1.3],
-                }}
-                transition={{
-                  duration: 2.5,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              />
-
-              {/* Enhanced Outer Glow Ring */}
-              <motion.div
-                className="absolute inset-0 rounded-full"
-                style={{
-                  boxShadow: `0 0 40px hsl(var(--primary) / 0.4), 
-                              0 0 80px hsl(var(--primary) / 0.3), 
-                              0 0 120px hsl(var(--primary) / 0.2)`,
-                }}
-                animate={{
-                  boxShadow: [
-                    `0 0 40px hsl(var(--primary) / 0.4), 0 0 80px hsl(var(--primary) / 0.3), 0 0 120px hsl(var(--primary) / 0.2)`,
-                    `0 0 60px hsl(var(--primary) / 0.6), 0 0 100px hsl(var(--primary) / 0.4), 0 0 160px hsl(var(--primary) / 0.3)`,
-                    `0 0 40px hsl(var(--primary) / 0.4), 0 0 80px hsl(var(--primary) / 0.3), 0 0 120px hsl(var(--primary) / 0.2)`
-                  ],
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              />
-
               {/* Main Button Content with proper containment */}
               <motion.div className="relative z-10 h-full w-full rounded-full overflow-hidden">
                 <motion.img
