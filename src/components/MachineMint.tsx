@@ -408,7 +408,7 @@ const syncPlatform = useCallback(() => {
   }, [startMint]);
 
   return (
-    <div className="mx-auto w-[min(403px,104vw)] max-w-[95vw] md:w-[min(600px,80vw)] -mt-6 md:-mt-12 relative z-20 px-1 md:px-4">
+    <div className="mx-auto w-[min(403px,104vw)] max-w-[95vw] md:w-[min(600px,80vw)] -mt-6 md:-mt-12 relative z-20 px-1 md:px-4" style={{ padding: '80px' }}>
       {/* Loading skeleton */}
       {!assetsReady && (
         <div className="relative select-none origin-top">
@@ -543,7 +543,7 @@ const syncPlatform = useCallback(() => {
 
           {/* Main interactive button (hotspot) */}
           <motion.button
-            className="absolute z-20 cursor-pointer disabled:cursor-not-allowed overflow-hidden"
+            className="absolute z-30 cursor-pointer disabled:cursor-not-allowed"
             disabled={minting || stage === 'processing' || stage === 'pressed'}
             onClick={onPress}
             aria-label={connected ? 'Press to mint NFT' : 'Connect wallet to mint NFT'}
@@ -553,12 +553,12 @@ const syncPlatform = useCallback(() => {
               width: `${hotspot.width}%`,
               height: `${hotspot.height}%`,
               aspectRatio: '1 / 1',
-              contain: 'layout style',
               willChange: 'transform',
               userSelect: 'none',
               fontSize: 0,
               textIndent: '-9999px',
-              color: 'transparent'
+              color: 'transparent',
+              overflow: 'visible'
             }}
           >
             {/* Press Here Button Design with contained animations */}
@@ -572,9 +572,14 @@ const syncPlatform = useCallback(() => {
               }}
               animate={connected && stage === 'idle' ? {
                 boxShadow: [
-                  "0 0 40px #ffd700, 0 0 80px #ffd700, 0 0 120px #ffd700, 0 0 160px #ffd700",
-                  "0 0 60px #00ffff, 0 0 120px #00ffff, 0 0 180px #00ffff, 0 0 240px #00ffff", 
-                  "0 0 40px #ffd700, 0 0 80px #ffd700, 0 0 120px #ffd700, 0 0 160px #ffd700"
+                  "0 0 60px #ffd700, 0 0 120px #ffd700, 0 0 180px #ffd700, 0 0 240px #ffd700",
+                  "0 0 80px #00ffff, 0 0 160px #00ffff, 0 0 240px #00ffff, 0 0 320px #00ffff", 
+                  "0 0 60px #ffd700, 0 0 120px #ffd700, 0 0 180px #ffd700, 0 0 240px #ffd700"
+                ],
+                filter: [
+                  "drop-shadow(0 0 60px #ffd700) drop-shadow(0 0 120px #ffd700)",
+                  "drop-shadow(0 0 80px #00ffff) drop-shadow(0 0 160px #00ffff)",
+                  "drop-shadow(0 0 60px #ffd700) drop-shadow(0 0 120px #ffd700)"
                 ]
               } : {}}
               transition={connected && stage === 'idle' ? {
@@ -584,7 +589,8 @@ const syncPlatform = useCallback(() => {
               } : {}}
               whileHover={{
                 scale: 1.08,
-                boxShadow: "0 0 80px #ffffff, 0 0 160px #ffd700, 0 0 240px #00ffff, 0 0 320px #ffd700",
+                boxShadow: "0 0 100px #ffffff, 0 0 200px #ffd700, 0 0 300px #00ffff, 0 0 400px #ffd700",
+                filter: "drop-shadow(0 0 100px #ffffff) drop-shadow(0 0 200px #ffd700) drop-shadow(0 0 300px #00ffff)",
                 transition: { duration: 0.2 }
               }}
               whileTap={{
@@ -595,7 +601,7 @@ const syncPlatform = useCallback(() => {
             >
               {/* Ring Animation Layer with containment */}
               <motion.div 
-                className="absolute inset-0 rounded-full overflow-hidden"
+                className="absolute inset-0 rounded-full"
                 style={{
                   background: `conic-gradient(from 0deg, 
                     hsl(var(--primary) / 0.3), 
