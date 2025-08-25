@@ -573,17 +573,17 @@ const syncPlatform = useCallback(() => {
               }}
               animate={connected && stage === 'idle' ? {
                 boxShadow: [
-                  // Primary pulsating glow
-                  "0 0 40px #ffd700, 0 0 80px #ffd700, 0 0 120px #ffd700, 0 0 25px #ffa500, 0 0 50px #ffa500, 0 0 75px #ffa500",
-                  "0 0 50px #00ffff, 0 0 100px #00ffff, 0 0 150px #00ffff, 0 0 30px #40e0d0, 0 0 60px #40e0d0, 0 0 90px #40e0d0", 
-                  "0 0 40px #ffd700, 0 0 80px #ffd700, 0 0 120px #ffd700, 0 0 25px #ffa500, 0 0 50px #ffa500, 0 0 75px #ffa500"
+                  // Primary pulsating glow - more luminous
+                  "0 0 50px #ffd700ff, 0 0 100px #ffd700cc, 0 0 150px #ffd70099, 0 0 30px #ffa500ff, 0 0 60px #ffa500cc, 0 0 90px #ffa50099, 0 0 200px #ffd70066",
+                  "0 0 60px #00ffffff, 0 0 120px #00ffffcc, 0 0 180px #00ffff99, 0 0 40px #40e0d0ff, 0 0 80px #40e0d0cc, 0 0 120px #40e0d099, 0 0 220px #00ffff66", 
+                  "0 0 50px #ffd700ff, 0 0 100px #ffd700cc, 0 0 150px #ffd70099, 0 0 30px #ffa500ff, 0 0 60px #ffa500cc, 0 0 90px #ffa50099, 0 0 200px #ffd70066"
                 ]
               } : {
-                // Secondary subtle pulsating glow when idle
+                // Secondary more luminous pulsating glow when idle
                 boxShadow: [
-                  "0 0 25px #ffd70060, 0 0 50px #ffd70040, 0 0 75px #ffd70020",
-                  "0 0 30px #ffd70070, 0 0 60px #ffd70050, 0 0 90px #ffd70030",
-                  "0 0 25px #ffd70060, 0 0 50px #ffd70040, 0 0 75px #ffd70020"
+                  "0 0 30px #ffd700cc, 0 0 60px #ffd70099, 0 0 90px #ffd70066, 0 0 120px #ffd70033",
+                  "0 0 40px #ffd700ff, 0 0 80px #ffd700cc, 0 0 120px #ffd70099, 0 0 160px #ffd70066",
+                  "0 0 30px #ffd700cc, 0 0 60px #ffd70099, 0 0 90px #ffd70066, 0 0 120px #ffd70033"
                 ]
               }}
               transition={connected && stage === 'idle' ? {

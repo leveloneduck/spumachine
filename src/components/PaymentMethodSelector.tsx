@@ -139,7 +139,7 @@ export function PaymentMethodSelector({ open, onOpenChange, onSelectPayment }: P
           </DialogTitle>
         </DialogHeader>
 
-        <div className="space-y-4 relative z-10">
+        <div className="space-y-2 sm:space-y-3 relative z-10">
           {/* SOL Payment Option */}
           <motion.div
             animate={{ 
