@@ -573,11 +573,19 @@ const syncPlatform = useCallback(() => {
               }}
               animate={connected && stage === 'idle' ? {
                 boxShadow: [
-                  "0 0 40px #ffd700, 0 0 80px #ffd700, 0 0 120px #ffd700",
-                  "0 0 50px #00ffff, 0 0 100px #00ffff, 0 0 150px #00ffff", 
-                  "0 0 40px #ffd700, 0 0 80px #ffd700, 0 0 120px #ffd700"
+                  // Primary pulsating glow
+                  "0 0 40px #ffd700, 0 0 80px #ffd700, 0 0 120px #ffd700, 0 0 25px #ffa500, 0 0 50px #ffa500, 0 0 75px #ffa500",
+                  "0 0 50px #00ffff, 0 0 100px #00ffff, 0 0 150px #00ffff, 0 0 30px #40e0d0, 0 0 60px #40e0d0, 0 0 90px #40e0d0", 
+                  "0 0 40px #ffd700, 0 0 80px #ffd700, 0 0 120px #ffd700, 0 0 25px #ffa500, 0 0 50px #ffa500, 0 0 75px #ffa500"
                 ]
-              } : {}}
+              } : {
+                // Secondary subtle pulsating glow when idle
+                boxShadow: [
+                  "0 0 25px #ffd70060, 0 0 50px #ffd70040, 0 0 75px #ffd70020",
+                  "0 0 30px #ffd70070, 0 0 60px #ffd70050, 0 0 90px #ffd70030",
+                  "0 0 25px #ffd70060, 0 0 50px #ffd70040, 0 0 75px #ffd70020"
+                ]
+              }}
               transition={connected && stage === 'idle' ? {
                 duration: 1.5,
                 repeat: Infinity,
