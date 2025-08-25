@@ -3,7 +3,6 @@ import { useWallet } from '@solana/wallet-adapter-react';
 import { useWalletModal } from '@solana/wallet-adapter-react-ui';
 import { motion } from 'framer-motion';
 import { Copy, Loader2, Volume2, VolumeX, Wallet } from 'lucide-react';
-import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 
 import { Button } from '@/components/ui/button';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
@@ -488,12 +487,16 @@ const syncPlatform = useCallback(() => {
           {/* Control buttons: Wallet Connect + Volume */}
           <div className="absolute right-4 top-4 z-50 flex gap-2">
             {/* Wallet Connect Button */}
-            <div className="wallet-adapter-button-container">
-              <WalletMultiButton 
-                className="!h-10 !w-10 !min-w-[40px] !p-0 !rounded-md !shadow-[0_0_12px_hsl(var(--primary)/0.3)] !border !border-primary/30 !bg-background/80 !backdrop-blur-sm hover:!shadow-[0_0_16px_hsl(var(--primary)/0.4)] hover:!border-primary/50 !transition-all !duration-200 !text-primary !font-normal"
-                startIcon={<Wallet size={16} />}
-              />
-            </div>
+            <Button
+              type="button"
+              variant="mechanical"
+              size="icon"
+              onClick={() => connected ? {} : setVisible(true)}
+              className="h-8 w-8 md:h-10 md:w-10 shadow-[0_0_12px_hsl(var(--primary)/0.3)] border-primary/30 bg-background/80 backdrop-blur-sm hover:shadow-[0_0_16px_hsl(var(--primary)/0.4)] hover:border-primary/50 transition-all duration-200"
+              aria-label={connected ? `Connected: ${publicKey?.toBase58().slice(0, 4)}...` : 'Connect wallet'}
+            >
+              <Wallet size={16} className="text-primary" />
+            </Button>
 
             {/* Mute/unmute toggle */}
             <Button
@@ -501,7 +504,7 @@ const syncPlatform = useCallback(() => {
               variant="mechanical"
               size="icon"
               onClick={() => setMuted((m) => !m)}
-              className="shadow-[0_0_12px_hsl(var(--primary)/0.3)] border-primary/30 bg-background/80 backdrop-blur-sm hover:shadow-[0_0_16px_hsl(var(--primary)/0.4)] hover:border-primary/50 transition-all duration-200"
+              className="h-8 w-8 md:h-10 md:w-10 shadow-[0_0_12px_hsl(var(--primary)/0.3)] border-primary/30 bg-background/80 backdrop-blur-sm hover:shadow-[0_0_16px_hsl(var(--primary)/0.4)] hover:border-primary/50 transition-all duration-200"
               aria-label={muted ? 'Unmute background video' : 'Mute background video'}
             >
               {muted ? <VolumeX size={16} className="text-primary" /> : <Volume2 size={16} className="text-primary" />}
