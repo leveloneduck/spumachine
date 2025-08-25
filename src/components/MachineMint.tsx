@@ -490,12 +490,11 @@ const syncPlatform = useCallback(() => {
             <Button
               type="button"
               variant="mechanical"
-              size="icon"
               onClick={() => connected ? {} : setVisible(true)}
-              className="h-8 w-8 md:h-10 md:w-10 shadow-[0_0_12px_hsl(var(--primary)/0.3)] border-primary/30 bg-background/80 backdrop-blur-sm hover:shadow-[0_0_16px_hsl(var(--primary)/0.4)] hover:border-primary/50 transition-all duration-200"
+              className="h-8 md:h-10 w-auto px-3 md:px-4 shadow-[0_0_12px_hsl(var(--primary)/0.3)] border-primary/30 bg-background/80 backdrop-blur-sm hover:shadow-[0_0_16px_hsl(var(--primary)/0.4)] hover:border-primary/50 transition-all duration-200"
               aria-label={connected ? `Connected: ${publicKey?.toBase58().slice(0, 4)}...` : 'Connect wallet'}
             >
-              <Wallet size={16} className="text-primary" />
+              <span className="text-xs md:text-sm text-primary">Select Wallet</span>
             </Button>
 
             {/* Mute/unmute toggle */}
