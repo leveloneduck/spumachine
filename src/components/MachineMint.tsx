@@ -571,23 +571,13 @@ const syncPlatform = useCallback(() => {
                  overflow: 'visible',
                  transform: 'translate3d(0,0,0)'
                }}
-                animate={{
-                   boxShadow: connected && stage === 'idle' ? [
-                     "0 0 60px rgba(255, 215, 0, 0.8)",
-                     "0 0 80px rgba(0, 255, 255, 0.6)", 
-                     "0 0 60px rgba(255, 215, 0, 0.8)"
-                   ] : [
-                     "0 0 40px rgba(255, 215, 0, 0.6)",
-                     "0 0 60px rgba(255, 215, 0, 0.8)",
-                     "0 0 40px rgba(255, 215, 0, 0.6)"
-                   ]
+                 animate={{
+                   scale: 1,
                  }}
-              transition={{
-                duration: connected && stage === 'idle' ? 1.5 : 2.5,
-                repeat: Infinity,
-                repeatType: "reverse",
-                ease: "easeInOut"
-              }}
+               transition={{
+                 duration: 0.3,
+                 ease: "easeInOut"
+               }}
                 whileHover={{
                    scale: 1.05,
                    boxShadow: "0 0 80px rgba(255, 215, 0, 0.9)",
@@ -599,40 +589,6 @@ const syncPlatform = useCallback(() => {
                    transition: { duration: 0.1 }
                  }}
             >
-               {/* Pure Outward Glow - NO BORDER, NO CENTER FILL */}
-                <motion.div 
-                  className="absolute inset-0 rounded-full"
-                  style={{
-                    background: 'transparent',
-                    boxShadow: `
-                      0 0 10px hsl(var(--primary) / 0.8),
-                      0 0 20px hsl(var(--primary) / 0.6),
-                      0 0 40px hsl(var(--primary) / 0.4),
-                      0 0 60px hsl(var(--primary) / 0.2)
-                    `,
-                    willChange: 'box-shadow',
-                  }}
-                  whileHover={{
-                    boxShadow: `
-                      0 0 15px hsl(var(--primary)),
-                      0 0 30px hsl(var(--primary) / 0.8),
-                      0 0 60px hsl(var(--primary) / 0.6),
-                      0 0 90px hsl(var(--primary) / 0.4),
-                      0 0 120px hsl(var(--primary) / 0.2)
-                    `,
-                    transition: { duration: 0.2 }
-                  }}
-                  whileTap={{
-                    boxShadow: `
-                      0 0 20px hsl(var(--primary)),
-                      0 0 40px hsl(var(--primary) / 0.9),
-                      0 0 80px hsl(var(--primary) / 0.7),
-                      0 0 120px hsl(var(--primary) / 0.5),
-                      0 0 160px hsl(var(--primary) / 0.3)
-                    `,
-                    transition: { duration: 0.1 }
-                  }}
-                />
 
               {/* Main Button Content with proper containment */}
               <motion.div className="relative z-10 h-full w-full rounded-full overflow-hidden">
