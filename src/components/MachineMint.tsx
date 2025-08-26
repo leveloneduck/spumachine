@@ -572,20 +572,22 @@ const syncPlatform = useCallback(() => {
                  transform: 'translate3d(0,0,0)'
                }}
                  animate={{
-                   scale: 1,
+                   boxShadow: "0 0 40px hsl(var(--primary) / 0.6), 0 0 80px hsl(var(--primary) / 0.3)"
                  }}
                transition={{
-                 duration: 0.3,
+                 duration: 2.5,
+                 repeat: Infinity,
+                 repeatType: "reverse",
                  ease: "easeInOut"
                }}
-                whileHover={{
+                 whileHover={{
                    scale: 1.05,
-                   boxShadow: "0 0 80px rgba(255, 215, 0, 0.9)",
+                   boxShadow: "0 0 60px hsl(var(--primary) / 0.8), 0 0 120px hsl(var(--primary) / 0.4)",
                    transition: { duration: 0.2 }
                  }}
                  whileTap={{
                    scale: 0.95,
-                   boxShadow: "0 0 60px rgba(255, 215, 0, 1.0)",
+                   boxShadow: "0 0 80px hsl(var(--primary)), 0 0 160px hsl(var(--primary) / 0.5)",
                    transition: { duration: 0.1 }
                  }}
             >
