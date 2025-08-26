@@ -6,8 +6,8 @@
 @media (hover: none) and (pointer: coarse) {
   .mobile-glow-button {
     background: 
-      radial-gradient(circle, transparent 30%, rgba(255, 215, 0, 0.8) 70%, rgba(255, 215, 0, 0.4) 90%, transparent 100%),
-      radial-gradient(circle, transparent 40%, rgba(255, 255, 255, 0.2) 75%, transparent 100%);
+      radial-gradient(circle, transparent 60%, rgba(255, 215, 0, 0.8) 80%, rgba(255, 215, 0, 0.4) 95%, transparent 100%),
+      radial-gradient(circle, transparent 70%, rgba(255, 255, 255, 0.2) 85%, transparent 100%);
     border: 2px solid rgba(255, 215, 0, 0.9);
     box-shadow: 
       0 0 30px rgba(255, 215, 0, 0.6),
@@ -23,8 +23,8 @@
 @keyframes mobile-pulse-glow {
   0%, 100% {
     background: 
-      radial-gradient(circle, transparent 30%, rgba(255, 215, 0, 0.8) 70%, rgba(255, 215, 0, 0.4) 90%, transparent 100%),
-      radial-gradient(circle, transparent 40%, rgba(255, 255, 255, 0.2) 75%, transparent 100%);
+      radial-gradient(circle, transparent 60%, rgba(255, 215, 0, 0.8) 80%, rgba(255, 215, 0, 0.4) 95%, transparent 100%),
+      radial-gradient(circle, transparent 70%, rgba(255, 255, 255, 0.2) 85%, transparent 100%);
     border-color: rgba(255, 215, 0, 0.9);
     box-shadow: 
       0 0 30px rgba(255, 215, 0, 0.6),
@@ -35,8 +35,8 @@
   }
   50% {
     background: 
-      radial-gradient(circle, transparent 20%, rgba(255, 215, 0, 0.95) 60%, rgba(255, 215, 0, 0.6) 80%, rgba(255, 215, 0, 0.1) 95%, transparent 100%),
-      radial-gradient(circle, transparent 30%, rgba(255, 255, 255, 0.3) 70%, rgba(255, 215, 0, 0.1) 85%, transparent 100%);
+      radial-gradient(circle, transparent 50%, rgba(255, 215, 0, 0.95) 70%, rgba(255, 215, 0, 0.6) 85%, rgba(255, 215, 0, 0.1) 95%, transparent 100%),
+      radial-gradient(circle, transparent 60%, rgba(255, 255, 255, 0.3) 80%, rgba(255, 215, 0, 0.1) 90%, transparent 100%);
     border-color: rgba(255, 215, 0, 1.0);
     box-shadow: 
       0 0 50px rgba(255, 215, 0, 0.8),

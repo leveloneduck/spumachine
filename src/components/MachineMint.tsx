@@ -636,7 +636,7 @@ const syncPlatform = useCallback(() => {
                 <motion.img
                   src="/PRESS HERE.png"
                   alt=""
-                  className="h-full w-full object-fill select-none pointer-events-none"
+                  className="h-full w-full object-contain select-none pointer-events-none"
                   draggable={false}
                   loading="lazy"
                   style={{
