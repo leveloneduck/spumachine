@@ -571,37 +571,33 @@ const syncPlatform = useCallback(() => {
                  overflow: 'visible',
                  transform: 'translate3d(0,0,0)'
                }}
-               animate={{
-                  boxShadow: connected && stage === 'idle' ? [
-                    // Ultra-luminous hollow ring glow when connected - no center fill
-                    "0 0 80px #ffd700ff, 0 0 160px #ffd700ee, 0 0 240px #ffd700dd, 0 0 320px #ffd700bb, 0 0 60px #ffa500ff, 0 0 120px #ffa500ee, 0 0 180px #ffa500dd",
-                    "0 0 100px #00ffffff, 0 0 200px #00ffffee, 0 0 300px #00ffffdd, 0 0 400px #00ffffbb, 0 0 80px #40e0d0ff, 0 0 160px #40e0d0ee, 0 0 240px #40e0d0dd", 
-                    "0 0 80px #ffd700ff, 0 0 160px #ffd700ee, 0 0 240px #ffd700dd, 0 0 320px #ffd700bb, 0 0 60px #ffa500ff, 0 0 120px #ffa500ee, 0 0 180px #ffa500dd"
-                  ] : [
-                    // Always active ultra-luminous hollow ring glow - no center fill
-                    "0 0 60px #ffd700ff, 0 0 120px #ffd700ff, 0 0 180px #ffd700ee, 0 0 240px #ffd700dd, 0 0 300px #ffd700cc, 0 0 360px #ffd700bb",
-                    "0 0 100px #ffd700ff, 0 0 200px #ffd700ff, 0 0 300px #ffd700ff, 0 0 400px #ffd700ee, 0 0 500px #ffd700dd, 0 0 600px #ffd700cc",
-                    "0 0 60px #ffd700ff, 0 0 120px #ffd700ff, 0 0 180px #ffd700ee, 0 0 240px #ffd700dd, 0 0 300px #ffd700cc, 0 0 360px #ffd700bb"
-                  ]
-                }}
+                animate={{
+                   boxShadow: connected && stage === 'idle' ? [
+                     "0 0 60px rgba(255, 215, 0, 0.8)",
+                     "0 0 80px rgba(0, 255, 255, 0.6)", 
+                     "0 0 60px rgba(255, 215, 0, 0.8)"
+                   ] : [
+                     "0 0 40px rgba(255, 215, 0, 0.6)",
+                     "0 0 60px rgba(255, 215, 0, 0.8)",
+                     "0 0 40px rgba(255, 215, 0, 0.6)"
+                   ]
+                 }}
               transition={{
                 duration: connected && stage === 'idle' ? 1.5 : 2.5,
                 repeat: Infinity,
                 repeatType: "reverse",
                 ease: "easeInOut"
               }}
-               whileHover={{
-                  scale: 1.08,
-                  boxShadow: "0 0 100px #ffffff, 0 0 200px #ffd700ff, 0 0 300px #00ffffff, 0 0 400px #ffd700ee",
-                  filter: "brightness(1.4) drop-shadow(0 0 50px #ffd700ff)",
-                  transition: { duration: 0.2 }
-                }}
-                whileTap={{
-                  scale: 0.95,
-                  boxShadow: "0 0 80px hsl(var(--primary) / 1.0), 0 0 160px hsl(var(--primary) / 0.9), 0 0 240px hsl(var(--primary) / 0.7)",
-                  filter: "brightness(1.6) drop-shadow(0 0 60px hsl(var(--primary)))",
-                  transition: { duration: 0.1 }
-                }}
+                whileHover={{
+                   scale: 1.05,
+                   boxShadow: "0 0 80px rgba(255, 215, 0, 0.9)",
+                   transition: { duration: 0.2 }
+                 }}
+                 whileTap={{
+                   scale: 0.95,
+                   boxShadow: "0 0 60px rgba(255, 215, 0, 1.0)",
+                   transition: { duration: 0.1 }
+                 }}
             >
               {/* Ring Animation Layer with containment */}
                <motion.div 
