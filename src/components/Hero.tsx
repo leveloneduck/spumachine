@@ -73,8 +73,8 @@ const Hero = () => {
         </motion.div>
       </div>
       
-      {/* Stats integrated within Hero section with mobile spacing */}
-      <div className="relative mt-4 md:mt-6 pt-0">
+      {/* Stats integrated within Hero section with no gap */}
+      <div className="relative mt-0 pt-0">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}

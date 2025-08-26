@@ -562,15 +562,15 @@ const syncPlatform = useCallback(() => {
             }}
           >
             {/* Press Here Button Design with contained animations */}
-            <motion.div
-              className="relative h-full w-full rounded-full select-none"
-               style={{
-                transformOrigin: 'center',
-                borderRadius: '50%',
-                willChange: 'transform',
-                overflow: 'visible',
-                transform: 'translate3d(0,0,0)'
-              }}
+             <motion.div
+               className="mobile-glow-button relative h-full w-full rounded-full select-none"
+                style={{
+                 transformOrigin: 'center',
+                 borderRadius: '50%',
+                 willChange: 'transform',
+                 overflow: 'visible',
+                 transform: 'translate3d(0,0,0)'
+               }}
               animate={{
                 boxShadow: connected && stage === 'idle' ? [
                   // Enhanced pulsating glow when connected
