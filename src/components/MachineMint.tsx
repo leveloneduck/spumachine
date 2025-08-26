@@ -572,18 +572,18 @@ const syncPlatform = useCallback(() => {
                  transform: 'translate3d(0,0,0)'
                }}
                animate={{
-                 boxShadow: connected && stage === 'idle' ? [
-                   // Ultra-luminous pulsating glow when connected - enhanced radii
-                   "0 0 80px #ffd700ff, 0 0 160px #ffd700ee, 0 0 240px #ffd700dd, 0 0 320px #ffd700bb, 0 0 60px #ffa500ff, 0 0 120px #ffa500ee, 0 0 180px #ffa500dd, inset 0 0 40px #ffd70066",
-                   "0 0 100px #00ffffff, 0 0 200px #00ffffee, 0 0 300px #00ffffdd, 0 0 400px #00ffffbb, 0 0 80px #40e0d0ff, 0 0 160px #40e0d0ee, 0 0 240px #40e0d0dd, inset 0 0 50px #00ffff66", 
-                   "0 0 80px #ffd700ff, 0 0 160px #ffd700ee, 0 0 240px #ffd700dd, 0 0 320px #ffd700bb, 0 0 60px #ffa500ff, 0 0 120px #ffa500ee, 0 0 180px #ffa500dd, inset 0 0 40px #ffd70066"
-                 ] : [
-                   // Always active ultra-luminous pulsating glow - massively enhanced
-                   "0 0 60px #ffd700ff, 0 0 120px #ffd700ff, 0 0 180px #ffd700ee, 0 0 240px #ffd700dd, 0 0 300px #ffd700cc, 0 0 360px #ffd700bb, inset 0 0 30px #ffd70088",
-                   "0 0 100px #ffd700ff, 0 0 200px #ffd700ff, 0 0 300px #ffd700ff, 0 0 400px #ffd700ee, 0 0 500px #ffd700dd, 0 0 600px #ffd700cc, inset 0 0 50px #ffd700aa",
-                   "0 0 60px #ffd700ff, 0 0 120px #ffd700ff, 0 0 180px #ffd700ee, 0 0 240px #ffd700dd, 0 0 300px #ffd700cc, 0 0 360px #ffd700bb, inset 0 0 30px #ffd70088"
-                 ]
-               }}
+                  boxShadow: connected && stage === 'idle' ? [
+                    // Ultra-luminous hollow ring glow when connected - no center fill
+                    "0 0 80px #ffd700ff, 0 0 160px #ffd700ee, 0 0 240px #ffd700dd, 0 0 320px #ffd700bb, 0 0 60px #ffa500ff, 0 0 120px #ffa500ee, 0 0 180px #ffa500dd",
+                    "0 0 100px #00ffffff, 0 0 200px #00ffffee, 0 0 300px #00ffffdd, 0 0 400px #00ffffbb, 0 0 80px #40e0d0ff, 0 0 160px #40e0d0ee, 0 0 240px #40e0d0dd", 
+                    "0 0 80px #ffd700ff, 0 0 160px #ffd700ee, 0 0 240px #ffd700dd, 0 0 320px #ffd700bb, 0 0 60px #ffa500ff, 0 0 120px #ffa500ee, 0 0 180px #ffa500dd"
+                  ] : [
+                    // Always active ultra-luminous hollow ring glow - no center fill
+                    "0 0 60px #ffd700ff, 0 0 120px #ffd700ff, 0 0 180px #ffd700ee, 0 0 240px #ffd700dd, 0 0 300px #ffd700cc, 0 0 360px #ffd700bb",
+                    "0 0 100px #ffd700ff, 0 0 200px #ffd700ff, 0 0 300px #ffd700ff, 0 0 400px #ffd700ee, 0 0 500px #ffd700dd, 0 0 600px #ffd700cc",
+                    "0 0 60px #ffd700ff, 0 0 120px #ffd700ff, 0 0 180px #ffd700ee, 0 0 240px #ffd700dd, 0 0 300px #ffd700cc, 0 0 360px #ffd700bb"
+                  ]
+                }}
               transition={{
                 duration: connected && stage === 'idle' ? 1.5 : 2.5,
                 repeat: Infinity,
@@ -591,45 +591,45 @@ const syncPlatform = useCallback(() => {
                 ease: "easeInOut"
               }}
                whileHover={{
-                 scale: 1.08,
-                 boxShadow: "0 0 100px #ffffff, 0 0 200px #ffd700ff, 0 0 300px #00ffffff, 0 0 400px #ffd700ee, inset 0 0 60px #ffffff66",
-                 filter: "brightness(1.4) drop-shadow(0 0 50px #ffd700ff)",
-                 transition: { duration: 0.2 }
-               }}
-               whileTap={{
-                 scale: 0.95,
-                 boxShadow: "0 0 80px hsl(var(--primary) / 1.0), 0 0 160px hsl(var(--primary) / 0.9), 0 0 240px hsl(var(--primary) / 0.7), inset 0 0 40px hsl(var(--primary) / 0.8)",
-                 filter: "brightness(1.6) drop-shadow(0 0 60px hsl(var(--primary)))",
-                 transition: { duration: 0.1 }
-               }}
-            >
-              {/* Ring Animation Layer with containment */}
-              <motion.div 
-                className="absolute inset-0 rounded-full"
-                style={{
-                  background: `conic-gradient(from 0deg, 
-                    hsl(var(--primary) / 0.3), 
-                    hsl(var(--primary) / 0.1), 
-                    hsl(var(--primary) / 0.3))`,
-                  padding: '2px',
-                }}
-                whileHover={{
-                  background: `conic-gradient(from 0deg, 
-                    hsl(var(--primary) / 0.8), 
-                    hsl(var(--primary) / 0.5), 
-                    hsl(var(--primary) / 0.8))`,
+                  scale: 1.08,
+                  boxShadow: "0 0 100px #ffffff, 0 0 200px #ffd700ff, 0 0 300px #00ffffff, 0 0 400px #ffd700ee",
+                  filter: "brightness(1.4) drop-shadow(0 0 50px #ffd700ff)",
                   transition: { duration: 0.2 }
                 }}
                 whileTap={{
-                  background: `conic-gradient(from 0deg, 
-                    hsl(var(--primary) / 1.0), 
-                    hsl(var(--primary) / 0.7), 
-                    hsl(var(--primary) / 1.0))`,
+                  scale: 0.95,
+                  boxShadow: "0 0 80px hsl(var(--primary) / 1.0), 0 0 160px hsl(var(--primary) / 0.9), 0 0 240px hsl(var(--primary) / 0.7)",
+                  filter: "brightness(1.6) drop-shadow(0 0 60px hsl(var(--primary)))",
                   transition: { duration: 0.1 }
                 }}
-              >
-                <div className="w-full h-full rounded-full bg-background/20" />
-              </motion.div>
+            >
+              {/* Ring Animation Layer with containment */}
+               <motion.div 
+                 className="absolute inset-0 rounded-full"
+                 style={{
+                   background: `conic-gradient(from 0deg, 
+                     hsl(var(--primary) / 0.6), 
+                     hsl(var(--primary) / 0.3), 
+                     hsl(var(--primary) / 0.6))`,
+                   padding: '2px',
+                 }}
+                 whileHover={{
+                   background: `conic-gradient(from 0deg, 
+                     hsl(var(--primary) / 0.9), 
+                     hsl(var(--primary) / 0.6), 
+                     hsl(var(--primary) / 0.9))`,
+                   transition: { duration: 0.2 }
+                 }}
+                 whileTap={{
+                   background: `conic-gradient(from 0deg, 
+                     hsl(var(--primary) / 1.0), 
+                     hsl(var(--primary) / 0.8), 
+                     hsl(var(--primary) / 1.0))`,
+                   transition: { duration: 0.1 }
+                 }}
+               >
+                 <div className="w-full h-full rounded-full bg-background/10" />
+               </motion.div>
 
               {/* Main Button Content with proper containment */}
               <motion.div className="relative z-10 h-full w-full rounded-full overflow-hidden">
