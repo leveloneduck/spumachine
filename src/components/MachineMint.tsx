@@ -591,42 +591,37 @@ const syncPlatform = useCallback(() => {
                    transition: { duration: 0.1 }
                  }}
              >
-               {/* Glow Ring Layer */}
-               <motion.div 
-                 className="absolute inset-0 rounded-full"
-                 style={{
-                   background: 'transparent',
-                   border: '1px solid transparent',
-                   boxShadow: `
-                     0 0 20px hsl(var(--primary) / 0.8),
-                     0 0 40px hsl(var(--primary) / 0.5),
-                     0 0 80px hsl(var(--primary) / 0.3)
-                   `,
-                 }}
-                 animate={{
-                   boxShadow: `
-                     0 0 20px hsl(var(--primary) / 0.8),
-                     0 0 40px hsl(var(--primary) / 0.5),
-                     0 0 80px hsl(var(--primary) / 0.3)
-                   `
-                 }}
-                 whileHover={{
-                   boxShadow: `
-                     0 0 30px hsl(var(--primary)),
-                     0 0 60px hsl(var(--primary) / 0.7),
-                     0 0 120px hsl(var(--primary) / 0.4)
-                   `,
-                   transition: { duration: 0.2 }
-                 }}
-                 whileTap={{
-                   boxShadow: `
-                     0 0 40px hsl(var(--primary)),
-                     0 0 80px hsl(var(--primary) / 0.8),
-                     0 0 160px hsl(var(--primary) / 0.5)
-                   `,
-                   transition: { duration: 0.1 }
-                 }}
-               />
+                {/* Bright Glow Ring */}
+                <motion.div 
+                  className="absolute inset-0 rounded-full"
+                  style={{
+                    background: 'transparent',
+                    boxShadow: `
+                      0 0 40px hsl(var(--primary)),
+                      0 0 80px hsl(var(--primary)),
+                      0 0 120px hsl(var(--primary) / 0.8),
+                      0 0 200px hsl(var(--primary) / 0.6)
+                    `,
+                  }}
+                  whileHover={{
+                    boxShadow: `
+                      0 0 60px hsl(var(--primary)),
+                      0 0 120px hsl(var(--primary)),
+                      0 0 180px hsl(var(--primary) / 0.9),
+                      0 0 300px hsl(var(--primary) / 0.7)
+                    `,
+                    transition: { duration: 0.2 }
+                  }}
+                  whileTap={{
+                    boxShadow: `
+                      0 0 80px hsl(var(--primary)),
+                      0 0 160px hsl(var(--primary)),
+                      0 0 240px hsl(var(--primary) / 0.9),
+                      0 0 400px hsl(var(--primary) / 0.8)
+                    `,
+                    transition: { duration: 0.1 }
+                  }}
+                />
 
               {/* Main Button Content with proper containment */}
               <motion.div className="relative z-10 h-full w-full rounded-full overflow-hidden">
