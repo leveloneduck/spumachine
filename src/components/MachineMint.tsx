@@ -599,33 +599,36 @@ const syncPlatform = useCallback(() => {
                    transition: { duration: 0.1 }
                  }}
             >
-               {/* Pure Border Ring - NO CENTER FILL */}
+               {/* Pure Outward Glow - NO BORDER, NO CENTER FILL */}
                 <motion.div 
                   className="absolute inset-0 rounded-full"
                   style={{
                     background: 'transparent',
-                    border: '2px solid hsl(var(--primary) / 0.6)',
                     boxShadow: `
-                      0 0 20px hsl(var(--primary) / 0.4),
-                      0 0 40px hsl(var(--primary) / 0.2),
-                      inset 0 0 0 1px hsl(var(--primary) / 0.3)
+                      0 0 10px hsl(var(--primary) / 0.8),
+                      0 0 20px hsl(var(--primary) / 0.6),
+                      0 0 40px hsl(var(--primary) / 0.4),
+                      0 0 60px hsl(var(--primary) / 0.2)
                     `,
+                    willChange: 'box-shadow',
                   }}
                   whileHover={{
-                    border: '2px solid hsl(var(--primary) / 0.9)',
                     boxShadow: `
-                      0 0 30px hsl(var(--primary) / 0.6),
-                      0 0 60px hsl(var(--primary) / 0.3),
-                      inset 0 0 0 1px hsl(var(--primary) / 0.5)
+                      0 0 15px hsl(var(--primary)),
+                      0 0 30px hsl(var(--primary) / 0.8),
+                      0 0 60px hsl(var(--primary) / 0.6),
+                      0 0 90px hsl(var(--primary) / 0.4),
+                      0 0 120px hsl(var(--primary) / 0.2)
                     `,
                     transition: { duration: 0.2 }
                   }}
                   whileTap={{
-                    border: '2px solid hsl(var(--primary))',
                     boxShadow: `
-                      0 0 40px hsl(var(--primary) / 0.8),
-                      0 0 80px hsl(var(--primary) / 0.4),
-                      inset 0 0 0 1px hsl(var(--primary) / 0.7)
+                      0 0 20px hsl(var(--primary)),
+                      0 0 40px hsl(var(--primary) / 0.9),
+                      0 0 80px hsl(var(--primary) / 0.7),
+                      0 0 120px hsl(var(--primary) / 0.5),
+                      0 0 160px hsl(var(--primary) / 0.3)
                     `,
                     transition: { duration: 0.1 }
                   }}
