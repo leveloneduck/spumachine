@@ -599,33 +599,37 @@ const syncPlatform = useCallback(() => {
                    transition: { duration: 0.1 }
                  }}
             >
-              {/* Ring Animation Layer with containment */}
-               <motion.div 
-                 className="absolute inset-0 rounded-full"
-                 style={{
-                   background: `conic-gradient(from 0deg, 
-                     hsl(var(--primary) / 0.6), 
-                     hsl(var(--primary) / 0.3), 
-                     hsl(var(--primary) / 0.6))`,
-                   padding: '2px',
-                 }}
-                 whileHover={{
-                   background: `conic-gradient(from 0deg, 
-                     hsl(var(--primary) / 0.9), 
-                     hsl(var(--primary) / 0.6), 
-                     hsl(var(--primary) / 0.9))`,
-                   transition: { duration: 0.2 }
-                 }}
-                 whileTap={{
-                   background: `conic-gradient(from 0deg, 
-                     hsl(var(--primary) / 1.0), 
-                     hsl(var(--primary) / 0.8), 
-                     hsl(var(--primary) / 1.0))`,
-                   transition: { duration: 0.1 }
-                 }}
-               >
-                 <div className="w-full h-full rounded-full bg-background/10" />
-               </motion.div>
+               {/* Pure Border Ring - NO CENTER FILL */}
+                <motion.div 
+                  className="absolute inset-0 rounded-full"
+                  style={{
+                    background: 'transparent',
+                    border: '2px solid hsl(var(--primary) / 0.6)',
+                    boxShadow: `
+                      0 0 20px hsl(var(--primary) / 0.4),
+                      0 0 40px hsl(var(--primary) / 0.2),
+                      inset 0 0 0 1px hsl(var(--primary) / 0.3)
+                    `,
+                  }}
+                  whileHover={{
+                    border: '2px solid hsl(var(--primary) / 0.9)',
+                    boxShadow: `
+                      0 0 30px hsl(var(--primary) / 0.6),
+                      0 0 60px hsl(var(--primary) / 0.3),
+                      inset 0 0 0 1px hsl(var(--primary) / 0.5)
+                    `,
+                    transition: { duration: 0.2 }
+                  }}
+                  whileTap={{
+                    border: '2px solid hsl(var(--primary))',
+                    boxShadow: `
+                      0 0 40px hsl(var(--primary) / 0.8),
+                      0 0 80px hsl(var(--primary) / 0.4),
+                      inset 0 0 0 1px hsl(var(--primary) / 0.7)
+                    `,
+                    transition: { duration: 0.1 }
+                  }}
+                />
 
               {/* Main Button Content with proper containment */}
               <motion.div className="relative z-10 h-full w-full rounded-full overflow-hidden">
