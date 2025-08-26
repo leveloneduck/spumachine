@@ -578,10 +578,10 @@ const syncPlatform = useCallback(() => {
                   "0 0 60px #00ffffff, 0 0 120px #00ffffcc, 0 0 180px #00ffff99, 0 0 40px #40e0d0ff, 0 0 80px #40e0d0cc, 0 0 120px #40e0d099, 0 0 220px #00ffff66", 
                   "0 0 50px #ffd700ff, 0 0 100px #ffd700cc, 0 0 150px #ffd70099, 0 0 30px #ffa500ff, 0 0 60px #ffa500cc, 0 0 90px #ffa50099, 0 0 200px #ffd70066"
                 ] : [
-                  // Always active pulsating glow
-                  "0 0 30px #ffd700cc, 0 0 60px #ffd70099, 0 0 90px #ffd70066, 0 0 120px #ffd70033",
-                  "0 0 40px #ffd700ff, 0 0 80px #ffd700cc, 0 0 120px #ffd70099, 0 0 160px #ffd70066",
-                  "0 0 30px #ffd700cc, 0 0 60px #ffd70099, 0 0 90px #ffd70066, 0 0 120px #ffd70033"
+                  // Always active much more luminous pulsating glow
+                  "0 0 40px #ffd700ff, 0 0 80px #ffd700ee, 0 0 120px #ffd700dd, 0 0 160px #ffd700bb, 0 0 200px #ffd70099",
+                  "0 0 60px #ffd700ff, 0 0 120px #ffd700ff, 0 0 180px #ffd700ee, 0 0 240px #ffd700dd, 0 0 300px #ffd700bb",
+                  "0 0 40px #ffd700ff, 0 0 80px #ffd700ee, 0 0 120px #ffd700dd, 0 0 160px #ffd700bb, 0 0 200px #ffd70099"
                 ]
               }}
               transition={{
