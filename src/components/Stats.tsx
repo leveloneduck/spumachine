@@ -7,7 +7,7 @@ const Stats = () => {
   const percent = Math.min(100, Math.max(0, (stats.minted / stats.total) * 100));
 
   return (
-    <section className="container mx-auto pb-0 relative z-10 px-6 sm:px-4">
+    <section className="container mx-auto pb-0 relative z-10 px-6 sm:px-4 -mt-8 md:-mt-12">
       <motion.div 
         initial={{ opacity: 0, y: 8 }} 
         whileInView={{ opacity: 1, y: 0 }} 
