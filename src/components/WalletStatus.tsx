@@ -8,7 +8,7 @@ export const WalletStatus = () => {
   const { setVisible } = useWalletModal();
 
   return (
-    <div className="flex flex-col items-center gap-2 text-center mb-8">
+    <div className="flex flex-col items-center gap-2 text-center mb-8 md:mb-7">
       <Badge variant="outline" className="text-sm bg-muted/50">
         {connected
           ? `Connected: ${publicKey?.toBase58().slice(0, 4)}...${publicKey?.toBase58().slice(-4)}`
