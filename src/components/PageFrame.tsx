@@ -1,4 +1,5 @@
 import React from "react";
+import pressHereImage from "@/assets/press-here.png";
 
 interface PageFrameProps {
   /**
@@ -25,7 +26,7 @@ interface PageFrameProps {
  */
 const PageFrame: React.FC<PageFrameProps> = ({
   // Default to a single-image frame. Swap with your asset in /public or via ?frameSrc=/your-file.png
-  src = "/PRESS HERE.png",
+  src = pressHereImage,
   slice = 256,
   size = "clamp(24px, 4vw, 96px)",
   repeat = "stretch",

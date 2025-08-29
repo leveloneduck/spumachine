@@ -11,6 +11,7 @@ import { Badge } from '@/components/ui/badge';
 import { toast } from '@/components/ui/use-toast';
 import { MINT_CONFIG, getRpcEndpoint } from '@/config/mintConfig';
 import { PaymentMethodSelector, type PaymentMethod } from '@/components/PaymentMethodSelector';
+import pressHereImage from '@/assets/press-here.png';
 
 // Artwork: replace this file with your uploaded machine image to update the UI
 const MACHINE_PUBLIC = '/machine.png?v=1';
@@ -611,7 +612,7 @@ const syncPlatform = useCallback(() => {
               {/* Main Button Content with proper containment */}
               <motion.div className="relative z-10 h-full w-full rounded-full overflow-hidden">
                 <motion.img
-                  src="/PRESS HERE.png"
+                  src={pressHereImage}
                   alt=""
                   className="h-full w-full object-contain select-none pointer-events-none"
                   draggable={false}
