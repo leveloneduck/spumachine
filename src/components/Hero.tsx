@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import MachineMint from '@/components/MachineMint';
 import Stats from '@/components/Stats';
 import ElectricText from '@/components/ElectricText';
+import { WalletStatus } from '@/components/WalletStatus';
 
 const Hero = () => {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -60,6 +61,16 @@ const Hero = () => {
           <p className="text-sm md:text-base text-[hsl(var(--metal-light))] mt-2 tracking-[0.2em] font-semibold">
             EXCLUSIVE ACCESS ONLY
           </p>
+        </motion.div>
+
+        {/* Wallet Status - positioned above machine */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: 'easeOut', delay: 0.15 }}
+          className="flex justify-center mb-6"
+        >
+          <WalletStatus />
         </motion.div>
 
         <motion.div
