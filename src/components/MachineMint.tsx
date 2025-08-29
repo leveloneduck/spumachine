@@ -608,12 +608,8 @@ const syncPlatform = useCallback(() => {
                   }}
                 />
 
-               {/* Main Button Content with proper containment */}
-               <motion.div className="relative z-10 h-full w-full rounded-full overflow-hidden bg-primary/20 backdrop-blur-sm border border-primary/30">
-                 <div className="h-full w-full flex items-center justify-center text-primary font-bold text-lg">
-                   PRESS HERE
-                 </div>
-               </motion.div>
+               {/* Invisible hotspot area - uses machine's built-in "PRESS HERE" text */}
+               <motion.div className="relative z-10 h-full w-full rounded-full" />
 
                {/* Press Ripple Effect */}
                <motion.div
