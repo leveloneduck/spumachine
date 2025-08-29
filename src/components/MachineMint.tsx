@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useWalletModal } from '@solana/wallet-adapter-react-ui';
 import { motion } from 'framer-motion';
-import { Copy, Loader2, Volume2, VolumeX, Wallet } from 'lucide-react';
+import { Copy, Loader2, Wallet } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
@@ -121,7 +121,6 @@ const MachineMint = () => {
     return 1.04;
   });
 
-  const [muted, setMuted] = useState(true);
   const [videoSrc, setVideoSrc] = useState<string | null>(null);
   const [shouldPlayVideo, setShouldPlayVideo] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -467,7 +466,7 @@ const syncPlatform = useCallback(() => {
                 className="h-full w-full object-cover"
                 style={{ objectPosition: `${videoPosX}% ${videoPosY}%`, transform: `scale(${videoZoom})`, transformOrigin: 'center' }}
                 src={videoSrc}
-                muted={muted}
+                muted={false}
                 loop
                 playsInline
                 preload="auto"
@@ -484,20 +483,6 @@ const syncPlatform = useCallback(() => {
             </div>
           )}
 
-          {/* Control buttons: Volume */}
-          <div className="absolute right-4 top-4 z-50 flex gap-2">
-            {/* Mute/unmute toggle */}
-            <Button
-              type="button"
-              variant="mechanical"
-              size="icon"
-              onClick={() => setMuted((m) => !m)}
-              className="hidden h-8 w-8 md:h-10 md:w-10 shadow-[0_0_12px_hsl(var(--primary)/0.3)] border-primary/30 bg-background/80 backdrop-blur-sm hover:shadow-[0_0_16px_hsl(var(--primary)/0.4)] hover:border-primary/50 transition-all duration-200"
-              aria-label={muted ? 'Unmute background video' : 'Mute background video'}
-            >
-              {muted ? <VolumeX size={16} className="text-primary" /> : <Volume2 size={16} className="text-primary" />}
-            </Button>
-          </div>
 
           {/* Machine artwork overlay (PNG with transparent window) */}
           <img
