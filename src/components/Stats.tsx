@@ -1,20 +1,25 @@
 import { Progress } from '@/components/ui/progress';
 import { useCandyMachine } from '@/hooks/useCandyMachine';
 import { motion } from 'framer-motion';
-
 const Stats = () => {
-  const { stats, loading, error } = useCandyMachine();
-  const percent = Math.min(100, Math.max(0, (stats.remaining / stats.total) * 100));
-
-  return (
-    <section className="container mx-auto pb-0 relative z-10 px-6 sm:px-4 -mt-8 md:-mt-12">
-      <motion.div 
-        initial={{ opacity: 0, y: 8 }} 
-        whileInView={{ opacity: 1, y: 0 }} 
-        viewport={{ once: true }} 
-        transition={{ duration: 0.5 }} 
-        className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 max-w-[240px] sm:max-w-3xl mx-auto"
-      >
+  const {
+    stats,
+    loading,
+    error
+  } = useCandyMachine();
+  const percent = Math.min(100, Math.max(0, stats.remaining / stats.total * 100));
+  return <section className="container mx-auto pb-0 relative z-10 px-6 sm:px-4 -mt-8 md:-mt-12">
+      <motion.div initial={{
+      opacity: 0,
+      y: 8
+    }} whileInView={{
+      opacity: 1,
+      y: 0
+    }} viewport={{
+      once: true
+    }} transition={{
+      duration: 0.5
+    }} className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 max-w-[240px] sm:max-w-3xl mx-auto">
         <div className="metal-holes relative rounded-xl p-3 sm:p-6 overflow-hidden
                         bg-gradient-to-b from-[hsl(var(--metal-base))] via-[hsl(var(--metal-dark))] to-[hsl(var(--metal-base))]
                         border-2 border-[hsl(var(--metal-light)/0.3)]
@@ -25,7 +30,7 @@ const Stats = () => {
           <div className="corner-hole-tr"></div>
           <div className="corner-hole-bl"></div>
           <div className="corner-hole-br"></div>
-          <p className="text-sm text-[hsl(var(--metal-light))] relative z-10">Minted</p>
+          <p className="text-sm text-[hsl(var(--metal-light))] relative z-10">Constructed</p>
           <p className="mt-2 text-2xl sm:text-3xl font-bold text-[hsl(var(--amber-display))] relative z-10">{loading ? '...' : stats.minted}</p>
         </div>
         <div className="metal-holes relative rounded-xl p-3 sm:p-6 overflow-hidden
@@ -59,8 +64,6 @@ const Stats = () => {
         </div>
       </motion.div>
       {error && <p className="mt-4 text-sm text-destructive">{error}</p>}
-    </section>
-  );
+    </section>;
 };
-
 export default Stats;
