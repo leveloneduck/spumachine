@@ -43,7 +43,7 @@ const Stats = () => {
           <div className="corner-hole-tr"></div>
           <div className="corner-hole-bl"></div>
           <div className="corner-hole-br"></div>
-          <p className="text-sm text-[hsl(var(--metal-light))] relative z-10">Remaining</p>
+          <p className="text-sm text-[hsl(var(--metal-light))] relative z-10">Supply</p>
           <p className="mt-2 text-2xl sm:text-3xl font-bold text-[hsl(var(--amber-display))] relative z-10">{loading ? '...' : stats.remaining}</p>
         </div>
         <div className="metal-holes relative rounded-xl p-3 sm:p-6 overflow-hidden
