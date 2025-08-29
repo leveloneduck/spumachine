@@ -56,7 +56,7 @@ const Stats = () => {
           <div className="corner-hole-tr"></div>
           <div className="corner-hole-bl"></div>
           <div className="corner-hole-br"></div>
-          <p className="text-sm text-[hsl(var(--metal-light))] relative z-10">Remaining</p>
+          <p className="text-sm text-[hsl(var(--metal-light))] relative z-10">Sequence</p>
           <div className="mt-4 relative z-10">
             <Progress value={percent} className="[&>div]:bg-gradient-to-r [&>div]:from-[hsl(var(--amber-glow))] [&>div]:to-[hsl(var(--rust-glow))] bg-[hsl(var(--metal-dark)/0.3)]" />
             <p className="mt-2 text-sm text-[hsl(var(--metal-light))]">{loading ? 'Loading...' : `${percent.toFixed(1)}%`}</p>
