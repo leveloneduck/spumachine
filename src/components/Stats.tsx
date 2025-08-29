@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 const Stats = () => {
   const { stats, loading, error } = useCandyMachine();
-  const percent = Math.min(100, Math.max(0, (stats.minted / stats.total) * 100));
+  const percent = Math.min(100, Math.max(0, (stats.remaining / stats.total) * 100));
 
   return (
     <section className="container mx-auto pb-0 relative z-10 px-6 sm:px-4 -mt-8 md:-mt-12">
@@ -51,7 +51,7 @@ const Stats = () => {
           <div className="corner-hole-tr"></div>
           <div className="corner-hole-bl"></div>
           <div className="corner-hole-br"></div>
-          <p className="text-sm text-[hsl(var(--metal-light))] relative z-10">Progress</p>
+          <p className="text-sm text-[hsl(var(--metal-light))] relative z-10">Remaining</p>
           <div className="mt-4 relative z-10">
             <Progress value={percent} className="[&>div]:bg-gradient-to-r [&>div]:from-[hsl(var(--amber-glow))] [&>div]:to-[hsl(var(--rust-glow))] bg-[hsl(var(--metal-dark)/0.3)]" />
             <p className="mt-2 text-sm text-[hsl(var(--metal-light))]">{loading ? 'Loading...' : `${percent.toFixed(1)}%`}</p>
