@@ -546,180 +546,170 @@ const syncPlatform = useCallback(() => {
               overflow: 'visible'
             }}
           >
-            {/* Press Here Button Design with contained animations */}
-             <motion.div
-               className="mobile-glow-button relative h-full w-full rounded-full select-none"
+            {/* Invisible hotspot that uses machine's built-in PRESS HERE text */}
+            <motion.div
+              className="relative h-full w-full rounded-full select-none"
+              style={{
+                transformOrigin: 'center',
+                borderRadius: '50%',
+                willChange: 'transform',
+                overflow: 'visible',
+                transform: 'translate3d(0,0,0)',
+                background: 'transparent'
+              }}
+              animate={{
+                boxShadow: "0 0 60px hsl(var(--primary) / 0.8), 0 0 120px hsl(var(--primary) / 0.4)"
+              }}
+              transition={{
+                duration: 2.5,
+                repeat: Infinity,
+                repeatType: "reverse",
+                ease: "easeInOut"
+              }}
+              whileHover={{
+                scale: 1.1,
+                boxShadow: "0 0 80px hsl(var(--primary) / 1), 0 0 160px hsl(var(--primary) / 0.6)",
+                transition: { duration: 0.3 }
+              }}
+              whileTap={{
+                scale: 0.95,
+                boxShadow: "0 0 100px hsl(var(--primary)), 0 0 200px hsl(var(--primary) / 0.8)",
+                transition: { duration: 0.1 }
+              }}
+            >
+              {/* Stronger Glow Ring */}
+              <motion.div 
+                className="absolute inset-0 rounded-full"
                 style={{
-                 transformOrigin: 'center',
-                 borderRadius: '50%',
-                 willChange: 'transform',
-                 overflow: 'visible',
-                 transform: 'translate3d(0,0,0)'
-               }}
-                 animate={{
-                   boxShadow: "0 0 40px hsl(var(--primary) / 0.6), 0 0 80px hsl(var(--primary) / 0.3)"
-                 }}
-               transition={{
-                 duration: 2.5,
-                 repeat: Infinity,
-                 repeatType: "reverse",
-                 ease: "easeInOut"
-               }}
-                 whileHover={{
-                   scale: 1.05,
-                   boxShadow: "0 0 60px hsl(var(--primary) / 0.8), 0 0 120px hsl(var(--primary) / 0.4)",
-                   transition: { duration: 0.2 }
-                 }}
-                 whileTap={{
-                   scale: 0.95,
-                   boxShadow: "0 0 80px hsl(var(--primary)), 0 0 160px hsl(var(--primary) / 0.5)",
-                   transition: { duration: 0.1 }
-                 }}
-             >
-                {/* Bright Glow Ring */}
+                  background: 'transparent',
+                  boxShadow: `
+                    0 0 60px hsl(var(--primary)),
+                    0 0 120px hsl(var(--primary)),
+                    0 0 180px hsl(var(--primary) / 0.9),
+                    0 0 300px hsl(var(--primary) / 0.7)
+                  `,
+                }}
+                whileHover={{
+                  boxShadow: `
+                    0 0 80px hsl(var(--primary)),
+                    0 0 160px hsl(var(--primary)),
+                    0 0 240px hsl(var(--primary) / 1),
+                    0 0 400px hsl(var(--primary) / 0.8)
+                  `,
+                  transition: { duration: 0.3 }
+                }}
+                whileTap={{
+                  boxShadow: `
+                    0 0 100px hsl(var(--primary)),
+                    0 0 200px hsl(var(--primary)),
+                    0 0 300px hsl(var(--primary) / 1),
+                    0 0 500px hsl(var(--primary) / 0.9)
+                  `,
+                  transition: { duration: 0.1 }
+                }}
+              />
+
+              {/* Subtle highlight overlay for hover feedback only */}
+              <motion.div 
+                className="absolute inset-0 rounded-full"
+                style={{
+                  background: 'transparent',
+                  border: '2px solid transparent'
+                }}
+                whileHover={{
+                  border: '2px solid hsl(var(--primary) / 0.6)',
+                  background: 'hsl(var(--primary) / 0.1)',
+                  transition: { duration: 0.2 }
+                }}
+              />
+
+              {/* Press ripple effect */}
+              <motion.div
+                className="absolute inset-0 bg-primary/20 rounded-full"
+                style={{ 
+                  clipPath: 'circle(50% at center)',
+                  transformOrigin: 'center'
+                }}
+                initial={{ scale: 0, opacity: 0 }}
+                whileTap={{
+                  scale: [0, 1.2],
+                  opacity: [0, 0.8, 0],
+                  transition: { duration: 0.4, ease: "easeOut" }
+                }}
+              />
+
+              {/* Button Press State */}
+              {stage === 'pressed' && (
                 <motion.div 
-                  className="absolute inset-0 rounded-full"
-                  style={{
-                    background: 'transparent',
-                    boxShadow: `
-                      0 0 40px hsl(var(--primary)),
-                      0 0 80px hsl(var(--primary)),
-                      0 0 120px hsl(var(--primary) / 0.8),
-                      0 0 200px hsl(var(--primary) / 0.6)
-                    `,
-                  }}
-                  whileHover={{
-                    boxShadow: `
-                      0 0 60px hsl(var(--primary)),
-                      0 0 120px hsl(var(--primary)),
-                      0 0 180px hsl(var(--primary) / 0.9),
-                      0 0 300px hsl(var(--primary) / 0.7)
-                    `,
-                    transition: { duration: 0.2 }
-                  }}
-                  whileTap={{
-                    boxShadow: `
-                      0 0 80px hsl(var(--primary)),
-                      0 0 160px hsl(var(--primary)),
-                      0 0 240px hsl(var(--primary) / 0.9),
-                      0 0 400px hsl(var(--primary) / 0.8)
-                    `,
-                    transition: { duration: 0.1 }
-                  }}
+                  className="absolute inset-0 bg-primary/30 rounded-full"
+                  style={{ clipPath: 'circle(50% at center)' }}
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.15 }}
                 />
+              )}
 
-              {/* Main Button Content with proper containment */}
-              <motion.div className="relative z-10 h-full w-full rounded-full overflow-hidden">
-                <motion.img
-                  src="/PRESS HERE.png"
-                  alt=""
-                  className="h-full w-full object-contain select-none pointer-events-none"
-                  draggable={false}
-                  loading="lazy"
-                  style={{
-                    userSelect: 'none',
-                    WebkitUserSelect: 'none',
-                    fontSize: 0,
-                    textIndent: '-9999px'
-                  }}
-                  whileHover={{
-                    filter: "brightness(1.3) contrast(1.15) saturate(1.2)",
-                    transition: { duration: 0.2 }
-                  }}
-                  whileTap={{
-                    filter: "brightness(1.5) contrast(1.25) saturate(1.4)",
-                    transition: { duration: 0.1 }
-                  }}
-                />
-                
-                {/* Contained Press Ripple Effect */}
-                <motion.div
-                  className="absolute inset-0 bg-primary/20 rounded-full"
-                  style={{ 
-                    clipPath: 'circle(50% at center)',
-                    transformOrigin: 'center'
-                  }}
-                  initial={{ scale: 0, opacity: 0 }}
-                  whileTap={{
-                    scale: [0, 1.0],
-                    opacity: [0, 0.8, 0],
-                    transition: { duration: 0.4, ease: "easeOut" }
-                  }}
-                />
-
-                {/* Button Press State with containment */}
-                {stage === 'pressed' && (
-                  <motion.div 
-                    className="absolute inset-0 bg-primary/30 rounded-full"
-                    style={{ clipPath: 'circle(50% at center)' }}
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.15 }}
-                  />
-                )}
-
-                {/* Processing State */}
-                {stage === 'processing' && (
-                  <motion.div 
-                    className="absolute inset-0 grid place-items-center bg-background/50 rounded-full"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <motion.div
-                      className="w-4 h-4 border-2 border-primary/30 border-t-primary rounded-full"
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                    />
-                  </motion.div>
-                )}
-
-                {/* Loading State Enhancement */}
-                {minting && (
-                  <motion.div 
-                    className="absolute inset-0 grid place-items-center bg-background/70 rounded-full"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <motion.div
-                      animate={{ 
-                        boxShadow: [
-                          "0 0 4px hsl(var(--primary) / 0.3)",
-                          "0 0 8px hsl(var(--primary) / 0.4)",
-                          "0 0 4px hsl(var(--primary) / 0.3)"
-                        ]
-                      }}
-                      transition={{ 
-                        duration: 1.5, 
-                        repeat: Infinity, 
-                        ease: "easeInOut" 
-                      }}
-                      className="rounded-full p-1"
-                    >
-                      <Loader2 className="h-6 w-6 animate-spin text-primary" />
-                    </motion.div>
-                  </motion.div>
-                )}
-
-                {/* Success/Error Flash with containment */}
-                {(stage === 'success' || stage === 'error') && (
+              {/* Processing State */}
+              {stage === 'processing' && (
+                <motion.div 
+                  className="absolute inset-0 grid place-items-center bg-background/50 rounded-full"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.2 }}
+                >
                   <motion.div
-                    className={`absolute inset-0 ${stage === 'success' ? 'bg-green-500/30' : 'bg-red-500/30'} rounded-full`}
-                    style={{ clipPath: 'circle(50% at center)' }}
-                    initial={{ opacity: 0, scale: 0.8 }}
+                    className="w-4 h-4 border-2 border-primary/30 border-t-primary rounded-full"
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                  />
+                </motion.div>
+              )}
+
+              {/* Loading State Enhancement */}
+              {minting && (
+                <motion.div 
+                  className="absolute inset-0 grid place-items-center bg-background/70 rounded-full"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <motion.div
                     animate={{ 
-                      opacity: [0, 0.8, 0], 
-                      scale: [0.8, 1, 1] 
+                      boxShadow: [
+                        "0 0 4px hsl(var(--primary) / 0.3)",
+                        "0 0 8px hsl(var(--primary) / 0.4)",
+                        "0 0 4px hsl(var(--primary) / 0.3)"
+                      ]
                     }}
                     transition={{ 
-                      duration: 0.6, 
-                      ease: "easeOut" 
+                      duration: 1.5, 
+                      repeat: Infinity, 
+                      ease: "easeInOut" 
                     }}
-                  />
-                )}
-              </motion.div>
+                    className="rounded-full p-1"
+                  >
+                    <Loader2 className="h-6 w-6 animate-spin text-primary" />
+                  </motion.div>
+                </motion.div>
+              )}
+
+              {/* Success/Error Flash */}
+              {(stage === 'success' || stage === 'error') && (
+                <motion.div
+                  className={`absolute inset-0 ${stage === 'success' ? 'bg-green-500/30' : 'bg-red-500/30'} rounded-full`}
+                  style={{ clipPath: 'circle(50% at center)' }}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ 
+                    opacity: [0, 0.8, 0], 
+                    scale: [0.8, 1, 1] 
+                  }}
+                  transition={{ 
+                    duration: 0.6, 
+                    ease: "easeOut" 
+                  }}
+                />
+              )}
             </motion.div>
           </motion.button>
         </AspectRatio>

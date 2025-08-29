@@ -68,7 +68,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.15 }}
-          className="flex justify-center mb-6 md:mb-5"
+          className="flex justify-center mb-3 md:mb-2"
         >
           <WalletStatus />
         </motion.div>
