@@ -608,98 +608,120 @@ const syncPlatform = useCallback(() => {
                   }}
                 />
 
-               {/* Invisible hotspot area - uses machine's built-in "PRESS HERE" text */}
-               <motion.div className="relative z-10 h-full w-full rounded-full" />
+              {/* Main Button Content with proper containment */}
+              <motion.div className="relative z-10 h-full w-full rounded-full overflow-hidden">
+                <motion.img
+                  src="/PRESS HERE.png"
+                  alt=""
+                  className="h-full w-full object-contain select-none pointer-events-none"
+                  draggable={false}
+                  loading="lazy"
+                  style={{
+                    userSelect: 'none',
+                    WebkitUserSelect: 'none',
+                    fontSize: 0,
+                    textIndent: '-9999px'
+                  }}
+                  whileHover={{
+                    filter: "brightness(1.3) contrast(1.15) saturate(1.2)",
+                    transition: { duration: 0.2 }
+                  }}
+                  whileTap={{
+                    filter: "brightness(1.5) contrast(1.25) saturate(1.4)",
+                    transition: { duration: 0.1 }
+                  }}
+                />
+                
+                {/* Contained Press Ripple Effect */}
+                <motion.div
+                  className="absolute inset-0 bg-primary/20 rounded-full"
+                  style={{ 
+                    clipPath: 'circle(50% at center)',
+                    transformOrigin: 'center'
+                  }}
+                  initial={{ scale: 0, opacity: 0 }}
+                  whileTap={{
+                    scale: [0, 1.0],
+                    opacity: [0, 0.8, 0],
+                    transition: { duration: 0.4, ease: "easeOut" }
+                  }}
+                />
 
-               {/* Press Ripple Effect */}
-               <motion.div
-                 className="absolute inset-0 bg-primary/20 rounded-full"
-                 style={{ 
-                   clipPath: 'circle(50% at center)',
-                   transformOrigin: 'center'
-                 }}
-                 initial={{ scale: 0, opacity: 0 }}
-                 whileTap={{
-                   scale: [0, 1.0],
-                   opacity: [0, 0.8, 0],
-                   transition: { duration: 0.4, ease: "easeOut" }
-                 }}
-               />
+                {/* Button Press State with containment */}
+                {stage === 'pressed' && (
+                  <motion.div 
+                    className="absolute inset-0 bg-primary/30 rounded-full"
+                    style={{ clipPath: 'circle(50% at center)' }}
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.15 }}
+                  />
+                )}
 
-               {/* Button Press State */}
-               {stage === 'pressed' && (
-                 <motion.div 
-                   className="absolute inset-0 bg-primary/30 rounded-full"
-                   style={{ clipPath: 'circle(50% at center)' }}
-                   initial={{ scale: 0.8, opacity: 0 }}
-                   animate={{ scale: 1, opacity: 1 }}
-                   exit={{ opacity: 0 }}
-                   transition={{ duration: 0.15 }}
-                 />
-               )}
+                {/* Processing State */}
+                {stage === 'processing' && (
+                  <motion.div 
+                    className="absolute inset-0 grid place-items-center bg-background/50 rounded-full"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <motion.div
+                      className="w-4 h-4 border-2 border-primary/30 border-t-primary rounded-full"
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                    />
+                  </motion.div>
+                )}
 
-               {/* Processing State */}
-               {stage === 'processing' && (
-                 <motion.div 
-                   className="absolute inset-0 grid place-items-center bg-background/50 rounded-full"
-                   initial={{ opacity: 0 }}
-                   animate={{ opacity: 1 }}
-                   transition={{ duration: 0.2 }}
-                 >
-                   <motion.div
-                     className="w-4 h-4 border-2 border-primary/30 border-t-primary rounded-full"
-                     animate={{ rotate: 360 }}
-                     transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                   />
-                 </motion.div>
-               )}
+                {/* Loading State Enhancement */}
+                {minting && (
+                  <motion.div 
+                    className="absolute inset-0 grid place-items-center bg-background/70 rounded-full"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <motion.div
+                      animate={{ 
+                        boxShadow: [
+                          "0 0 4px hsl(var(--primary) / 0.3)",
+                          "0 0 8px hsl(var(--primary) / 0.4)",
+                          "0 0 4px hsl(var(--primary) / 0.3)"
+                        ]
+                      }}
+                      transition={{ 
+                        duration: 1.5, 
+                        repeat: Infinity, 
+                        ease: "easeInOut" 
+                      }}
+                      className="rounded-full p-1"
+                    >
+                      <Loader2 className="h-6 w-6 animate-spin text-primary" />
+                    </motion.div>
+                  </motion.div>
+                )}
 
-               {/* Loading State */}
-               {minting && (
-                 <motion.div 
-                   className="absolute inset-0 grid place-items-center bg-background/70 rounded-full"
-                   initial={{ opacity: 0 }}
-                   animate={{ opacity: 1 }}
-                   transition={{ duration: 0.2 }}
-                 >
-                   <motion.div
-                     animate={{ 
-                       boxShadow: [
-                         "0 0 4px hsl(var(--primary) / 0.3)",
-                         "0 0 8px hsl(var(--primary) / 0.4)",
-                         "0 0 4px hsl(var(--primary) / 0.3)"
-                       ]
-                     }}
-                     transition={{ 
-                       duration: 1.5, 
-                       repeat: Infinity, 
-                       ease: "easeInOut" 
-                     }}
-                     className="rounded-full p-1"
-                   >
-                     <Loader2 className="h-6 w-6 animate-spin text-primary" />
-                   </motion.div>
-                 </motion.div>
-               )}
-
-               {/* Success/Error Flash */}
-               {(stage === 'success' || stage === 'error') && (
-                 <motion.div
-                   className={`absolute inset-0 ${stage === 'success' ? 'bg-green-500/30' : 'bg-red-500/30'} rounded-full`}
-                   style={{ clipPath: 'circle(50% at center)' }}
-                   initial={{ opacity: 0, scale: 0.8 }}
-                   animate={{ 
-                     opacity: [0, 0.8, 0], 
-                     scale: [0.8, 1, 1] 
-                   }}
-                   transition={{ 
-                     duration: 0.6, 
-                     ease: "easeOut" 
-                   }}
-                 />
-               )}
-             </motion.div>
-           </motion.button>
+                {/* Success/Error Flash with containment */}
+                {(stage === 'success' || stage === 'error') && (
+                  <motion.div
+                    className={`absolute inset-0 ${stage === 'success' ? 'bg-green-500/30' : 'bg-red-500/30'} rounded-full`}
+                    style={{ clipPath: 'circle(50% at center)' }}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ 
+                      opacity: [0, 0.8, 0], 
+                      scale: [0.8, 1, 1] 
+                    }}
+                    transition={{ 
+                      duration: 0.6, 
+                      ease: "easeOut" 
+                    }}
+                  />
+                )}
+              </motion.div>
+            </motion.div>
+          </motion.button>
         </AspectRatio>
       </motion.div>
 
