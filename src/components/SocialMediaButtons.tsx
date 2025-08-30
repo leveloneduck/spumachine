@@ -26,12 +26,6 @@ export const SocialMediaButtons = ({ links = {} }: SocialMediaButtonsProps) => {
       ariaLabel: 'Subscribe to our YouTube channel'
     },
     {
-      name: 'Facebook',
-      icon: Facebook,
-      url: links.facebook || '#',
-      ariaLabel: 'Like us on Facebook'
-    },
-    {
       name: 'X',
       icon: Twitter,
       url: links.twitter || '#',
