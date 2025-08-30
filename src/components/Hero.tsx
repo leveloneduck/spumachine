@@ -118,7 +118,7 @@ const Hero = () => {
                           border border-[hsl(var(--rust-base)/0.4)] backdrop-blur-sm
                           shadow-[0_8px_32px_hsl(var(--metal-dark)/0.4)]">
             {/* Rust accent overlay */}
-            <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-[hsl(var(--rust-dark)/0.1)] via-transparent to-[hsl(var(--rust-base)/0.1)] hidden" />
+            <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-[hsl(var(--rust-dark)/0.1)] via-transparent to-[hsl(var(--rust-base)/0.1)]" />
             
             <div className="relative z-10">
               <h3 className="text-xl md:text-2xl font-bold text-[hsl(var(--amber-display))] mb-4 tracking-wide">
