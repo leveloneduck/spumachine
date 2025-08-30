@@ -4,6 +4,7 @@ import MachineMint from '@/components/MachineMint';
 import Stats from '@/components/Stats';
 import ElectricText from '@/components/ElectricText';
 import { WalletStatus } from '@/components/WalletStatus';
+import { SocialMediaButtons } from '@/components/SocialMediaButtons';
 
 const Hero = () => {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -72,6 +73,9 @@ const Hero = () => {
         >
           <WalletStatus />
         </motion.div>
+
+        {/* Social Media Buttons */}
+        <SocialMediaButtons />
 
         <motion.div
           initial={{ opacity: 0, y: 10 }}
