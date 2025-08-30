@@ -591,10 +591,11 @@ const syncPlatform = useCallback(() => {
                 }}
                 whileHover={{
                   boxShadow: `
+                    0 0 40px hsl(var(--primary) / 1.4),
                     0 0 80px hsl(var(--primary) / 1.3),
-                    0 0 160px hsl(var(--primary) / 1.2),
-                    0 0 240px hsl(var(--primary) / 1.4),
-                    0 0 400px hsl(var(--primary) / 1.1)
+                    0 0 140px hsl(var(--primary) / 1.2),
+                    0 0 220px hsl(var(--primary) / 1.4),
+                    0 0 380px hsl(var(--primary) / 1.1)
                   `,
                   transition: { duration: 0.3 }
                 }}
