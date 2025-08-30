@@ -558,7 +558,7 @@ const syncPlatform = useCallback(() => {
                 background: 'transparent'
               }}
               animate={{
-                boxShadow: "0 0 60px hsl(var(--primary) / 0.8), 0 0 120px hsl(var(--primary) / 0.4)"
+                boxShadow: "0 0 60px hsl(var(--primary) / 1.2), 0 0 120px hsl(var(--primary) / 0.8)"
               }}
               transition={{
                 duration: 2.5,
@@ -568,12 +568,12 @@ const syncPlatform = useCallback(() => {
               }}
               whileHover={{
                 scale: 1.1,
-                boxShadow: "0 0 80px hsl(var(--primary) / 1), 0 0 160px hsl(var(--primary) / 0.6)",
+                boxShadow: "0 0 80px hsl(var(--primary) / 1.5), 0 0 160px hsl(var(--primary) / 1)",
                 transition: { duration: 0.3 }
               }}
               whileTap={{
                 scale: 0.95,
-                boxShadow: "0 0 100px hsl(var(--primary)), 0 0 200px hsl(var(--primary) / 0.8)",
+                boxShadow: "0 0 100px hsl(var(--primary) / 1.2), 0 0 200px hsl(var(--primary) / 1)",
                 transition: { duration: 0.1 }
               }}
             >
@@ -583,27 +583,27 @@ const syncPlatform = useCallback(() => {
                 style={{
                   background: 'transparent',
                   boxShadow: `
-                    0 0 60px hsl(var(--primary)),
-                    0 0 120px hsl(var(--primary)),
-                    0 0 180px hsl(var(--primary) / 0.9),
-                    0 0 300px hsl(var(--primary) / 0.7)
+                    0 0 60px hsl(var(--primary) / 1.2),
+                    0 0 120px hsl(var(--primary) / 1.1),
+                    0 0 180px hsl(var(--primary) / 1.3),
+                    0 0 300px hsl(var(--primary) / 1)
                   `,
                 }}
                 whileHover={{
                   boxShadow: `
-                    0 0 80px hsl(var(--primary)),
-                    0 0 160px hsl(var(--primary)),
-                    0 0 240px hsl(var(--primary) / 1),
-                    0 0 400px hsl(var(--primary) / 0.8)
+                    0 0 80px hsl(var(--primary) / 1.3),
+                    0 0 160px hsl(var(--primary) / 1.2),
+                    0 0 240px hsl(var(--primary) / 1.4),
+                    0 0 400px hsl(var(--primary) / 1.1)
                   `,
                   transition: { duration: 0.3 }
                 }}
                 whileTap={{
                   boxShadow: `
-                    0 0 100px hsl(var(--primary)),
-                    0 0 200px hsl(var(--primary)),
-                    0 0 300px hsl(var(--primary) / 1),
-                    0 0 500px hsl(var(--primary) / 0.9)
+                    0 0 100px hsl(var(--primary) / 1.4),
+                    0 0 200px hsl(var(--primary) / 1.3),
+                    0 0 300px hsl(var(--primary) / 1.2),
+                    0 0 500px hsl(var(--primary) / 1.1)
                   `,
                   transition: { duration: 0.1 }
                 }}
@@ -677,9 +677,9 @@ const syncPlatform = useCallback(() => {
                   <motion.div
                     animate={{ 
                       boxShadow: [
-                        "0 0 4px hsl(var(--primary) / 0.3)",
-                        "0 0 8px hsl(var(--primary) / 0.4)",
-                        "0 0 4px hsl(var(--primary) / 0.3)"
+                        "0 0 4px hsl(var(--primary) / 0.6)",
+                        "0 0 8px hsl(var(--primary) / 0.8)",
+                        "0 0 4px hsl(var(--primary) / 0.6)"
                       ]
                     }}
                     transition={{ 
