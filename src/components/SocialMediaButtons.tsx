@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Instagram, Youtube, Facebook, X } from 'lucide-react';
+import { Instagram, Youtube, Facebook } from 'lucide-react';
+import { XLogo } from '@/components/icons/XLogo';
 
 interface SocialMediaButtonsProps {
   links?: {
@@ -27,7 +28,7 @@ export const SocialMediaButtons = ({ links = {} }: SocialMediaButtonsProps) => {
     },
     {
       name: 'X',
-      icon: X,
+      icon: XLogo,
       url: links.twitter || '#',
       ariaLabel: 'Follow us on X (Twitter)'
     }
