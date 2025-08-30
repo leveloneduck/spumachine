@@ -445,7 +445,28 @@ const syncPlatform = useCallback(() => {
             )}
           </div>
 
-          {/* Random video layer behind the machine artwork */}
+          {/* Static TV gif background - always visible */}
+          <div
+            className={`absolute z-5 overflow-hidden pointer-events-none ${videoDev ? 'ring-1 ring-muted/40' : ''}`}
+            style={{
+              left: `${videoWindow.left}%`,
+              top: `${videoWindow.top}%`,
+              width: `${videoWindow.width}%`,
+              height: `${videoWindow.height}%`,
+            }}
+          >
+            <img
+              src="/static tv.gif"
+              alt="Static TV background"
+              className="absolute inset-0 w-full h-full object-cover"
+              style={{
+                transform: `scale(${videoZoom})`,
+                objectPosition: `${videoPosX}% ${videoPosY}%`,
+              }}
+            />
+          </div>
+
+          {/* Video overlay - shows on top of static TV when minting */}
           {videoSrc && (
             <div
               className={`absolute z-10 overflow-hidden pointer-events-none ${videoDev ? 'ring-2 ring-primary/60' : ''}`}
@@ -456,14 +477,7 @@ const syncPlatform = useCallback(() => {
                 height: `${videoWindow.height}%`,
               }}
             >
-              {/* Dark overlay when video is not playing */}
-              <motion.div
-                className="absolute inset-0 z-10 bg-black"
-                initial={{ opacity: 1 }}
-                animate={{ opacity: shouldPlayVideo ? 0 : 1 }}
-                transition={{ duration: 0.3 }}
-              />
-              
+              {/* Video only shows when minting */}
               <motion.video
                 ref={videoRef}
                 key={videoSrc}
@@ -473,7 +487,7 @@ const syncPlatform = useCallback(() => {
                 muted={false}
                 loop
                 playsInline
-                preload="auto"
+                preload="metadata"
                 onCanPlay={() => setVideoLoading('loaded')}
                 onLoadedData={() => setVideoLoading('loaded')}
                 onError={() => {
@@ -481,8 +495,8 @@ const syncPlatform = useCallback(() => {
                   setVideoLoading('error');
                 }}
                 initial={{ opacity: 0 }}
-                animate={{ opacity: assetsReady ? 1 : 0 }}
-                transition={{ duration: 0.6 }}
+                animate={{ opacity: shouldPlayVideo ? 1 : 0 }}
+                transition={{ duration: 0.3 }}
               />
             </div>
           )}
