@@ -13,7 +13,7 @@ const NeonFooter = () => {
       <div className="container mx-auto py-1 px-4 flex flex-col md:flex-row items-center justify-between gap-1 relative z-10">
         <p className="text-sm text-[hsl(var(--metal-light))]">© {new Date().getFullYear()} 404 Limbots Collection</p>
         <div className="flex items-center gap-4">
-          <a href="https://twitter.com" target="_blank" rel="noreferrer" className="text-[hsl(var(--metal-light))] hover:text-[hsl(var(--amber-glow))] hover-scale transition-colors duration-200" aria-label="X (formerly Twitter)">
+          <a href="https://X.com/SparePartsUniverse" target="_blank" rel="noreferrer" className="text-[hsl(var(--metal-light))] hover:text-[hsl(var(--amber-glow))] hover-scale transition-colors duration-200" aria-label="X (formerly Twitter)">
             <XLogo size={18} />
           </a>
           <a href="https://discord.com" target="_blank" rel="noreferrer" className="text-[hsl(var(--metal-light))] hover:text-[hsl(var(--amber-glow))] hover-scale transition-colors duration-200" aria-label="Discord">

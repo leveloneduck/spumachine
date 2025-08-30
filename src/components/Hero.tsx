@@ -75,7 +75,13 @@ const Hero = () => {
         </motion.div>
 
         {/* Social Media Buttons */}
-        <SocialMediaButtons />
+        <SocialMediaButtons 
+          links={{
+            instagram: "https://instagram.com/SparePartsUniverse",
+            youtube: "https://youtube.com/@sparepartsuniverse",
+            twitter: "https://X.com/SparePartsUniverse"
+          }}
+        />
 
         <motion.div
           initial={{ opacity: 0, y: 10 }}
