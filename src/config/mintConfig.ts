@@ -11,9 +11,11 @@ export interface TokenPaymentConfig {
 export const MINT_CONFIG = {
   collectionName: '404 Limbots Collection',
   totalItems: 404,
-  // REPLACE WITH YOUR ACTUAL CANDY MACHINE ID (32-44 character base58 string)
-  candyMachineId: 'REPLACE_WITH_YOUR_CANDY_MACHINE_ID',
-  // SOL payment amount (for SOL guard)
+  // REPLACE WITH YOUR ACTUAL CORE CANDY MACHINE ID (32-44 character base58 string)
+  candyMachineId: 'REPLACE_WITH_YOUR_CORE_CANDY_MACHINE_ID',
+  // Collection address for Core assets (required for Core Candy Machine)
+  collectionAddress: 'REPLACE_WITH_COLLECTION_ADDRESS',
+  // SOL payment amount (for SOL payment guard)
   solPrice: 0.1,
   // Token payment configuration (for Token Payment guard)
   tokenPayment: {
@@ -30,6 +32,15 @@ export const MINT_CONFIG = {
   rpcEndpoint: '',
   // Visual mode for the lever UI: 'svg' (default) or '3d'
   visualMode: 'svg' as VisualMode,
+  // Core-specific metadata configuration
+  coreAssetConfig: {
+    name: 'Limbot #',
+    symbol: 'LIMBOT',
+    description: 'A unique Limbot from the 404 Collection',
+    sellerFeeBasisPoints: 500, // 5%
+    isCollection: false,
+    isMutable: true,
+  },
 };
 
 export const getRpcEndpoint = () => {

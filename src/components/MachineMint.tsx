@@ -269,8 +269,13 @@ const syncPlatform = useCallback(() => {
       setStage('error');
       return;
     }
-    if (!MINT_CONFIG.candyMachineId || MINT_CONFIG.candyMachineId === 'REPLACE_WITH_YOUR_CANDY_MACHINE_ID') {
-      toast({ title: 'Candy Machine ID missing', description: 'Set it in src/config/mintConfig.ts' });
+    if (!MINT_CONFIG.candyMachineId || MINT_CONFIG.candyMachineId === 'REPLACE_WITH_YOUR_CORE_CANDY_MACHINE_ID') {
+      toast({ title: 'Core Candy Machine ID missing', description: 'Set it in src/config/mintConfig.ts' });
+      setStage('error');
+      return;
+    }
+    if (!MINT_CONFIG.collectionAddress || MINT_CONFIG.collectionAddress === 'REPLACE_WITH_COLLECTION_ADDRESS') {
+      toast({ title: 'Collection address missing', description: 'Set collection address in src/config/mintConfig.ts' });
       setStage('error');
       return;
     }
@@ -301,13 +306,13 @@ const syncPlatform = useCallback(() => {
 
       const [
         { createUmi },
-        { publicKey, generateSigner, some, sol, lamports },
-        { fetchCandyMachine, mint },
+        { publicKey, generateSigner, some, lamports },
+        { fetchCandyMachine, mintV1 },
         { walletAdapterIdentity }
       ] = await Promise.all([
         import('@metaplex-foundation/umi-bundle-defaults'),
         import('@metaplex-foundation/umi'),
-        import('@metaplex-foundation/mpl-candy-machine'),
+        import('@metaplex-foundation/mpl-core-candy-machine'),
         import('@metaplex-foundation/umi-signer-wallet-adapters')
       ]);
 
@@ -315,7 +320,7 @@ const syncPlatform = useCallback(() => {
       const umi = createUmi(endpoint).use(walletAdapterIdentity((wallet as any).adapter));
 
       const cm = await fetchCandyMachine(umi, publicKey(MINT_CONFIG.candyMachineId as string));
-      const nftMint = generateSigner(umi);
+      const asset = generateSigner(umi);
 
       // Prepare mint arguments based on payment method
       let mintArgs: any = {};
@@ -334,21 +339,20 @@ const syncPlatform = useCallback(() => {
         });
       }
 
-      // Use mint function with proper guard handling for V3
+      // Use Core Candy Machine mint function
       const group = MINT_CONFIG.guardGroupLabel;
-      const sig = await mint(umi, {
+      const sig = await mintV1(umi, {
         candyMachine: cm.publicKey,
-        nftMint: nftMint.publicKey,
-        collectionMint: (cm as any).collectionMint,
-        collectionUpdateAuthority: (cm as any).authority,
+        asset,
+        collection: publicKey(MINT_CONFIG.collectionAddress),
         ...(group ? { group } : {}),
         mintArgs
       }).sendAndConfirm(umi);
 
       const paymentLabel = paymentMethod === 'sol' ? '$SOL' : MINT_CONFIG.tokenPayment?.symbol || '$SPU';
       toast({ 
-        title: 'Mint successful', 
-        description: `NFT minted with ${paymentLabel}!\nNFT: ${nftMint.publicKey.toString().slice(0, 8)}…\nTx: ${String(sig).slice(0, 8)}…` 
+        title: 'Core Asset minted successfully', 
+        description: `Core NFT minted with ${paymentLabel}!\nAsset: ${asset.publicKey.toString().slice(0, 8)}…\nTx: ${String(sig).slice(0, 8)}…` 
       });
       setStage('success');
     } catch (e: any) {

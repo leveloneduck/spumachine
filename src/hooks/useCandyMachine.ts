@@ -13,7 +13,7 @@ export function useCandyMachine() {
   const [error, setError] = useState<string | null>(null);
 
   const fetchStats = useCallback(async () => {
-    if (!MINT_CONFIG.candyMachineId || MINT_CONFIG.candyMachineId === 'REPLACE_WITH_YOUR_CANDY_MACHINE_ID') {
+    if (!MINT_CONFIG.candyMachineId || MINT_CONFIG.candyMachineId === 'REPLACE_WITH_YOUR_CORE_CANDY_MACHINE_ID') {
       // Don't show error for placeholder, just set default stats
       setStats({ minted: 0, total: MINT_CONFIG.totalItems, remaining: MINT_CONFIG.totalItems });
       setError(null);
@@ -23,11 +23,11 @@ export function useCandyMachine() {
       setLoading(true);
       setError(null);
 
-      // Dynamic imports for Candy Machine V3
+      // Dynamic imports for Core Candy Machine
       const [{ createUmi }, { publicKey }, { fetchCandyMachine }] = await Promise.all([
         import('@metaplex-foundation/umi-bundle-defaults'),
         import('@metaplex-foundation/umi'),
-        import('@metaplex-foundation/mpl-candy-machine')
+        import('@metaplex-foundation/mpl-core-candy-machine')
       ]);
 
       const endpoint = getRpcEndpoint();
