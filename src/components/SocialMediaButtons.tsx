@@ -59,11 +59,11 @@ export const SocialMediaButtons = ({ links = {} }: SocialMediaButtonsProps) => {
               asChild
               className="h-10 w-10 md:h-12 md:w-12 hover-scale 
                          shadow-[0_0_12px_hsl(var(--primary)/0.3)] 
-                         border-[hsl(var(--rust-base)/0.4)] 
-                         bg-gradient-to-b from-[hsl(var(--metal-base)/0.8)] to-[hsl(var(--metal-dark)/0.6)] 
+                         border-primary/30 
+                         bg-background/80 
                          backdrop-blur-sm
                          hover:shadow-[0_0_16px_hsl(var(--primary)/0.4)] 
-                         hover:border-[hsl(var(--rust-base)/0.6)]
+                         hover:border-primary/50
                          transition-all duration-200"
             >
               <a
