@@ -39,6 +39,8 @@ const MachineMint = () => {
   
   const [imageLoading, setImageLoading] = useState<LoadingState>('loading');
   const [videoLoading, setVideoLoading] = useState<LoadingState>('loading');
+  const [staticTvLoading, setStaticTvLoading] = useState<LoadingState>('loading');
+  const [staticTvRetries, setStaticTvRetries] = useState(0);
   const [assetsReady, setAssetsReady] = useState(false);
   const [displayRatio, setDisplayRatio] = useState(3 / 4);
   const [devMode, setDevMode] = useState(false);
@@ -207,10 +209,12 @@ const syncPlatform = useCallback(() => {
 
   // Check if assets are ready and trigger fade-in animation
   useEffect(() => {
-    if (imageLoading === 'loaded' && (videoLoading === 'loaded' || videoLoading === 'error')) {
+    if (imageLoading === 'loaded' && 
+        (videoLoading === 'loaded' || videoLoading === 'error') && 
+        (staticTvLoading === 'loaded' || staticTvLoading === 'error')) {
       setAssetsReady(true);
     }
-  }, [imageLoading, videoLoading]);
+  }, [imageLoading, videoLoading, staticTvLoading]);
 
   // Fallback timeout to prevent infinite loading
   useEffect(() => {
@@ -455,15 +459,58 @@ const syncPlatform = useCallback(() => {
               height: `${videoWindow.height}%`,
             }}
           >
-            <img
-              src="/static tv.gif"
-              alt="Static TV background"
-              className="absolute inset-0 w-full h-full object-cover"
-              style={{
-                transform: `scale(${videoZoom})`,
-                objectPosition: `${videoPosX}% ${videoPosY}%`,
-              }}
-            />
+            {/* Static TV GIF with fallback */}
+            {staticTvLoading !== 'error' && (
+              <img
+                src={`/static tv.gif?v=${Date.now()}`}
+                alt="Static TV background"
+                className="absolute inset-0 w-full h-full object-cover"
+                loading="eager"
+                style={{
+                  transform: `scale(${videoZoom})`,
+                  objectPosition: `${videoPosX}% ${videoPosY}%`,
+                }}
+                onLoad={() => setStaticTvLoading('loaded')}
+                onError={() => {
+                  console.warn('Static TV GIF failed to load, retrying...');
+                  if (staticTvRetries < 2) {
+                    setStaticTvRetries(prev => prev + 1);
+                    setTimeout(() => {
+                      const img = document.querySelector('img[alt="Static TV background"]') as HTMLImageElement;
+                      if (img) img.src = `/static tv.gif?v=${Date.now()}&retry=${staticTvRetries + 1}`;
+                    }, 1000);
+                  } else {
+                    setStaticTvLoading('error');
+                  }
+                }}
+              />
+            )}
+            
+            {/* CSS Fallback Animation */}
+            {staticTvLoading === 'error' && (
+              <div 
+                className="absolute inset-0 w-full h-full"
+                style={{
+                  background: `
+                    radial-gradient(circle at 20% 80%, rgba(120, 200, 255, 0.3) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 20%, rgba(255, 120, 120, 0.3) 0%, transparent 50%),
+                    radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.8) 0%, transparent 1px),
+                    linear-gradient(90deg, transparent 49%, rgba(255, 255, 255, 0.1) 49.5%, rgba(255, 255, 255, 0.1) 50.5%, transparent 51%),
+                    linear-gradient(0deg, transparent 49%, rgba(255, 255, 255, 0.05) 49.5%, rgba(255, 255, 255, 0.05) 50.5%, transparent 51%),
+                    #0a0a0a
+                  `,
+                  backgroundSize: '100% 100%, 100% 100%, 3px 3px, 100% 2px, 2px 100%, 100% 100%',
+                  animation: 'staticNoise 0.1s infinite linear alternate, scanlines 2s infinite linear'
+                }}
+              />
+            )}
+            
+            {/* Loading State */}
+            {staticTvLoading === 'loading' && (
+              <div className="absolute inset-0 w-full h-full bg-muted/50 flex items-center justify-center">
+                <div className="w-4 h-4 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
+              </div>
+            )}
           </div>
 
           {/* Video overlay - shows on top of static TV when minting */}

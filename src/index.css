@@ -312,3 +312,31 @@
     }
   }
 }
+
+/* Static TV Fallback Animations */
+@keyframes staticNoise {
+  0% {
+    background-position: 0% 0%, 100% 0%, 0px 0px, 0% 0%, 0% 0%, 0% 0%;
+  }
+  25% {
+    background-position: 20% 80%, 80% 20%, 1px 1px, 0% 1px, 1px 0%, 0% 0%;
+  }
+  50% {
+    background-position: 40% 40%, 60% 60%, 2px 2px, 0% 2px, 2px 0%, 0% 0%;
+  }
+  75% {
+    background-position: 80% 20%, 20% 80%, 1px 1px, 0% 1px, 1px 0%, 0% 0%;
+  }
+  100% {
+    background-position: 0% 0%, 100% 0%, 0px 0px, 0% 0%, 0% 0%, 0% 0%;
+  }
+}
+
+@keyframes scanlines {
+  0% {
+    background-position: 0% 0%, 100% 0%, 0px 0px, 0% 0%, 0% 0%, 0% 0%;
+  }
+  100% {
+    background-position: 0% 0%, 100% 0%, 0px 0px, 0% 100%, 100% 0%, 0% 0%;
+  }
+}
